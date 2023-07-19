@@ -14,15 +14,18 @@ const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
 	useEffect(() => {
 		if (!level.map) return;
 
-		const image = new Image();
+		const loadImage = (
+			src: string,
+			setImage: React.Dispatch<React.SetStateAction<HTMLImageElement | null>>
+		) => {
+			const image = new Image();
 
-		image.src = level.map.lowerSrc;
-		image.onload = () => setLowerImage(image);
+			image.src = src;
+			image.onload = () => setImage(image);
+		};
 
-		const image2 = new Image();
-
-		image2.src = level.map.upperSrc;
-		image2.onload = () => setUpperImage(image2);
+		loadImage(level.map.lowerSrc, setLowerImage);
+		loadImage(level.map.upperSrc, setUpperImage);
 	}, [level.map]);
 
 	useEffect(() => {
