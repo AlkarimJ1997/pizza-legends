@@ -1,14 +1,14 @@
 import { CELL_SIZE } from '@/utils/consts';
 import Sprite from '@/components/Sprite';
 
-interface LevelPlacementsLayerProps {
-	level: Level;
+interface PlacementsLayerProps {
+	overworld: Overworld;
 }
 
-const LevelPlacementsLayer = ({ level }: LevelPlacementsLayerProps) => {
+const PlacementsLayer = ({ overworld }: PlacementsLayerProps) => {
 	return (
 		<div>
-			{level.placements.map(placement => {
+			{overworld.placements.map(placement => {
 				const xPos = `${placement.x * CELL_SIZE}px`;
 				const yPos = `${placement.y * CELL_SIZE}px`;
 				const styles = {
@@ -25,4 +25,4 @@ const LevelPlacementsLayer = ({ level }: LevelPlacementsLayerProps) => {
 	);
 };
 
-export default LevelPlacementsLayer;
+export default PlacementsLayer;

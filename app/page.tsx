@@ -1,7 +1,7 @@
-import RenderLevel from '@/components/RenderLevel';
+import RenderOverworld from '@/components/RenderOverworld';
 
 const Home = () => {
-	return <RenderLevel />;
+	return <RenderOverworld />;
 };
 
 export default Home;

@@ -20,8 +20,8 @@ declare global {
 		direction: Direction;
 	};
 
-	// Level Stuff
-	type Level = {
+	// Overworld Stuff
+	type Overworld = {
 		map: MapSrc;
 		placements: Placement[];
 	};

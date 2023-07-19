@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-interface LevelBackgroundLayerProps {
-	level: Level;
+interface BackgroundLayerProps {
+	overworld: Overworld;
 }
 
 type MapLayers = {
@@ -11,7 +11,7 @@ type MapLayers = {
 	upper: HTMLImageElement | null;
 };
 
-const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
+const BackgroundLayer = ({ overworld }: BackgroundLayerProps) => {
 	const [mapImages, setMapImages] = useState<MapLayers>({
 		lower: null,
 		upper: null,
@@ -20,7 +20,7 @@ const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	useEffect(() => {
-		if (!level.map) return;
+		if (!overworld.map) return;
 
 		const loadImage = (src: string, layer: keyof MapLayers) => {
 			const image = new Image();
@@ -31,9 +31,9 @@ const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
 			};
 		};
 
-		loadImage(level.map.lowerSrc, 'lower');
-		loadImage(level.map.upperSrc, 'upper');
-	}, [level.map]);
+		loadImage(overworld.map.lowerSrc, 'lower');
+		loadImage(overworld.map.upperSrc, 'upper');
+	}, [overworld.map]);
 
 	useEffect(() => {
 		if (!mapImages.lower || !mapImages.upper || !canvasRef.current) return;
@@ -63,4 +63,4 @@ const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
 	);
 };
 
-export default LevelBackgroundLayer;
+export default BackgroundLayer;
