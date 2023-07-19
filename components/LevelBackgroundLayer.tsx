@@ -6,30 +6,37 @@ interface LevelBackgroundLayerProps {
 	level: Level;
 }
 
+type MapLayers = {
+	lower: HTMLImageElement | null;
+	upper: HTMLImageElement | null;
+};
+
 const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
-	const [lowerImage, setLowerImage] = useState<HTMLImageElement | null>(null);
-	const [upperImage, setUpperImage] = useState<HTMLImageElement | null>(null);
+	const [mapImages, setMapImages] = useState<MapLayers>({
+		lower: null,
+		upper: null,
+	});
+
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	useEffect(() => {
 		if (!level.map) return;
 
-		const loadImage = (
-			src: string,
-			setImage: React.Dispatch<React.SetStateAction<HTMLImageElement | null>>
-		) => {
+		const loadImage = (src: string, layer: keyof MapLayers) => {
 			const image = new Image();
 
 			image.src = src;
-			image.onload = () => setImage(image);
+			image.onload = () => {
+				setMapImages(images => ({ ...images, [layer]: image }));
+			};
 		};
 
-		loadImage(level.map.lowerSrc, setLowerImage);
-		loadImage(level.map.upperSrc, setUpperImage);
+		loadImage(level.map.lowerSrc, 'lower');
+		loadImage(level.map.upperSrc, 'upper');
 	}, [level.map]);
 
 	useEffect(() => {
-		if (!lowerImage || !upperImage || !canvasRef.current) return;
+		if (!mapImages.lower || !mapImages.upper || !canvasRef.current) return;
 
 		const canvasEl = canvasRef.current;
 		const ctx = canvasEl.getContext('2d');
@@ -38,18 +45,18 @@ const LevelBackgroundLayer = ({ level }: LevelBackgroundLayerProps) => {
 		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
 		// Draw the map image
-		ctx?.drawImage(lowerImage, 0, 0);
-		ctx?.drawImage(upperImage, 0, 0);
-	}, [lowerImage, upperImage]);
+		ctx?.drawImage(mapImages.lower, 0, 0);
+		ctx?.drawImage(mapImages.upper, 0, 0);
+	}, [mapImages]);
 
 	return (
 		<div className='absolute'>
-			{lowerImage && (
+			{mapImages.lower && (
 				<canvas
 					ref={canvasRef}
 					className='canvas'
-					width={lowerImage.width}
-					height={lowerImage.height}
+					width={mapImages.lower.width}
+					height={mapImages.lower.height}
 				/>
 			)}
 		</div>
