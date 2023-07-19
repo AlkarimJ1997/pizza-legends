@@ -1,6 +1,11 @@
 export const CELL_SIZE = 16;
 export const X_NUDGE = 8;
 
+export const PLACEMENT_TYPES = {
+  HERO: 'HERO',
+  NPC: 'NPC',
+} as const;
+
 export const SKINS = {
 	HERO: '/images/characters/people/hero.png',
 	ERIO: '/images/characters/people/erio.png',
