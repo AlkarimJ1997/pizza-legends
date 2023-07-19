@@ -1,6 +1,6 @@
-import { CELL_SIZE, DIRECTIONS, MAPS, SKINS } from '@/utils/consts';
-import Sprite from '@/components/Sprite';
+import { DIRECTIONS, MAPS, SKINS } from '@/utils/consts';
 import LevelBackgroundLayer from '@/components/LevelBackgroundLayer';
+import LevelPlacementsLayer from '@/components/LevelPlacementsLayer';
 
 const RenderLevel = () => {
 	const level = {
@@ -16,22 +16,7 @@ const RenderLevel = () => {
 		<div className='absolute inset-0 flex items-center justify-center'>
 			<div className='h-gameHeight w-gameWidth scale-pixelSize'>
 				<LevelBackgroundLayer level={level} />
-				{level.placements.map(placement => {
-					const xPos = `${placement.x * CELL_SIZE}px`;
-					const yPos = `${placement.y * CELL_SIZE}px`;
-					const styles = {
-						transform: `translate3d(${xPos}, ${yPos}, 0)`,
-					};
-
-					return (
-						<div key={placement.id} className='absolute' style={styles}>
-							<Sprite
-								skinSrc={placement.skin}
-								direction={placement.direction}
-							/>
-						</div>
-					);
-				})}
+				<LevelPlacementsLayer level={level} />
 			</div>
 		</div>
 	);
