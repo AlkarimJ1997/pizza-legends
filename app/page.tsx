@@ -1,14 +1,7 @@
-'use client';
-
-import { RecoilRoot } from 'recoil';
 import RenderLevel from '@/components/RenderLevel';
 
 const Home = () => {
-	return (
-		<RecoilRoot>
-			<RenderLevel />
-		</RecoilRoot>
-	);
+	return <RenderLevel />;
 };
 
 export default Home;

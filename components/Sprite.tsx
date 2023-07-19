@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
 import { X_NUDGE } from '@/utils/consts';
 import Shadow from '@/components/Shadow';
