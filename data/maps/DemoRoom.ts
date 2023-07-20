@@ -1,4 +1,4 @@
-import { MAPS, SKINS, DIRECTIONS, PLACEMENT_TYPES } from '@/utils/consts';
+import { MAPS, SKINS, DIRECTIONS } from '@/utils/consts';
 
 const OVERWORLD_STATE: Overworld = {
 	map: MAPS.DemoRoom,

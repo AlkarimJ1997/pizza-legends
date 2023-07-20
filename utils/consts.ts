@@ -68,4 +68,4 @@ export const directionUpdateMap = {
   [DIRECTIONS.RIGHT]: { x: 1, y: 0 },
   [DIRECTIONS.UP]: { x: 0, y: -1 },
   [DIRECTIONS.DOWN]: { x: 0, y: 1 },
-}
+} as const;

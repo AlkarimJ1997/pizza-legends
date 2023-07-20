@@ -1,9 +1,16 @@
 import { Placement } from '@/classes/Placement';
-import type { OverworldState } from '@/classes/OverworldState';
+import { CELL_SIZE, directionUpdateMap } from '@/utils/consts';
 import Sprite from '@/components/Sprite';
-import { DIRECTIONS, directionUpdateMap } from '@/utils/consts';
 
 export class PersonPlacement extends Placement {
+	controllerMoveRequested(direction: Direction) {
+		if (this.movingPixelsRemaining > 0) return;
+
+		// Start the move
+		this.movingPixelsRemaining = CELL_SIZE;
+		this.movingPixelDirection = direction;
+	}
+
 	tick() {
 		this.tickMovingPixelProgress();
 	}

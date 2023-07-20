@@ -1,3 +1,4 @@
+import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
 import { MAPS } from '@/utils/consts';
@@ -10,11 +11,14 @@ export class OverworldState {
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
 
+	directionControls: DirectionControls;
 	gameLoop: GameLoop | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: Overworld) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
+		this.directionControls = new DirectionControls();
+
 		this.start();
 	}
 
@@ -38,6 +42,11 @@ export class OverworldState {
 	}
 
 	tick() {
+    // Check for movement
+    if (this.directionControls.direction) {
+      
+    }
+    
 		this.placements.forEach(placement => placement.tick());
 		this.onEmit(this.getState()); // Emit any changes to React
 	}

@@ -22,12 +22,13 @@ declare global {
 		skin: Skin;
 		direction?: Direction;
 		type?: PlacementType;
+    isPlayerControlled?: boolean;
 	};
 
 	// Overworld Stuff
 	type Overworld = {
 		map: MapSrc;
-		placements: Placement[];
+		placements: PlacementConfig[];
 	};
 }
 
