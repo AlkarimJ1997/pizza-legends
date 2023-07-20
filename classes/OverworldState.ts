@@ -1,5 +1,7 @@
+import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
 import { MAPS } from '@/utils/consts';
+import type { Placement } from '@/classes/Placement';
 import OverworldMaps from '@/data/OverworldStateMap';
 
 export class OverworldState {
@@ -20,7 +22,9 @@ export class OverworldState {
 		const overworldData = OverworldMaps[this.id]!;
 
 		this.map = overworldData.map;
-		this.placements = overworldData.placements;
+		this.placements = overworldData.placements.map(config => {
+			return placementFactory.createPlacement(config, this);
+		});
 
 		this.startGameLoop();
 	}
@@ -34,7 +38,7 @@ export class OverworldState {
 	}
 
 	tick() {
-		// this.placements.forEach(placement => placement.tick());
+		this.placements.forEach(placement => placement.tick());
 		this.onEmit(this.getState()); // Emit any changes to React
 	}
 

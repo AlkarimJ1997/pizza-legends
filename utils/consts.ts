@@ -2,8 +2,7 @@ export const CELL_SIZE = 16;
 export const X_NUDGE = 8;
 
 export const PLACEMENT_TYPES = {
-  HERO: 'HERO',
-  NPC: 'NPC',
+  PERSON: 'PERSON',
 } as const;
 
 export const SKINS = {
@@ -63,3 +62,10 @@ export const DIRECTIONS = {
 	LEFT: 'LEFT',
 	RIGHT: 'RIGHT',
 } as const;
+
+export const directionUpdateMap = {
+  [DIRECTIONS.LEFT]: { x: -1, y: 0 },
+  [DIRECTIONS.RIGHT]: { x: 1, y: 0 },
+  [DIRECTIONS.UP]: { x: 0, y: -1 },
+  [DIRECTIONS.DOWN]: { x: 0, y: 1 },
+}

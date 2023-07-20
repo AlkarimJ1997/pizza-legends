@@ -1,4 +1,5 @@
-import { SKINS, DIRECTIONS, MAPS } from '@/utils/consts';
+import { SKINS, DIRECTIONS, MAPS, PLACEMENT_TYPES } from '@/utils/consts';
+import type { Placement } from '@/classes/Placement';
 
 declare global {
 	// Utilities
@@ -12,12 +13,15 @@ declare global {
 	type MapSrc = ValueOf<typeof MAPS>;
 
 	// Placements
-	type Placement = {
+	type PlacementType = keyof typeof PLACEMENT_TYPES;
+
+	type PlacementConfig = {
 		id: number;
 		x: number;
 		y: number;
 		skin: Skin;
-		direction: Direction;
+		direction?: Direction;
+		type?: PlacementType;
 	};
 
 	// Overworld Stuff

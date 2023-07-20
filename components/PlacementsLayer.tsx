@@ -9,15 +9,14 @@ const PlacementsLayer = ({ overworld }: PlacementsLayerProps) => {
 	return (
 		<div>
 			{overworld.placements.map(placement => {
-				const xPos = `${placement.x * CELL_SIZE}px`;
-				const yPos = `${placement.y * CELL_SIZE}px`;
+				const [x, y] = placement.displayXY();
 				const styles = {
-					transform: `translate3d(${xPos}, ${yPos}, 0)`,
+					transform: `translate3d(${x}px, ${y}px, 0)`,
 				};
 
 				return (
 					<div key={placement.id} className='absolute' style={styles}>
-						<Sprite skinSrc={placement.skin} direction={placement.direction} />
+						{placement.renderComponent()}
 					</div>
 				);
 			})}
