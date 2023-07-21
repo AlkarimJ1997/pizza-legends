@@ -11,9 +11,9 @@ export abstract class Placement {
 	overworld: OverworldState;
 
 	// Movement
-	travelPixelsPerFrame: number;
-	movingPixelsRemaining: number;
-	movingPixelDirection: Direction;
+	travelPixelsPerFrame: number = 1.5;
+	movingPixelsRemaining: number = 0;
+	movingPixelDirection: Direction = DIRECTIONS.RIGHT;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.id = properties.id;
@@ -23,11 +23,6 @@ export abstract class Placement {
 		this.skin = properties.skin;
 		this.direction = properties.direction ?? DIRECTIONS.DOWN;
 		this.overworld = overworld;
-
-		// Movement
-		this.travelPixelsPerFrame = 1.5;
-		this.movingPixelsRemaining = 0;
-		this.movingPixelDirection = DIRECTIONS.RIGHT;
 	}
 
 	displayXY(): [number, number] {
