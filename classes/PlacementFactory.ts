@@ -1,4 +1,5 @@
 import { PersonPlacement } from '@/classes/PersonPlacement';
+import { HeroPlacement } from '@/classes/HeroPlacement';
 import { PLACEMENT_TYPES } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 
@@ -13,8 +14,8 @@ class PlacementFactory {
 
 	getInstance(config: PlacementConfig, overworld: OverworldState) {
 		switch (config.type) {
-			// case PLACEMENT_TYPES.PERSON:
-			// 	return new PersonPlacement(config, overworld);
+			case PLACEMENT_TYPES.HERO:
+				return new HeroPlacement(config, overworld);
 			default:
 				return new PersonPlacement(config, overworld);
 		}
