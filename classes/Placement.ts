@@ -26,7 +26,7 @@ export abstract class Placement {
 
 		// Movement
 		this.travelPixelsPerFrame = 1.5;
-		this.movingPixelsRemaining = 16;
+		this.movingPixelsRemaining = 0;
 		this.movingPixelDirection = DIRECTIONS.RIGHT;
 	}
 
