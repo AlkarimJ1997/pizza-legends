@@ -10,11 +10,7 @@ interface SpriteProps {
 	showShadow?: boolean;
 }
 
-const Sprite = ({
-	skinSrc,
-	frameCoord,
-	showShadow = true,
-}: SpriteProps) => {
+const Sprite = ({ skinSrc, frameCoord, showShadow = true }: SpriteProps) => {
 	const [skinImage, setSkinImage] = useState<HTMLImageElement | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -39,28 +35,20 @@ const Sprite = ({
 		// Draw the skin image
 		const [frameX, frameY] = frameCoord;
 
-		ctx?.drawImage(
-			skinImage,
-			frameX * 32,
-			frameY * 32,
-			32,
-			32,
-			0,
-			0,
-			32,
-			32
-		);
+		ctx?.drawImage(skinImage, frameX * 32, frameY * 32, 32, 32, 0, 0, 32, 32);
 	}, [skinImage, frameCoord]);
 
 	return (
 		<div className='relative'>
-			<canvas
-				ref={canvasRef}
-				className='absolute canvas'
-				width={32}
-				height={32}
-			/>
 			<div className='absolute'>{showShadow && <Shadow />}</div>
+			<div className={`absolute left-[-${X_NUDGE}px]`}>
+				<canvas
+					ref={canvasRef}
+					className='absolute canvas'
+					width={32}
+					height={32}
+				/>
+			</div>
 		</div>
 	);
 };

@@ -14,15 +14,36 @@ export class PersonPlacement extends Placement {
 		super(config, overworld);
 
 		this.animations = {
+			'idle-up': [[0, 2]],
 			'idle-down': [[0, 0]],
+			'idle-left': [[0, 3]],
+			'idle-right': [[0, 1]],
+			'walk-up': [
+				[1, 2],
+				[0, 2],
+				[3, 2],
+				[0, 2],
+			],
 			'walk-down': [
 				[1, 0],
 				[0, 0],
 				[3, 0],
 				[0, 0],
 			],
+			'walk-left': [
+				[1, 3],
+				[0, 3],
+				[3, 3],
+				[0, 3],
+			],
+			'walk-right': [
+				[1, 1],
+				[0, 1],
+				[3, 1],
+				[0, 1],
+			],
 		};
-		this.currentAnimation = 'walk-down';
+		this.currentAnimation = 'walk-left';
 		this.currentAnimationFrame = 0;
 		this.animationFrameLimit = 16;
 		this.animationFrameProgress = this.animationFrameLimit;
@@ -38,6 +59,7 @@ export class PersonPlacement extends Placement {
 
 	tick() {
 		this.tickMovingPixelProgress();
+		this.tickAnimationProgress();
 	}
 
 	tickMovingPixelProgress() {
@@ -51,6 +73,20 @@ export class PersonPlacement extends Placement {
 		}
 	}
 
+	tickAnimationProgress() {
+		if (this.animationFrameProgress > 0) {
+			this.animationFrameProgress--;
+			return;
+		}
+
+		this.animationFrameProgress = this.animationFrameLimit;
+		this.currentAnimationFrame++;
+
+		if (!this.getFrame()) {
+			this.currentAnimationFrame = 0;
+		}
+	}
+
 	onDoneMoving() {
 		const { x, y } = directionUpdateMap[this.movingPixelDirection];
 
@@ -58,17 +94,19 @@ export class PersonPlacement extends Placement {
 		this.y += y;
 	}
 
+	setAnimation(key: AnimationName) {
+		if (this.currentAnimation === key) return;
+
+		this.currentAnimation = key;
+		this.currentAnimationFrame = 0;
+		this.animationFrameProgress = this.animationFrameLimit;
+	}
+
 	getFrame() {
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
 	renderComponent() {
-		return (
-			<Sprite
-				skinSrc={this.skin}
-				frameCoord={this.getFrame()}
-				direction={this.direction}
-			/>
-		);
+		return <Sprite skinSrc={this.skin} frameCoord={this.getFrame()} />;
 	}
 }
