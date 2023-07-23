@@ -30,6 +30,10 @@ export class PersonPlacement extends Placement {
 		this.animationFrameProgress = this.animationFrameLimit;
 	}
 
+	get frame() {
+		return this.animations[this.currentAnimation][this.currentAnimationFrame];
+	}
+
 	controllerMoveRequested(direction: Direction) {
 		if (this.movingPixelsRemaining > 0) return;
 
@@ -63,6 +67,8 @@ export class PersonPlacement extends Placement {
 
 		this.animationFrameProgress = this.animationFrameLimit;
 		this.currentAnimationFrame++;
+
+		if (!this.frame) this.currentAnimationFrame = 0;
 	}
 
 	onDoneMoving() {
@@ -70,7 +76,7 @@ export class PersonPlacement extends Placement {
 
 		this.x += x;
 		this.y += y;
-    this.updateSprite();
+		this.updateSprite();
 	}
 
 	setAnimation(key: AnimationName) {
@@ -92,17 +98,7 @@ export class PersonPlacement extends Placement {
 		this.setAnimation(`idle-${dir}` as AnimationName);
 	}
 
-	getFrame() {
-		const frameLength = this.animations[this.currentAnimation].length;
-
-		if (this.currentAnimationFrame >= frameLength) {
-			this.currentAnimationFrame = 0;
-		}
-
-		return this.animations[this.currentAnimation][this.currentAnimationFrame];
-	}
-
 	renderComponent() {
-		return <Sprite skinSrc={this.skin} frameCoord={this.getFrame()} />;
+		return <Sprite skinSrc={this.skin} frameCoord={this.frame} />;
 	}
 }
