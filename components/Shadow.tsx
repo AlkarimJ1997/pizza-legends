@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { SHADOW, X_NUDGE } from '@/utils/consts';
+import { SHADOW } from '@/utils/consts';
 
 const Shadow = () => {
 	const [shadowImage, setShadowImage] = useState<HTMLImageElement | null>(null);
@@ -22,7 +22,7 @@ const Shadow = () => {
 		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
 		// Draw the shadow image
-		ctx?.drawImage(shadowImage, 0, 0, 32, 32, -X_NUDGE, 0, 32, 32);
+		ctx?.drawImage(shadowImage, 0, 0, 32, 32, 0, 0, 32, 32);
 	}, [shadowImage]);
 
 	return <canvas ref={canvasRef} className='canvas' width={32} height={32} />;

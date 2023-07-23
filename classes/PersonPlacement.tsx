@@ -2,6 +2,7 @@ import { Placement } from '@/classes/Placement';
 import { CELL_SIZE, directionUpdateMap } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 import Sprite from '@/components/Sprite';
+import { TILES } from '@/utils/tiles';
 
 export class PersonPlacement extends Placement {
 	animations: AnimationMap;
@@ -14,36 +15,16 @@ export class PersonPlacement extends Placement {
 		super(config, overworld);
 
 		this.animations = {
-			'idle-up': [[0, 2]],
-			'idle-down': [[0, 0]],
-			'idle-left': [[0, 3]],
-			'idle-right': [[0, 1]],
-			'walk-up': [
-				[1, 2],
-				[0, 2],
-				[3, 2],
-				[0, 2],
-			],
-			'walk-down': [
-				[1, 0],
-				[0, 0],
-				[3, 0],
-				[0, 0],
-			],
-			'walk-left': [
-				[1, 3],
-				[0, 3],
-				[3, 3],
-				[0, 3],
-			],
-			'walk-right': [
-				[1, 1],
-				[0, 1],
-				[3, 1],
-				[0, 1],
-			],
+			'idle-up': TILES.IDLE_UP,
+			'idle-down': TILES.IDLE_DOWN,
+			'idle-left': TILES.IDLE_LEFT,
+			'idle-right': TILES.IDLE_RIGHT,
+			'walk-up': TILES.WALK_UP,
+			'walk-down': TILES.WALK_DOWN,
+			'walk-left': TILES.WALK_LEFT,
+			'walk-right': TILES.WALK_RIGHT,
 		};
-		this.currentAnimation = 'walk-left';
+		this.currentAnimation = 'idle-down';
 		this.currentAnimationFrame = 0;
 		this.animationFrameLimit = 16;
 		this.animationFrameProgress = this.animationFrameLimit;
@@ -55,6 +36,7 @@ export class PersonPlacement extends Placement {
 		// Start the move
 		this.movingPixelsRemaining = CELL_SIZE;
 		this.movingPixelDirection = direction;
+		this.updateSprite();
 	}
 
 	tick() {
@@ -81,10 +63,6 @@ export class PersonPlacement extends Placement {
 
 		this.animationFrameProgress = this.animationFrameLimit;
 		this.currentAnimationFrame++;
-
-		if (!this.getFrame()) {
-			this.currentAnimationFrame = 0;
-		}
 	}
 
 	onDoneMoving() {
@@ -92,6 +70,7 @@ export class PersonPlacement extends Placement {
 
 		this.x += x;
 		this.y += y;
+    this.updateSprite();
 	}
 
 	setAnimation(key: AnimationName) {
@@ -102,7 +81,24 @@ export class PersonPlacement extends Placement {
 		this.animationFrameProgress = this.animationFrameLimit;
 	}
 
+	updateSprite() {
+		const dir = this.movingPixelDirection.toLowerCase();
+
+		if (this.movingPixelsRemaining > 0) {
+			this.setAnimation(`walk-${dir}` as AnimationName);
+			return;
+		}
+
+		this.setAnimation(`idle-${dir}` as AnimationName);
+	}
+
 	getFrame() {
+		const frameLength = this.animations[this.currentAnimation].length;
+
+		if (this.currentAnimationFrame >= frameLength) {
+			this.currentAnimationFrame = 0;
+		}
+
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 

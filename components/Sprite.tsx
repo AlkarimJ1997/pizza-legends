@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { X_NUDGE } from '@/utils/consts';
 import Shadow from '@/components/Shadow';
 
 interface SpriteProps {
@@ -39,16 +38,14 @@ const Sprite = ({ skinSrc, frameCoord, showShadow = true }: SpriteProps) => {
 	}, [skinImage, frameCoord]);
 
 	return (
-		<div className='relative'>
+		<div className='relative left-[-7px]'>
 			<div className='absolute'>{showShadow && <Shadow />}</div>
-			<div className={`absolute left-[-${X_NUDGE}px]`}>
-				<canvas
-					ref={canvasRef}
-					className='absolute canvas'
-					width={32}
-					height={32}
-				/>
-			</div>
+			<canvas
+				ref={canvasRef}
+				className='absolute canvas'
+				width={32}
+				height={32}
+			/>
 		</div>
 	);
 };
