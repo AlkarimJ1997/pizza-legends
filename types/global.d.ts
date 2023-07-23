@@ -22,13 +22,28 @@ declare global {
 		skin: Skin;
 		direction?: Direction;
 		type?: PlacementType;
-    isPlayerControlled?: boolean;
+		isPlayerControlled?: boolean;
 	};
 
 	// Overworld Stuff
 	type Overworld = {
 		map: MapSrc;
 		placements: PlacementConfig[];
+	};
+
+	// Animation
+	type AnimationName =
+		| 'idle-up'
+		| 'idle-down'
+		| 'idle-left'
+		| 'idle-right'
+		| 'walk-up'
+		| 'walk-down'
+		| 'walk-left'
+		| 'walk-right';
+
+	type AnimationMap = {
+		[key in AnimationName]: [number, number][];
 	};
 }
 

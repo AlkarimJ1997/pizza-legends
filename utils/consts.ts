@@ -1,5 +1,5 @@
 export const CELL_SIZE = 16;
-export const X_NUDGE = 8;
+export const X_NUDGE = 7;
 
 export const PLACEMENT_TYPES = {
   HERO: 'HERO',

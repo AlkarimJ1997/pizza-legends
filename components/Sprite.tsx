@@ -6,11 +6,15 @@ import Shadow from '@/components/Shadow';
 
 interface SpriteProps {
 	skinSrc: Skin;
-	direction: Direction;
+	frameCoord: [number, number];
 	showShadow?: boolean;
 }
 
-const Sprite = ({ skinSrc, direction, showShadow = true }: SpriteProps) => {
+const Sprite = ({
+	skinSrc,
+	frameCoord,
+	showShadow = true,
+}: SpriteProps) => {
 	const [skinImage, setSkinImage] = useState<HTMLImageElement | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -32,15 +36,27 @@ const Sprite = ({ skinSrc, direction, showShadow = true }: SpriteProps) => {
 		// Clear out anything in the canvas
 		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
-		// Draw the skin image and shadow image
-		ctx?.drawImage(skinImage, 0, 0, 32, 32, -X_NUDGE, 0, 32, 32);
-	}, [skinImage]);
+		// Draw the skin image
+		const [frameX, frameY] = frameCoord;
+
+		ctx?.drawImage(
+			skinImage,
+			frameX * 32,
+			frameY * 32,
+			32,
+			32,
+			0,
+			0,
+			32,
+			32
+		);
+	}, [skinImage, frameCoord]);
 
 	return (
 		<div className='relative'>
 			<canvas
 				ref={canvasRef}
-				className='canvas absolute'
+				className='absolute canvas'
 				width={32}
 				height={32}
 			/>
