@@ -10,5 +10,6 @@ export class HeroPlacement extends PersonPlacement {
 			type: BEHAVIOR_TYPES.WALK,
 			direction,
 		});
+    this.updateSprite();
 	}
 }

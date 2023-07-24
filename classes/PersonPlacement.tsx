@@ -66,7 +66,6 @@ export class PersonPlacement extends Placement {
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();
-		this.updateSprite();
 	}
 
 	tickMovingPixelProgress() {
@@ -97,6 +96,10 @@ export class PersonPlacement extends Placement {
 
 		this.x += x;
 		this.y += y;
+
+		if (!this.overworld.directionControls.direction) {
+			this.updateSprite();
+		}
 	}
 
 	setAnimation(key: AnimationName) {
@@ -115,9 +118,7 @@ export class PersonPlacement extends Placement {
 			return;
 		}
 
-		if (!this.overworld.directionControls.direction) {
-			this.setAnimation(`idle-${dir}` as AnimationName);
-		}
+		this.setAnimation(`idle-${dir}` as AnimationName);
 	}
 
 	renderComponent() {
