@@ -24,7 +24,7 @@ export class PersonPlacement extends Placement {
 			'walk-left': TILES.WALK_LEFT,
 			'walk-right': TILES.WALK_RIGHT,
 		};
-		this.currentAnimation = 'idle-down';
+		this.currentAnimation = 'idle-right';
 		this.currentAnimationFrame = 0;
 		this.animationFrameLimit = 16;
 		this.animationFrameProgress = this.animationFrameLimit;
@@ -40,12 +40,12 @@ export class PersonPlacement extends Placement {
 		// Start the move
 		this.movingPixelsRemaining = CELL_SIZE;
 		this.movingPixelDirection = direction;
-		this.updateSprite();
 	}
 
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();
+		this.updateSprite();
 	}
 
 	tickMovingPixelProgress() {
@@ -76,7 +76,6 @@ export class PersonPlacement extends Placement {
 
 		this.x += x;
 		this.y += y;
-		this.updateSprite();
 	}
 
 	setAnimation(key: AnimationName) {
@@ -95,7 +94,9 @@ export class PersonPlacement extends Placement {
 			return;
 		}
 
-		this.setAnimation(`idle-${dir}` as AnimationName);
+		if (!this.overworld.directionControls.direction) {
+			this.setAnimation(`idle-${dir}` as AnimationName);
+		}
 	}
 
 	renderComponent() {
