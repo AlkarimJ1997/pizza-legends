@@ -1,4 +1,4 @@
-import { SKINS, DIRECTIONS, MAPS, PLACEMENT_TYPES } from '@/utils/consts';
+import { SKINS, DIRECTIONS, MAPS, PLACEMENT_TYPES, BEHAVIOR_TYPES } from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 
 declare global {
@@ -50,6 +50,14 @@ declare global {
 	type AnimationMap = {
 		[key in AnimationName]: [number, number][];
 	};
+
+  // Behavior Events
+  type BehaviorType = keyof typeof BEHAVIOR_TYPES;
+
+  type BehaviorEvent = {
+    type: BehaviorType;
+    direction: Direction;
+  }
 }
 
 export {};

@@ -5,6 +5,10 @@ export const PLACEMENT_TYPES = {
   PERSON: 'PERSON',
 } as const;
 
+export const BEHAVIOR_TYPES = {
+  WALK: 'WALK',
+} as const;
+
 export const SKINS = {
 	HERO: '/images/characters/people/hero.png',
 	ERIO: '/images/characters/people/erio.png',
