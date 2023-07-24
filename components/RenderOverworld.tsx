@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { OverworldState } from '@/classes/OverworldState';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
-import { MAPS } from '@/utils/consts';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<Overworld | null>(null);
@@ -26,11 +25,18 @@ const RenderOverworld = () => {
 
 	if (!overworld) return null;
 
+	const { cameraTransformX: x, cameraTransformY: y } = overworld;
+
 	return (
 		<div className='absolute inset-0 flex items-center justify-center'>
 			<div className='h-gameHeight w-gameWidth scale-pixelSize'>
-				<BackgroundLayer overworld={overworld} />
-				<PlacementsLayer overworld={overworld} />
+				<div
+					style={{
+						transform: `translate3d(${x}, ${y}, 0)`,
+					}}>
+					<BackgroundLayer overworld={overworld} />
+					<PlacementsLayer overworld={overworld} />
+				</div>
 			</div>
 		</div>
 	);

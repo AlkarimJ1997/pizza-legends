@@ -5,6 +5,7 @@ import { MAPS, PLACEMENT_TYPES } from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 import type { HeroPlacement } from '@/classes/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
+import { Camera } from '@/classes/Camera';
 
 export class OverworldState {
 	id: MapName;
@@ -15,6 +16,7 @@ export class OverworldState {
 	heroRef: HeroPlacement | undefined;
 
 	directionControls: DirectionControls;
+	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: Overworld) => void) {
@@ -37,6 +39,8 @@ export class OverworldState {
 			p => p.type === PLACEMENT_TYPES.HERO
 		) as HeroPlacement;
 
+		this.camera = new Camera(this);
+
 		this.startGameLoop();
 	}
 
@@ -55,6 +59,7 @@ export class OverworldState {
 		}
 
 		this.placements.forEach(placement => placement.tick());
+		this.camera?.tick();
 		this.onEmit(this.getState()); // Emit any changes to React
 	}
 
@@ -62,6 +67,8 @@ export class OverworldState {
 		return {
 			map: this.map,
 			placements: this.placements,
+			cameraTransformX: this.camera?.transformX ?? '',
+			cameraTransformY: this.camera?.transformY ?? '',
 		};
 	}
 
