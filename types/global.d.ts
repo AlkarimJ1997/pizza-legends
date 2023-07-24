@@ -29,6 +29,9 @@ declare global {
 	type Overworld = {
 		map: MapSrc;
 		placements: PlacementConfig[];
+	};
+
+	type OverworldChanges = Overworld & {
 		cameraTransformX: string;
 		cameraTransformY: string;
 	};

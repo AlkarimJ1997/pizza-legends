@@ -6,13 +6,13 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
 
 const RenderOverworld = () => {
-	const [overworld, setOverworld] = useState<Overworld | null>(null);
+	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
 
 	useEffect(() => {
 		// Create and subscribe to overworld state changes
 		const overworldState = new OverworldState(
 			'DemoRoom',
-			(newState: Overworld) => {
+			(newState: OverworldChanges) => {
 				setOverworld(newState);
 			}
 		);

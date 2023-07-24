@@ -1,6 +1,6 @@
 import { CELL_SIZE, DIRECTIONS } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
-import type { HeroPlacement } from '@/classes/HeroPlacement';
+import type { PersonPlacement } from '@/classes/PersonPlacement';
 
 export class Camera {
 	// Default
@@ -14,20 +14,24 @@ export class Camera {
 	// static readonly USE_SMOOTH_CAMERA = true;
 
 	overworld: OverworldState;
+	cameraPerson: PersonPlacement;
 	cameraX: number;
 	cameraY: number;
 	transformOffset: number;
 
-	constructor(overworld: OverworldState) {
+	constructor(overworld: OverworldState, cameraPerson: PersonPlacement) {
 		this.overworld = overworld;
+		this.cameraPerson = cameraPerson;
 
-		const [heroX, heroY] = this.overworld.heroRef?.displayXY() ?? [];
+		const [personX, personY] = this.targetCoords;
 
-		if (!heroX || !heroY) throw new Error('Hero not found');
-
-		this.cameraX = heroX;
-		this.cameraY = heroY;
+		this.cameraX = personX;
+		this.cameraY = personY;
 		this.transformOffset = -5.5 * CELL_SIZE;
+	}
+
+	get targetCoords() {
+		return this.cameraPerson?.displayXY() ?? [];
 	}
 
 	get transformX() {
@@ -47,30 +51,26 @@ export class Camera {
 	}
 
 	getNewCameraPosition() {
-		const hero = this.overworld.heroRef;
-
-		if (!hero) throw new Error('Hero not found');
-
-		const [heroX, heroY] = hero.displayXY();
+		const [personX, personY] = this.targetCoords;
 
 		if (Camera.USE_SMOOTH_CAMERA) {
-			const [targetX, targetY] = this.incorporateLookAhead(hero, heroX, heroY);
+			const [newX, newY] = this.incorporateLookAhead(personX, personY);
 
-			this.cameraX = Camera.lerp(this.cameraX, targetX, Camera.SPEED);
-			this.cameraY = Camera.lerp(this.cameraY, targetY, Camera.SPEED);
+			this.cameraX = Camera.lerp(this.cameraX, newX, Camera.SPEED);
+			this.cameraY = Camera.lerp(this.cameraY, newY, Camera.SPEED);
 			return;
 		}
 
-		this.cameraX = heroX;
-		this.cameraY = heroY;
+		this.cameraX = personX;
+		this.cameraY = personY;
 	}
 
-	incorporateLookAhead(hero: HeroPlacement, heroX: number, heroY: number) {
-		let targetX = heroX;
-		let targetY = heroY;
+	incorporateLookAhead(personX: number, personY: number) {
+		let targetX = personX;
+		let targetY = personY;
 
-		if (hero.movingPixelsRemaining > 0) {
-			switch (hero.movingPixelDirection) {
+		if (this.cameraPerson.movingPixelsRemaining > 0) {
+			switch (this.cameraPerson.movingPixelDirection) {
 				case DIRECTIONS.UP:
 					targetY -= Camera.LOOK_AHEAD * CELL_SIZE;
 					break;

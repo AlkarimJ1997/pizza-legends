@@ -1,6 +1,3 @@
-import { CELL_SIZE } from '@/utils/consts';
-import Sprite from '@/components/Sprite';
-
 interface PlacementsLayerProps {
 	overworld: Overworld;
 }

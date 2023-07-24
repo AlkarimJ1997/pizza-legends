@@ -9,7 +9,7 @@ import { Camera } from '@/classes/Camera';
 
 export class OverworldState {
 	id: MapName;
-	onEmit: (newState: Overworld) => void;
+	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
 
@@ -19,7 +19,7 @@ export class OverworldState {
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
-	constructor(mapId: MapName, onEmit: (newState: Overworld) => void) {
+	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
 		this.directionControls = new DirectionControls();
@@ -39,7 +39,7 @@ export class OverworldState {
 			p => p.type === PLACEMENT_TYPES.HERO
 		) as HeroPlacement;
 
-		this.camera = new Camera(this);
+		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();
 	}
