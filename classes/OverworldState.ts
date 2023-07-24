@@ -13,6 +13,7 @@ export class OverworldState {
 	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
+	isCutscenePlaying: boolean = false;
 
 	heroRef: HeroPlacement | undefined;
 

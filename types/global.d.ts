@@ -64,17 +64,17 @@ declare global {
 	type BehaviorType = keyof typeof BEHAVIOR_TYPES;
 
 	type WalkEvent = {
+		type: 'WALK';
 		direction: Direction;
 	};
 
 	type StandEvent = {
+		type: 'STAND';
 		direction: Direction;
 		time: number;
 	};
 
-	type BehaviorEvent = {
-		type: BehaviorType;
-	} & (WalkEvent | StandEvent);
+	type BehaviorEvent = { who?: string } & (WalkEvent | StandEvent);
 }
 
 export {};

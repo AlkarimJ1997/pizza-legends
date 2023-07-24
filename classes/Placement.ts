@@ -1,5 +1,6 @@
-import type { OverworldState } from '@/classes/OverworldState';
+import { OverworldEvent } from '@/classes/OverworldEvent';
 import { CELL_SIZE, DIRECTIONS, PLACEMENT_TYPES } from '@/utils/consts';
+import type { OverworldState } from '@/classes/OverworldState';
 
 export abstract class Placement {
 	id: string | null = null;
@@ -14,6 +15,10 @@ export abstract class Placement {
 	movingPixelsRemaining: number = 0;
 	movingPixelDirection: Direction;
 
+	// Behavior
+	behaviorLoop: BehaviorEvent[] = [];
+	behaviorLoopIndex: number = 0;
+
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
 		this.x = properties.x;
@@ -23,6 +28,37 @@ export abstract class Placement {
 
 		// Movement
 		this.movingPixelDirection = properties.direction ?? DIRECTIONS.DOWN;
+
+		this.mount();
+	}
+
+	mount() {
+		setTimeout(() => {
+			this.doBehaviorEvent();
+		}, 10);
+	}
+
+	async doBehaviorEvent() {
+		if (this.overworld.isCutscenePlaying || this.behaviorLoop.length === 0) {
+			return;
+		}
+
+		let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
+		eventConfig.who = this.id ?? '';
+
+		const eventHandler = new OverworldEvent({
+			overworld: this.overworld,
+			event: eventConfig,
+		});
+		await eventHandler.init();
+
+		this.behaviorLoopIndex++;
+
+		if (this.behaviorLoopIndex >= this.behaviorLoop.length) {
+			this.behaviorLoopIndex = 0;
+		}
+
+		this.doBehaviorEvent();
 	}
 
 	displayXY(): [number, number] {
