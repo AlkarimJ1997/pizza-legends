@@ -27,6 +27,7 @@ declare global {
 		skin: Skin;
 		direction?: Direction;
 		type?: PlacementType;
+		behaviorLoop?: BehaviorEvent[];
 	};
 
 	// Overworld Stuff
@@ -62,10 +63,18 @@ declare global {
 	// Behavior Events
 	type BehaviorType = keyof typeof BEHAVIOR_TYPES;
 
-	type BehaviorEvent = {
-		type: BehaviorType;
+	type WalkEvent = {
 		direction: Direction;
 	};
+
+	type StandEvent = {
+		direction: Direction;
+		time: number;
+	};
+
+	type BehaviorEvent = {
+		type: BehaviorType;
+	} & (WalkEvent | StandEvent);
 }
 
 export {};

@@ -7,6 +7,7 @@ export const PLACEMENT_TYPES = {
 
 export const BEHAVIOR_TYPES = {
   WALK: 'WALK',
+  STAND: 'STAND',
 } as const;
 
 export const SKINS = {
