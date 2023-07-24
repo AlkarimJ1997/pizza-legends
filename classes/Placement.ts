@@ -2,7 +2,7 @@ import type { OverworldState } from '@/classes/OverworldState';
 import { CELL_SIZE, DIRECTIONS, PLACEMENT_TYPES } from '@/utils/consts';
 
 export abstract class Placement {
-	id: number;
+	id: string | null = null;
 	type: PlacementType;
 	x: number;
 	y: number;
@@ -15,7 +15,6 @@ export abstract class Placement {
 	movingPixelDirection: Direction;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
-		this.id = properties.id;
 		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
 		this.x = properties.x;
 		this.y = properties.y;

@@ -4,10 +4,13 @@ import { PLACEMENT_TYPES } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 
 class PlacementFactory {
-	createPlacement(config: PlacementConfig, overworld: OverworldState) {
+	createPlacement(
+		id: string,
+		config: PlacementConfig,
+		overworld: OverworldState
+	) {
 		const instance = this.getInstance(config, overworld);
-
-		// Make ID here...
+		instance.id = id;
 
 		return instance;
 	}

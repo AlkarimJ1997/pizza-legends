@@ -30,16 +30,14 @@ export class OverworldState {
 
 	start() {
 		const overworldData = OverworldMaps[this.id]!;
+		const { map, placements } = overworldData;
 
-		this.map = overworldData.map;
-		this.placements = overworldData.placements.map(config => {
-			return placementFactory.createPlacement(config, this);
+		this.map = map;
+		this.placements = Object.entries(placements).map(([id, config]) => {
+			return placementFactory.createPlacement(id, config, this);
 		});
 
-		this.heroRef = this.placements.find(
-			p => p.type === PLACEMENT_TYPES.HERO
-		) as HeroPlacement;
-
+		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();

@@ -1,4 +1,10 @@
-import { SKINS, DIRECTIONS, MAPS, PLACEMENT_TYPES, BEHAVIOR_TYPES } from '@/utils/consts';
+import {
+	SKINS,
+	DIRECTIONS,
+	MAPS,
+	PLACEMENT_TYPES,
+	BEHAVIOR_TYPES,
+} from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 
 declare global {
@@ -16,19 +22,19 @@ declare global {
 	type PlacementType = keyof typeof PLACEMENT_TYPES;
 
 	type PlacementConfig = {
-		id: number;
 		x: number;
 		y: number;
 		skin: Skin;
 		direction?: Direction;
 		type?: PlacementType;
-		isPlayerControlled?: boolean;
 	};
 
 	// Overworld Stuff
-	type Overworld = {
+	type OverworldConfig = {
 		map: MapSrc;
-		placements: PlacementConfig[];
+		placements: {
+			[key: string]: PlacementConfig;
+		};
 	};
 
 	type OverworldChanges = Overworld & {
@@ -51,13 +57,13 @@ declare global {
 		[key in AnimationName]: [number, number][];
 	};
 
-  // Behavior Events
-  type BehaviorType = keyof typeof BEHAVIOR_TYPES;
+	// Behavior Events
+	type BehaviorType = keyof typeof BEHAVIOR_TYPES;
 
-  type BehaviorEvent = {
-    type: BehaviorType;
-    direction: Direction;
-  }
+	type BehaviorEvent = {
+		type: BehaviorType;
+		direction: Direction;
+	};
 }
 
 export {};

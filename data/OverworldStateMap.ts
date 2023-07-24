@@ -1,6 +1,6 @@
 import DemoRoom from './maps/DemoRoom';
 
-const OverworldMaps: Partial<Record<MapName, Overworld>> = {
+const OverworldMaps: Partial<Record<MapName, OverworldConfig>> = {
 	DemoRoom,
 };
 
