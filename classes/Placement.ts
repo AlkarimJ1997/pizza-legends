@@ -13,7 +13,7 @@ export abstract class Placement {
 	// Movement
 	travelPixelsPerFrame: number = 1.5;
 	movingPixelsRemaining: number = 0;
-	movingPixelDirection: Direction = DIRECTIONS.RIGHT;
+	movingPixelDirection: Direction = DIRECTIONS.DOWN;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.id = properties.id;

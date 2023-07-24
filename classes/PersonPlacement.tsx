@@ -24,9 +24,9 @@ export class PersonPlacement extends Placement {
 			'walk-left': TILES.WALK_LEFT,
 			'walk-right': TILES.WALK_RIGHT,
 		};
-		this.currentAnimation = 'idle-right';
+		this.currentAnimation = 'idle-down';
 		this.currentAnimationFrame = 0;
-		this.animationFrameLimit = 16;
+		this.animationFrameLimit = 8;
 		this.animationFrameProgress = this.animationFrameLimit;
 	}
 
