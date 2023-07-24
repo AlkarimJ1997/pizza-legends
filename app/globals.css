@@ -25,31 +25,31 @@ body {
 	}
 }
 
-@media (width >= 360px) {
+@media screen and (min-width: 360px) and (min-height: 360px) {
 	:root {
 		--pixel-size: 2;
 	}
 }
 
-@media (width >= 540px) {
+@media screen and (min-width: 540px) and (min-height: 540px) {
 	:root {
 		--pixel-size: 3;
 	}
 }
 
-@media (width >= 720px) {
+@media screen and (min-width: 720px) and (min-height: 720px) {
 	:root {
 		--pixel-size: 4;
 	}
 }
 
-@media (width >= 900px) {
+@media screen and (min-width: 900px) and (min-height: 900px) {
 	:root {
 		--pixel-size: 5;
 	}
 }
 
-@media (width >= 1080px) {
+@media screen and (min-width: 1080px) and (min-height: 1080px) {
 	:root {
 		--pixel-size: 6;
 	}

@@ -22,6 +22,9 @@ export class HeroPlacement extends PersonPlacement {
 			y: this.y + y,
 		});
 
+    // Change the hero's direction
+    this.movingPixelDirection = direction;
+
 		if (isOutOfBounds) return false;
 
 		// TODO: Is there an NPC or other obstacle in the way?
