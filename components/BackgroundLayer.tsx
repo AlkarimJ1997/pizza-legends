@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 interface BackgroundLayerProps {
-	overworld: Overworld;
+	overworld: OverworldChanges;
 }
 
 type MapLayers = {

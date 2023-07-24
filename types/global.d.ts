@@ -37,7 +37,9 @@ declare global {
 		};
 	};
 
-	type OverworldChanges = Overworld & {
+	type OverworldChanges = {
+		map: MapSrc;
+		placements: Placement[];
 		cameraTransformX: string;
 		cameraTransformY: string;
 	};

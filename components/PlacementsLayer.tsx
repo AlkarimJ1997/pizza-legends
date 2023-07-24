@@ -1,5 +1,5 @@
 interface PlacementsLayerProps {
-	overworld: Overworld;
+	overworld: OverworldChanges;
 }
 
 const PlacementsLayer = ({ overworld }: PlacementsLayerProps) => {
