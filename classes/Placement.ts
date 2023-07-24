@@ -54,6 +54,10 @@ export abstract class Placement {
 		}
 	}
 
+	isSolidForBody(_body: Placement) {
+		return false;
+	}
+
 	tick() {}
 
 	abstract renderComponent(): React.ReactNode;

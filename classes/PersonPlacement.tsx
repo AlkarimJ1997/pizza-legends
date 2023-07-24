@@ -1,8 +1,9 @@
 import { Placement } from '@/classes/Placement';
+import { Collision } from '@/classes/Collision';
 import { BEHAVIOR_TYPES, CELL_SIZE, directionUpdateMap } from '@/utils/consts';
+import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
 import Sprite from '@/components/Sprite';
-import { TILES } from '@/utils/tiles';
 
 export class PersonPlacement extends Placement {
 	animations: AnimationMap;
@@ -34,6 +35,10 @@ export class PersonPlacement extends Placement {
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
+	isSolidForBody() {
+		return true;
+	}
+
 	startBehavior(behavior: BehaviorEvent) {
 		this.movingPixelDirection = behavior.direction;
 
@@ -49,16 +54,16 @@ export class PersonPlacement extends Placement {
 	}
 
 	canMoveToNextDestination(direction: Direction) {
-		// Is the next space in bounds?
 		const { x, y } = directionUpdateMap[direction];
-		const isOutOfBounds = this.overworld.isPositionOutOfBounds({
-			x: this.x + x,
-			y: this.y + y,
-		});
+		const nextPosition = { x: this.x + x, y: this.y + y };
 
+		// Is the next space in bounds?
+		const isOutOfBounds = this.overworld.isPositionOutOfBounds(nextPosition);
 		if (isOutOfBounds) return false;
 
-		// TODO: Is there an NPC or other obstacle in the way?
+		// Is there a solid thing here?
+		const collision = new Collision(this, this.overworld, nextPosition);
+		if (collision.withSolidPlacement()) return false;
 
 		return true;
 	}
