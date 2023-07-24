@@ -34,14 +34,6 @@ export class PersonPlacement extends Placement {
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
-	controllerMoveRequested(direction: Direction) {
-		if (this.movingPixelsRemaining > 0) return;
-
-		// Start the move
-		this.movingPixelsRemaining = CELL_SIZE;
-		this.movingPixelDirection = direction;
-	}
-
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();

@@ -6,6 +6,7 @@ import type { Placement } from '@/classes/Placement';
 import type { HeroPlacement } from '@/classes/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
+import { WALLS } from '@/utils/walls';
 
 export class OverworldState {
 	id: MapName;
@@ -50,6 +51,12 @@ export class OverworldState {
 		this.gameLoop = new GameLoop(() => {
 			this.tick();
 		});
+	}
+
+	isPositionOutOfBounds(nextPosition: { x: number; y: number }) {
+		const { x, y } = nextPosition;
+
+		return WALLS[this.id][`${x},${y}`];
 	}
 
 	tick() {
