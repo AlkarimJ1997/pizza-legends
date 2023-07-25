@@ -36,6 +36,9 @@ declare global {
 		placements: {
 			[key: string]: PlacementConfig;
 		};
+		walls?: {
+			[key: string]: boolean;
+		};
 	};
 
 	type OverworldChanges = {
@@ -66,7 +69,7 @@ declare global {
 	type WalkEvent = {
 		type: 'WALK';
 		direction: Direction;
-    retry?: boolean;
+		retry?: boolean;
 	};
 
 	type StandEvent = {

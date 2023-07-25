@@ -72,10 +72,6 @@ export class PersonPlacement extends Placement {
 		const nextPosition = { x: this.x + x, y: this.y + y };
 
 		// Is the next space walkable?
-		const isSolid = this.overworld.isPositionSolid(nextPosition);
-		if (isSolid) return false;
-
-		// Is the next space occupied? (by another person or object)
 		const isOccupied = this.overworld.isPositionOccupied(nextPosition);
 		if (isOccupied) return false;
 

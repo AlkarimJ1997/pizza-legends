@@ -5,14 +5,12 @@ import {
 	BEHAVIOR_TYPES,
 	DIRECTIONS,
 	MAPS,
-	PLACEMENT_TYPES,
 	directionUpdateMap,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 import type { HeroPlacement } from '@/classes/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
-import { WALLS } from '@/utils/walls';
 import { OverworldEvent } from '@/classes/OverworldEvent';
 
 export class OverworldState {
@@ -29,7 +27,7 @@ export class OverworldState {
 	gameLoop: GameLoop | null = null;
 
 	// Collision detection
-	solidPlacements: { [key: string]: boolean } = {};
+	walls: { [key: string]: boolean } = {};
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -41,12 +39,13 @@ export class OverworldState {
 
 	start() {
 		const overworldData = OverworldMaps[this.id]!;
-		const { map, placements } = overworldData;
+		const { map, placements, walls } = overworldData;
 
 		this.map = map;
 		this.placements = Object.entries(placements).map(([id, config]) => {
 			return placementFactory.createPlacement(id, config, this);
 		});
+		this.walls = walls ?? {};
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
@@ -91,24 +90,18 @@ export class OverworldState {
 		this.placements.forEach(p => p.doBehaviorEvent());
 	}
 
-	isPositionSolid(nextPosition: { x: number; y: number }) {
-		const { x, y } = nextPosition;
-
-		return WALLS[this.id][`${x},${y}`];
-	}
-
 	isPositionOccupied(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;
 
-		return this.solidPlacements[`${x},${y}`];
+		return this.walls[`${x},${y}`];
 	}
 
 	addWall(x: number, y: number) {
-		this.solidPlacements[`${x},${y}`] = true;
+		this.walls[`${x},${y}`] = true;
 	}
 
 	removeWall(x: number, y: number) {
-		delete this.solidPlacements[`${x},${y}`];
+		delete this.walls[`${x},${y}`];
 	}
 
 	moveWall(wasX: number, wasY: number, direction: Direction) {
