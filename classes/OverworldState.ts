@@ -1,7 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { MAPS, PLACEMENT_TYPES } from '@/utils/consts';
+import { MAPS, PLACEMENT_TYPES, directionUpdateMap } from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 import type { HeroPlacement } from '@/classes/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
@@ -20,6 +20,9 @@ export class OverworldState {
 	directionControls: DirectionControls;
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
+
+	// Collision detection
+	solidPlacements: { [key: string]: boolean } = {};
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -52,10 +55,33 @@ export class OverworldState {
 		});
 	}
 
-	isPositionOutOfBounds(nextPosition: { x: number; y: number }) {
+	isPositionSolid(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;
 
 		return WALLS[this.id][`${x},${y}`];
+	}
+
+	isPositionOccupied(nextPosition: { x: number; y: number }) {
+		const { x, y } = nextPosition;
+
+		return this.solidPlacements[`${x},${y}`];
+	}
+
+	addWall(x: number, y: number) {
+		this.solidPlacements[`${x},${y}`] = true;
+	}
+
+	removeWall(x: number, y: number) {
+		delete this.solidPlacements[`${x},${y}`];
+	}
+
+	moveWall(wasX: number, wasY: number, direction: Direction) {
+		this.removeWall(wasX, wasY);
+
+		const { x, y } = directionUpdateMap[direction];
+		const nextPosition = { x: wasX + x, y: wasY + y };
+
+		this.addWall(nextPosition.x, nextPosition.y);
 	}
 
 	tick() {

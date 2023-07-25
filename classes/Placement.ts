@@ -29,14 +29,16 @@ export abstract class Placement {
 		// Movement
 		this.movingPixelDirection = properties.direction ?? DIRECTIONS.DOWN;
 
-    // Behavior
-    this.behaviorLoop = properties.behaviorLoop ?? [];
-    this.behaviorLoopIndex = 0;
+		// Behavior
+		this.behaviorLoop = properties.behaviorLoop ?? [];
+		this.behaviorLoopIndex = 0;
 
 		this.mount();
 	}
 
 	mount() {
+		this.overworld.addWall(this.x, this.y);
+
 		setTimeout(() => {
 			this.doBehaviorEvent();
 		}, 10);
@@ -91,10 +93,6 @@ export abstract class Placement {
 			default:
 				return [x, y + progressPixels];
 		}
-	}
-
-	isSolidForBody(_body: Placement) {
-		return false;
 	}
 
 	tick() {}

@@ -1,5 +1,4 @@
 import { Placement } from '@/classes/Placement';
-import { Collision } from '@/classes/Collision';
 import {
 	BEHAVIOR_TYPES,
 	CELL_SIZE,
@@ -41,10 +40,6 @@ export class PersonPlacement extends Placement {
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
-	isSolidForBody() {
-		return true;
-	}
-
 	startBehavior(behavior: BehaviorEvent) {
 		this.movingPixelDirection = behavior.direction;
 
@@ -55,6 +50,7 @@ export class PersonPlacement extends Placement {
 				return;
 			}
 
+			this.overworld.moveWall(this.x, this.y, behavior.direction);
 			this.movingPixelsRemaining = CELL_SIZE;
 			this.updateSprite();
 			return;
@@ -72,13 +68,13 @@ export class PersonPlacement extends Placement {
 		const { x, y } = directionUpdateMap[direction];
 		const nextPosition = { x: this.x + x, y: this.y + y };
 
-		// Is the next space in bounds?
-		const isOutOfBounds = this.overworld.isPositionOutOfBounds(nextPosition);
-		if (isOutOfBounds) return false;
+		// Is the next space walkable?
+		const isSolid = this.overworld.isPositionSolid(nextPosition);
+		if (isSolid) return false;
 
-		// Is there a solid thing here?
-		const collision = new Collision(this, this.overworld, nextPosition);
-		if (collision.withSolidPlacement()) return false;
+		// Is the next space occupied? (by another person or object)
+		const isOccupied = this.overworld.isPositionOccupied(nextPosition);
+		if (isOccupied) return false;
 
 		return true;
 	}
