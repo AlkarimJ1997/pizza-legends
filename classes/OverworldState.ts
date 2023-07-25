@@ -1,19 +1,26 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { MAPS, PLACEMENT_TYPES, directionUpdateMap } from '@/utils/consts';
+import {
+	BEHAVIOR_TYPES,
+	DIRECTIONS,
+	MAPS,
+	PLACEMENT_TYPES,
+	directionUpdateMap,
+} from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 import type { HeroPlacement } from '@/classes/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
 import { WALLS } from '@/utils/walls';
+import { OverworldEvent } from '@/classes/OverworldEvent';
 
 export class OverworldState {
 	id: MapName;
 	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
-	isCutscenePlaying: boolean = false;
+	isCutscenePlaying: boolean = true;
 
 	heroRef: HeroPlacement | undefined;
 
@@ -45,6 +52,18 @@ export class OverworldState {
 		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();
+		this.startCutscene([
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+			{
+				type: BEHAVIOR_TYPES.STAND,
+				direction: DIRECTIONS.RIGHT,
+				time: 300,
+				who: 'hero',
+			},
+		]);
 	}
 
 	startGameLoop() {
@@ -53,6 +72,22 @@ export class OverworldState {
 		this.gameLoop = new GameLoop(() => {
 			this.tick();
 		});
+	}
+
+	async startCutscene(events: BehaviorEvent[]) {
+		this.isCutscenePlaying = true;
+
+		// Start a loop of async events and await each one
+		for (const event of events) {
+			const eventHandler = new OverworldEvent({
+				overworld: this,
+				event,
+			});
+
+			await eventHandler.init();
+		}
+
+		this.isCutscenePlaying = false;
 	}
 
 	isPositionSolid(nextPosition: { x: number; y: number }) {
