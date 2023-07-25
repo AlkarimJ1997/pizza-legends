@@ -66,6 +66,7 @@ declare global {
 	type WalkEvent = {
 		type: 'WALK';
 		direction: Direction;
+    retry?: boolean;
 	};
 
 	type StandEvent = {

@@ -50,9 +50,10 @@ export class PersonPlacement extends Placement {
 
 		if (behavior.type === BEHAVIOR_TYPES.WALK) {
 			if (!this.canMoveToNextDestination(behavior.direction)) {
-        this.updateSprite();
-        return;
-      }
+				behavior.retry && setTimeout(() => this.startBehavior(behavior), 10);
+				this.updateSprite();
+				return;
+			}
 
 			this.movingPixelsRemaining = CELL_SIZE;
 			this.updateSprite();

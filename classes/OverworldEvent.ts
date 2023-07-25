@@ -45,6 +45,7 @@ export class OverworldEvent {
 		(who as PersonPlacement).startBehavior({
 			type: BEHAVIOR_TYPES.WALK,
 			direction: this.event.direction,
+			retry: true,
 		});
 
 		const completeHandler = (e: CustomEvent<{ whoId: string }>) => {
