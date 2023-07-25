@@ -7,8 +7,8 @@ import {
 } from '@/utils/consts';
 import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
-import Sprite from '@/components/Sprite';
 import { emitEvent } from '@/utils/helpers';
+import Person from '@/components/Person';
 
 export class PersonPlacement extends Placement {
 	animations: AnimationMap;
@@ -138,6 +138,6 @@ export class PersonPlacement extends Placement {
 	}
 
 	renderComponent() {
-		return <Sprite skinSrc={this.skin} frameCoord={this.frame} />;
+		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
 	}
 }

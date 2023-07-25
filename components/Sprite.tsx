@@ -1,26 +1,30 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Shadow from '@/components/Shadow';
 
-interface SpriteProps {
-	skinSrc: Skin;
+type DefaultProps = {
+	imageSrc: Skin;
+};
+
+type OverloadProps = {
+	imageSrc: Skin;
 	frameCoord: [number, number];
-	showShadow?: boolean;
-}
+};
 
-const Sprite = ({ skinSrc, frameCoord, showShadow = true }: SpriteProps) => {
+type SpriteProps = DefaultProps | OverloadProps;
+
+const Sprite = ({ imageSrc, ...props }: SpriteProps) => {
 	const [skinImage, setSkinImage] = useState<HTMLImageElement | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	useEffect(() => {
-		if (!skinSrc) return;
+		if (!imageSrc) return;
 
 		const image = new Image();
 
-		image.src = skinSrc;
+		image.src = imageSrc;
 		image.onload = () => setSkinImage(image);
-	}, [skinSrc, showShadow]);
+	}, [imageSrc]);
 
 	useEffect(() => {
 		if (!skinImage || !canvasRef.current) return;
@@ -32,14 +36,13 @@ const Sprite = ({ skinSrc, frameCoord, showShadow = true }: SpriteProps) => {
 		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
 		// Draw the skin image
-		const [frameX, frameY] = frameCoord;
+		const [frameX, frameY] = 'frameCoord' in props ? props.frameCoord : [0, 0];
 
 		ctx?.drawImage(skinImage, frameX * 32, frameY * 32, 32, 32, 0, 0, 32, 32);
-	}, [skinImage, frameCoord]);
+	}, [skinImage, props]);
 
 	return (
 		<div className='relative left-[-7px]'>
-			<div className='absolute'>{showShadow && <Shadow />}</div>
 			<canvas
 				ref={canvasRef}
 				className='absolute canvas'

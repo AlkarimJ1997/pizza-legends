@@ -4,6 +4,7 @@ import {
 	MAPS,
 	PLACEMENT_TYPES,
 	BEHAVIOR_TYPES,
+	SHADOW,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/Placement';
 
@@ -11,7 +12,7 @@ declare global {
 	// Utilities
 	type ValueOf<T> = T[keyof T];
 
-	type Skin = ValueOf<typeof SKINS>;
+	type Skin = ValueOf<typeof SKINS> | typeof SHADOW;
 	type Direction = ValueOf<typeof DIRECTIONS>;
 
 	// Maps
