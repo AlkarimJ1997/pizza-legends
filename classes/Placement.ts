@@ -11,13 +11,13 @@ export abstract class Placement {
 	overworld: OverworldState;
 
 	// Movement
-	travelPixelsPerFrame: number = 1.5;
+	travelPixelsPerFrame: number = 1;
 	movingPixelsRemaining: number = 0;
 	movingPixelDirection: Direction;
 
 	// Behavior
-	behaviorLoop: BehaviorEvent[] = [];
-	behaviorLoopIndex: number = 0;
+	behaviorLoop: BehaviorEvent[];
+	behaviorLoopIndex: number;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
@@ -28,6 +28,10 @@ export abstract class Placement {
 
 		// Movement
 		this.movingPixelDirection = properties.direction ?? DIRECTIONS.DOWN;
+
+    // Behavior
+    this.behaviorLoop = properties.behaviorLoop ?? [];
+    this.behaviorLoopIndex = 0;
 
 		this.mount();
 	}

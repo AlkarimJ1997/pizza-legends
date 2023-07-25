@@ -1,9 +1,15 @@
 import { Placement } from '@/classes/Placement';
 import { Collision } from '@/classes/Collision';
-import { BEHAVIOR_TYPES, CELL_SIZE, directionUpdateMap } from '@/utils/consts';
+import {
+	BEHAVIOR_TYPES,
+	CELL_SIZE,
+	CUSTOM_EVENTS,
+	directionUpdateMap,
+} from '@/utils/consts';
 import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
 import Sprite from '@/components/Sprite';
+import { emitEvent } from '@/utils/helpers';
 
 export class PersonPlacement extends Placement {
 	animations: AnimationMap;
@@ -42,14 +48,22 @@ export class PersonPlacement extends Placement {
 	startBehavior(behavior: BehaviorEvent) {
 		this.movingPixelDirection = behavior.direction;
 
-		switch (behavior.type) {
-			case BEHAVIOR_TYPES.WALK:
-				if (!this.canMoveToNextDestination(behavior.direction)) return;
+		if (behavior.type === BEHAVIOR_TYPES.WALK) {
+			if (!this.canMoveToNextDestination(behavior.direction)) {
+        this.updateSprite();
+        return;
+      }
 
-				this.movingPixelsRemaining = CELL_SIZE;
-				break;
-			default:
-				throw new Error(`Unknown behavior type: ${behavior.type}`);
+			this.movingPixelsRemaining = CELL_SIZE;
+			this.updateSprite();
+			return;
+		}
+
+		if (behavior.type === BEHAVIOR_TYPES.STAND) {
+			setTimeout(() => {
+				emitEvent(CUSTOM_EVENTS.STAND, { whoId: this.id! });
+			}, behavior.time);
+			this.updateSprite();
 		}
 	}
 
@@ -81,6 +95,7 @@ export class PersonPlacement extends Placement {
 		if (this.movingPixelsRemaining <= 0) {
 			this.movingPixelsRemaining = 0;
 			this.onDoneMoving();
+			emitEvent(CUSTOM_EVENTS.WALK, { whoId: this.id! });
 		}
 	}
 

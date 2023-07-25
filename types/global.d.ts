@@ -75,6 +75,24 @@ declare global {
 	};
 
 	type BehaviorEvent = { who?: string } & (WalkEvent | StandEvent);
+
+	// Custom Events
+	type CustomEventMap = {
+		PersonWalkingComplete: CustomEvent<{ whoId: string }>;
+		PersonStandingComplete: CustomEvent<{ whoId: string }>;
+	};
+
+	interface Document {
+		addEventListener<K extends keyof CustomEventMap>(
+			type: K,
+			listener: (this: Document, ev: CustomEventMap[K]) => void
+		): void;
+		removeEventListener<K extends keyof CustomEventMap>(
+			type: K,
+			listener: (this: Document, ev: CustomEventMap[K]) => void
+		): void;
+		dispatchEvent<K extends keyof CustomEventMap>(ev: CustomEventMap[K]): void;
+	}
 }
 
 export {};

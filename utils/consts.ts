@@ -1,13 +1,18 @@
 export const CELL_SIZE = 16;
 
 export const PLACEMENT_TYPES = {
-  HERO: 'HERO',
-  PERSON: 'PERSON',
+	HERO: 'HERO',
+	PERSON: 'PERSON',
 } as const;
 
 export const BEHAVIOR_TYPES = {
-  WALK: 'WALK',
-  STAND: 'STAND',
+	WALK: 'WALK',
+	STAND: 'STAND',
+} as const;
+
+export const CUSTOM_EVENTS = {
+	WALK: 'PersonWalkingComplete',
+	STAND: 'PersonStandingComplete',
 } as const;
 
 export const SKINS = {
@@ -69,8 +74,8 @@ export const DIRECTIONS = {
 } as const;
 
 export const directionUpdateMap = {
-  [DIRECTIONS.LEFT]: { x: -1, y: 0 },
-  [DIRECTIONS.RIGHT]: { x: 1, y: 0 },
-  [DIRECTIONS.UP]: { x: 0, y: -1 },
-  [DIRECTIONS.DOWN]: { x: 0, y: 1 },
+	[DIRECTIONS.LEFT]: { x: -1, y: 0 },
+	[DIRECTIONS.RIGHT]: { x: 1, y: 0 },
+	[DIRECTIONS.UP]: { x: 0, y: -1 },
+	[DIRECTIONS.DOWN]: { x: 0, y: 1 },
 } as const;
