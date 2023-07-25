@@ -19,7 +19,7 @@ export class OverworldEvent {
 	stand(resolve: () => void) {
 		const who = this.overworld.placements.find(p => p.id === this.event.who);
 
-		if (!who) return resolve();
+		if (!who || !('time' in this.event)) return resolve();
 
 		(who as PersonPlacement).startBehavior({
 			type: BEHAVIOR_TYPES.STAND,
