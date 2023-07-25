@@ -57,8 +57,11 @@ export class PersonPlacement extends Placement {
 		}
 
 		if (behavior.type === BEHAVIOR_TYPES.STAND) {
+			this.isStanding = true;
+
 			setTimeout(() => {
 				emitEvent(CUSTOM_EVENTS.STAND, { whoId: this.id! });
+				this.isStanding = false;
 			}, behavior.time);
 			this.updateSprite();
 		}

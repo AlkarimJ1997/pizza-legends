@@ -19,6 +19,8 @@ export abstract class Placement {
 	behaviorLoop: BehaviorEvent[];
 	behaviorLoopIndex: number;
 
+	isStanding: boolean = false;
+
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
 		this.x = properties.x;
@@ -45,7 +47,11 @@ export abstract class Placement {
 	}
 
 	async doBehaviorEvent() {
-		if (this.overworld.isCutscenePlaying || this.behaviorLoop.length === 0) {
+		if (
+			this.overworld.isCutscenePlaying ||
+			this.behaviorLoop.length === 0 ||
+			this.isStanding
+		) {
 			return;
 		}
 

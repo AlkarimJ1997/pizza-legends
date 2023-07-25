@@ -88,6 +88,7 @@ export class OverworldState {
 		}
 
 		this.isCutscenePlaying = false;
+		this.placements.forEach(p => p.doBehaviorEvent());
 	}
 
 	isPositionSolid(nextPosition: { x: number; y: number }) {
