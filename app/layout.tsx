@@ -1,7 +1,16 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
+import {
+	Abel,
+	Exo_2,
+	Monda,
+	Electrolize,
+	Changa,
+	Audiowide,
+} from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'] });
+const primary = Exo_2({
+	subsets: ['latin'],
+});
 
 export const metadata = {
 	title: 'Pizza Legends',
@@ -15,7 +24,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={`${inter.className} bg-indigo-400`}>{children}</body>
+			<body className={`${primary.className} bg-indigo-400`}>{children}</body>
 		</html>
 	);
 }
