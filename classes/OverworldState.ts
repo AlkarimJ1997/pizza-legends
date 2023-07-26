@@ -1,12 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import {
-	BEHAVIOR_TYPES,
-	DIRECTIONS,
-	MAPS,
-	directionUpdateMap,
-} from '@/utils/consts';
+import { MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
@@ -26,9 +21,6 @@ export class OverworldState {
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
-	// Collision detection
-	walls: { [key: string]: boolean } = {};
-
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
@@ -44,7 +36,6 @@ export class OverworldState {
 		this.placements = overworldData.placements.map(config => {
 			return placementFactory.createPlacement(config, this);
 		});
-		this.walls = overworldData.walls ?? {};
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
@@ -90,10 +81,6 @@ export class OverworldState {
 
 	isPositionOccupied(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;
-
-		if (this.walls[`${x},${y}`]) {
-			return true;
-		}
 
 		// Check for other placements
 		return this.placements.find(p => {

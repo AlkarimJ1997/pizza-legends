@@ -5,7 +5,6 @@ import {
 	BEHAVIOR_TYPES,
 	DIRECTIONS,
 } from '@/utils/consts';
-import { asGridCoord } from '@/utils/helpers';
 
 const OVERWORLD_STATE: OverworldConfig = {
 	map: MAPS.DemoRoom,
@@ -38,13 +37,11 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN },
 			],
 		},
+		{ x: 7, y: 5, type: PLACEMENT_TYPES.WALL },
+		{ x: 8, y: 5, type: PLACEMENT_TYPES.WALL },
+		{ x: 7, y: 6, type: PLACEMENT_TYPES.WALL },
+		{ x: 8, y: 6, type: PLACEMENT_TYPES.WALL },
 	],
-	walls: {
-		[asGridCoord(7, 5)]: true,
-		[asGridCoord(8, 5)]: true,
-		[asGridCoord(7, 6)]: true,
-		[asGridCoord(8, 6)]: true,
-	},
 };
 
 export default OVERWORLD_STATE;

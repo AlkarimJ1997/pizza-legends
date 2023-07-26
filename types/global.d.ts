@@ -44,9 +44,6 @@ declare global {
 	type OverworldConfig = {
 		map: MapSrc;
 		placements: PlacementConfig[];
-		walls?: {
-			[key: string]: boolean;
-		};
 	};
 
 	type OverworldChanges = {
