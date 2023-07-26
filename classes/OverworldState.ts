@@ -1,7 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { MAPS } from '@/utils/consts';
+import { BEHAVIOR_TYPES, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
@@ -41,18 +41,19 @@ export class OverworldState {
 		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();
-		// this.startCutscene([
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-		// 	{
-		// 		type: BEHAVIOR_TYPES.STAND,
-		// 		direction: DIRECTIONS.RIGHT,
-		// 		time: 300,
-		// 		who: 'hero',
-		// 	},
-		// ]);
+		this.startCutscene([
+      { type: BEHAVIOR_TYPES.MESSAGE, text: 'Hello World' },
+			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+			// {
+			// 	type: BEHAVIOR_TYPES.STAND,
+			// 	direction: DIRECTIONS.RIGHT,
+			// 	time: 300,
+			// 	who: 'hero',
+			// },
+		]);
 	}
 
 	startGameLoop() {
@@ -90,6 +91,16 @@ export class OverworldState {
 			}
 
 			return false;
+		});
+	}
+
+	addPlacement(config: PlacementConfig) {
+		this.placements.push(placementFactory.createPlacement(config, this));
+	}
+
+	deletePlacement(placementToRemove: Placement) {
+		this.placements = this.placements.filter(p => {
+			return p.id !== placementToRemove.id;
 		});
 	}
 

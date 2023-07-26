@@ -1,6 +1,7 @@
 import type { OverworldState } from '@/classes/OverworldState';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
-import { BEHAVIOR_TYPES, CUSTOM_EVENTS } from '@/utils/consts';
+import TextMessage from '@/components/TextMessage';
+import { BEHAVIOR_TYPES, CUSTOM_EVENTS, PLACEMENT_TYPES } from '@/utils/consts';
 
 interface OverworldEventProps {
 	overworld: OverworldState;
@@ -40,7 +41,7 @@ export class OverworldEvent {
 	walk(resolve: () => void) {
 		const who = this.overworld.placements.find(p => p.id === this.event.who);
 
-		if (!who) return resolve();
+		if (!who || !('direction' in this.event)) return resolve();
 
 		(who as PersonPlacement).startBehavior({
 			type: BEHAVIOR_TYPES.WALK,
@@ -58,6 +59,15 @@ export class OverworldEvent {
 		document.addEventListener(CUSTOM_EVENTS.WALK, completeHandler);
 	}
 
+	textMessage(resolve: () => void) {
+		if (!('text' in this.event)) return resolve();
+
+		this.overworld.addPlacement({
+			text: this.event.text,
+			type: PLACEMENT_TYPES.MESSAGE,
+		});
+	}
+
 	init() {
 		return new Promise<void>(resolve => {
 			switch (this.event.type) {
@@ -65,6 +75,8 @@ export class OverworldEvent {
 					return this.stand(resolve);
 				case BEHAVIOR_TYPES.WALK:
 					return this.walk(resolve);
+				case BEHAVIOR_TYPES.MESSAGE:
+					return this.textMessage(resolve);
 				default:
 					return resolve();
 			}

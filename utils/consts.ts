@@ -4,11 +4,13 @@ export const PLACEMENT_TYPES = {
 	HERO: 'HERO',
 	NPC: 'NPC',
   WALL: 'WALL',
+  MESSAGE: 'MESSAGE',
 } as const;
 
 export const BEHAVIOR_TYPES = {
 	WALK: 'WALK',
 	STAND: 'STAND',
+  MESSAGE: 'MESSAGE',
 } as const;
 
 export const CUSTOM_EVENTS = {

@@ -27,7 +27,7 @@ declare global {
 		x: number;
 		y: number;
 		skin: Skin;
-		type: PlacementType;
+		type: 'HERO' | 'NPC';
 		direction?: Direction;
 		behaviorLoop?: BehaviorEvent[];
 	};
@@ -35,10 +35,15 @@ declare global {
 	type WallConfig = {
 		x: number;
 		y: number;
-		type: PlacementType;
+		type: 'WALL';
 	};
 
-	type PlacementConfig = PersonConfig | WallConfig;
+	type MessageConfig = {
+		text: string;
+		type: 'MESSAGE';
+	};
+
+	type PlacementConfig = PersonConfig | WallConfig | MessageConfig;
 
 	// Overworld Stuff
 	type OverworldConfig = {
@@ -83,7 +88,16 @@ declare global {
 		time: number;
 	};
 
-	type BehaviorEvent = { who?: string } & (WalkEvent | StandEvent);
+	type MessageEvent = {
+		type: 'MESSAGE';
+		text: string;
+	};
+
+	type BehaviorEvent = { who?: string } & (
+		| WalkEvent
+		| StandEvent
+		| MessageEvent
+	);
 
 	// Custom Events
 	type CustomEventMap = {
