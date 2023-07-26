@@ -50,8 +50,8 @@ export class PersonPlacement extends Placement {
 				return;
 			}
 
-			this.overworld.moveWall(this.x, this.y, behavior.direction);
 			this.movingPixelsRemaining = CELL_SIZE;
+			this.updateIntentPosition(behavior.direction);
 			this.updateSprite();
 			return;
 		}
@@ -112,6 +112,7 @@ export class PersonPlacement extends Placement {
 
 		this.x += x;
 		this.y += y;
+		this.intentPosition = null;
 
 		if (!this.overworld.directionControls.direction) {
 			this.updateSprite();
@@ -135,6 +136,15 @@ export class PersonPlacement extends Placement {
 		}
 
 		this.setAnimation(`idle-${dir}` as AnimationName);
+	}
+
+	updateIntentPosition(direction: Direction) {
+		const { x, y } = directionUpdateMap[direction];
+
+		this.intentPosition = {
+			x: this.x + x,
+			y: this.y + y,
+		};
 	}
 
 	renderComponent() {

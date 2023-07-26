@@ -18,7 +18,7 @@ export class OverworldState {
 	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
-	isCutscenePlaying: boolean = true;
+	isCutscenePlaying: boolean = false;
 
 	heroRef: HeroPlacement | undefined;
 
@@ -93,24 +93,19 @@ export class OverworldState {
 	isPositionOccupied(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;
 
-		return this.walls[`${x},${y}`];
-	}
+		if (this.walls[`${x},${y}`]) {
+			return true;
+		}
 
-	addWall(x: number, y: number) {
-		this.walls[`${x},${y}`] = true;
-	}
+		// Check for other placements
+		return this.placements.find(p => {
+			if (p.x === x && p.y === y) return true;
+			if (p.intentPosition?.x === x && p.intentPosition?.y === y) {
+				return true;
+			}
 
-	removeWall(x: number, y: number) {
-		delete this.walls[`${x},${y}`];
-	}
-
-	moveWall(wasX: number, wasY: number, direction: Direction) {
-		this.removeWall(wasX, wasY);
-
-		const { x, y } = directionUpdateMap[direction];
-		const nextPosition = { x: wasX + x, y: wasY + y };
-
-		this.addWall(nextPosition.x, nextPosition.y);
+			return false;
+		});
 	}
 
 	tick() {

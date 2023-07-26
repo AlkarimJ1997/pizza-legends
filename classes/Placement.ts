@@ -20,6 +20,7 @@ export abstract class Placement {
 	behaviorLoopIndex: number;
 
 	isStanding: boolean = false;
+	intentPosition: { x: number; y: number } | null = null;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
@@ -39,8 +40,6 @@ export abstract class Placement {
 	}
 
 	mount() {
-		this.overworld.addWall(this.x, this.y);
-
 		setTimeout(() => {
 			this.doBehaviorEvent();
 		}, 10);
