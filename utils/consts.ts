@@ -2,7 +2,7 @@ export const CELL_SIZE = 16;
 
 export const PLACEMENT_TYPES = {
 	HERO: 'HERO',
-	PERSON: 'PERSON',
+	NPC: 'NPC',
 } as const;
 
 export const BEHAVIOR_TYPES = {

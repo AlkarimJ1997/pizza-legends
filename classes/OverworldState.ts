@@ -18,7 +18,7 @@ export class OverworldState {
 	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
-	isCutscenePlaying: boolean = true;
+	isCutscenePlaying: boolean = false;
 
 	heroRef: HeroPlacement | undefined;
 
@@ -51,18 +51,18 @@ export class OverworldState {
 		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();
-		this.startCutscene([
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-			{
-				type: BEHAVIOR_TYPES.STAND,
-				direction: DIRECTIONS.RIGHT,
-				time: 300,
-				who: 'hero',
-			},
-		]);
+		// this.startCutscene([
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+		// 	{
+		// 		type: BEHAVIOR_TYPES.STAND,
+		// 		direction: DIRECTIONS.RIGHT,
+		// 		time: 300,
+		// 		who: 'hero',
+		// 	},
+		// ]);
 	}
 
 	startGameLoop() {
@@ -73,22 +73,22 @@ export class OverworldState {
 		});
 	}
 
-	async startCutscene(events: BehaviorEvent[]) {
-		this.isCutscenePlaying = true;
+	// async startCutscene(events: BehaviorEvent[]) {
+	// 	this.isCutscenePlaying = true;
 
-		// Start a loop of async events and await each one
-		for (const event of events) {
-			const eventHandler = new OverworldEvent({
-				overworld: this,
-				event,
-			});
+	// 	// Start a loop of async events and await each one
+	// 	for (const event of events) {
+	// 		const eventHandler = new OverworldEvent({
+	// 			overworld: this,
+	// 			event,
+	// 		});
 
-			await eventHandler.init();
-		}
+	// 		await eventHandler.init();
+	// 	}
 
-		this.isCutscenePlaying = false;
-		this.placements.forEach(p => p.doBehaviorEvent());
-	}
+	// 	this.isCutscenePlaying = false;
+	// 	this.placements.forEach(p => p.doBehaviorEvent());
+	// }
 
 	isPositionOccupied(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;

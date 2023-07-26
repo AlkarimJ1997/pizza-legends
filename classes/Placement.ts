@@ -22,7 +22,7 @@ export abstract class Placement {
 	isStanding: boolean = false;
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
-		this.type = properties.type ?? PLACEMENT_TYPES.PERSON;
+		this.type = properties.type;
 		this.x = properties.x;
 		this.y = properties.y;
 		this.skin = properties.skin;
@@ -40,37 +40,6 @@ export abstract class Placement {
 
 	mount() {
 		this.overworld.addWall(this.x, this.y);
-
-		setTimeout(() => {
-			this.doBehaviorEvent();
-		}, 10);
-	}
-
-	async doBehaviorEvent() {
-		if (
-			this.overworld.isCutscenePlaying ||
-			this.behaviorLoop.length === 0 ||
-			this.isStanding
-		) {
-			return;
-		}
-
-		let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
-		eventConfig.who = this.id ?? '';
-
-		const eventHandler = new OverworldEvent({
-			overworld: this.overworld,
-			event: eventConfig,
-		});
-		await eventHandler.init();
-
-		this.behaviorLoopIndex++;
-
-		if (this.behaviorLoopIndex >= this.behaviorLoop.length) {
-			this.behaviorLoopIndex = 0;
-		}
-
-		this.doBehaviorEvent();
 	}
 
 	displayXY(): [number, number] {
@@ -102,6 +71,8 @@ export abstract class Placement {
 	}
 
 	tick() {}
+
+	tickAttemptAiMove() {}
 
 	abstract renderComponent(): React.ReactNode;
 }

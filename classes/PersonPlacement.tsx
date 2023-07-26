@@ -8,9 +8,9 @@ import {
 import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
 import { emitEvent } from '@/utils/helpers';
-import Person from '@/components/Person';
+import { ReactNode } from 'react';
 
-export class PersonPlacement extends Placement {
+export abstract class PersonPlacement extends Placement {
 	animations: AnimationMap;
 	currentAnimation: AnimationName;
 	currentAnimationFrame: number;
@@ -81,6 +81,7 @@ export class PersonPlacement extends Placement {
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();
+    this.tickAttemptAiMove();
 	}
 
 	tickMovingPixelProgress() {
@@ -137,7 +138,5 @@ export class PersonPlacement extends Placement {
 		this.setAnimation(`idle-${dir}` as AnimationName);
 	}
 
-	renderComponent() {
-		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
-	}
+	abstract renderComponent(): ReactNode;
 }

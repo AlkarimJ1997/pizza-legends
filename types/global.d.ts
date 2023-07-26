@@ -26,8 +26,8 @@ declare global {
 		x: number;
 		y: number;
 		skin: Skin;
+		type: PlacementType;
 		direction?: Direction;
-		type?: PlacementType;
 		behaviorLoop?: BehaviorEvent[];
 	};
 
