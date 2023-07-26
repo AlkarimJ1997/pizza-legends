@@ -9,10 +9,15 @@ import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
 import { emitEvent } from '@/utils/helpers';
 import { ReactNode } from 'react';
+<<<<<<< HEAD:classes/placements/PersonPlacement.tsx
 
 export abstract class PersonPlacement extends Placement {
 	skin: Skin;
 
+=======
+
+export abstract class PersonPlacement extends Placement {
+>>>>>>> 01a1cb22590247aa90ebd44852534db800146382:classes/PersonPlacement.tsx
 	animations: AnimationMap;
 	currentAnimation: AnimationName;
 	currentAnimationFrame: number;
@@ -90,7 +95,11 @@ export abstract class PersonPlacement extends Placement {
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();
+<<<<<<< HEAD:classes/placements/PersonPlacement.tsx
 		this.tickAttemptAiMove();
+=======
+    this.tickAttemptAiMove();
+>>>>>>> 01a1cb22590247aa90ebd44852534db800146382:classes/PersonPlacement.tsx
 	}
 
 	tickMovingPixelProgress() {

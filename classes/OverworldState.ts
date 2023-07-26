@@ -72,18 +72,18 @@ export class OverworldState {
 		});
 	}
 
-	async startCutscene(events: BehaviorEvent[]) {
-		this.isCutscenePlaying = true;
+	// async startCutscene(events: BehaviorEvent[]) {
+	// 	this.isCutscenePlaying = true;
 
-		// Start a loop of async events and await each one
-		for (const event of events) {
-			const eventHandler = new OverworldEvent({
-				overworld: this,
-				event,
-			});
+	// 	// Start a loop of async events and await each one
+	// 	for (const event of events) {
+	// 		const eventHandler = new OverworldEvent({
+	// 			overworld: this,
+	// 			event,
+	// 		});
 
-			await eventHandler.init();
-		}
+	// 		await eventHandler.init();
+	// 	}
 
 		this.isCutscenePlaying = false;
 	}
