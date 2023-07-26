@@ -1,5 +1,5 @@
 import type { OverworldState } from '@/classes/OverworldState';
-import { PersonPlacement } from '@/classes/PersonPlacement';
+import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { BEHAVIOR_TYPES, CUSTOM_EVENTS } from '@/utils/consts';
 
 interface OverworldEventProps {

@@ -1,5 +1,6 @@
+import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { BEHAVIOR_TYPES } from '@/utils/consts';
-import { PersonPlacement } from '@/classes/PersonPlacement';
+import Person from '@/components/Person';
 
 export class HeroPlacement extends PersonPlacement {
 	controllerMoveRequested(direction: Direction) {
@@ -13,5 +14,9 @@ export class HeroPlacement extends PersonPlacement {
 			direction,
 		});
 		this.updateSprite();
+	}
+
+	renderComponent() {
+		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
 	}
 }

@@ -7,8 +7,8 @@ import {
 	MAPS,
 	directionUpdateMap,
 } from '@/utils/consts';
-import type { Placement } from '@/classes/Placement';
-import type { HeroPlacement } from '@/classes/HeroPlacement';
+import type { Placement } from '@/classes/placements/Placement';
+import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
 import { OverworldEvent } from '@/classes/OverworldEvent';
@@ -39,30 +39,29 @@ export class OverworldState {
 
 	start() {
 		const overworldData = OverworldMaps[this.id]!;
-		const { map, placements, walls } = overworldData;
 
-		this.map = map;
-		this.placements = Object.entries(placements).map(([id, config]) => {
-			return placementFactory.createPlacement(id, config, this);
+		this.map = overworldData.map;
+		this.placements = overworldData.placements.map(config => {
+			return placementFactory.createPlacement(config, this);
 		});
-		this.walls = walls ?? {};
+		this.walls = overworldData.walls ?? {};
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
 
 		this.startGameLoop();
-		this.startCutscene([
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-			{
-				type: BEHAVIOR_TYPES.STAND,
-				direction: DIRECTIONS.RIGHT,
-				time: 300,
-				who: 'hero',
-			},
-		]);
+		// this.startCutscene([
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+		// 	{
+		// 		type: BEHAVIOR_TYPES.STAND,
+		// 		direction: DIRECTIONS.RIGHT,
+		// 		time: 300,
+		// 		who: 'hero',
+		// 	},
+		// ]);
 	}
 
 	startGameLoop() {
@@ -87,7 +86,6 @@ export class OverworldState {
 		}
 
 		this.isCutscenePlaying = false;
-		this.placements.forEach(p => p.doBehaviorEvent());
 	}
 
 	isPositionOccupied(nextPosition: { x: number; y: number }) {

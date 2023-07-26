@@ -1,4 +1,4 @@
-import { Placement } from '@/classes/Placement';
+import { Placement } from '@/classes/placements/Placement';
 import {
 	BEHAVIOR_TYPES,
 	CELL_SIZE,
@@ -8,17 +8,25 @@ import {
 import { TILES } from '@/utils/tiles';
 import type { OverworldState } from '@/classes/OverworldState';
 import { emitEvent } from '@/utils/helpers';
-import Person from '@/components/Person';
+import { ReactNode } from 'react';
 
-export class PersonPlacement extends Placement {
+export abstract class PersonPlacement extends Placement {
+	skin: Skin;
+
 	animations: AnimationMap;
 	currentAnimation: AnimationName;
 	currentAnimationFrame: number;
 	animationFrameLimit: number;
 	animationFrameProgress: number;
 
-	constructor(config: PlacementConfig, overworld: OverworldState) {
+	// Behavior
+	behaviorLoop: BehaviorEvent[];
+	behaviorLoopIndex: number;
+
+	constructor(config: PersonConfig, overworld: OverworldState) {
 		super(config, overworld);
+
+		this.skin = config.skin;
 
 		this.animations = {
 			'idle-up': TILES.IDLE_UP,
@@ -34,6 +42,10 @@ export class PersonPlacement extends Placement {
 		this.currentAnimationFrame = 0;
 		this.animationFrameLimit = 8;
 		this.animationFrameProgress = this.animationFrameLimit;
+
+		// Behavior
+		this.behaviorLoop = config.behaviorLoop ?? [];
+		this.behaviorLoopIndex = 0;
 	}
 
 	get frame() {
@@ -57,11 +69,8 @@ export class PersonPlacement extends Placement {
 		}
 
 		if (behavior.type === BEHAVIOR_TYPES.STAND) {
-			this.isStanding = true;
-
 			setTimeout(() => {
 				emitEvent(CUSTOM_EVENTS.STAND, { whoId: this.id! });
-				this.isStanding = false;
 			}, behavior.time);
 			this.updateSprite();
 		}
@@ -81,6 +90,7 @@ export class PersonPlacement extends Placement {
 	tick() {
 		this.tickMovingPixelProgress();
 		this.tickAnimationProgress();
+		this.tickAttemptAiMove();
 	}
 
 	tickMovingPixelProgress() {
@@ -147,7 +157,5 @@ export class PersonPlacement extends Placement {
 		};
 	}
 
-	renderComponent() {
-		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
-	}
+	abstract renderComponent(): ReactNode;
 }

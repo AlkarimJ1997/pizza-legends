@@ -1,6 +1,6 @@
 import { CELL_SIZE, DIRECTIONS } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
-import type { PersonPlacement } from '@/classes/PersonPlacement';
+import type { PersonPlacement } from '@/classes/placements/PersonPlacement';
 
 export class Camera {
 	// Default

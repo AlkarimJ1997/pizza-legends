@@ -6,7 +6,7 @@ import {
 	BEHAVIOR_TYPES,
 	SHADOW,
 } from '@/utils/consts';
-import type { Placement } from '@/classes/Placement';
+import type { Placement } from '@/classes/placements/Placement';
 
 declare global {
 	// Utilities
@@ -22,21 +22,28 @@ declare global {
 	// Placements
 	type PlacementType = keyof typeof PLACEMENT_TYPES;
 
-	type PlacementConfig = {
+	type PersonConfig = {
+		id: string;
 		x: number;
 		y: number;
 		skin: Skin;
+		type: PlacementType;
 		direction?: Direction;
-		type?: PlacementType;
 		behaviorLoop?: BehaviorEvent[];
 	};
+
+	type WallConfig = {
+		x: number;
+		y: number;
+		type: PlacementType;
+	};
+
+	type PlacementConfig = PersonConfig | WallConfig;
 
 	// Overworld Stuff
 	type OverworldConfig = {
 		map: MapSrc;
-		placements: {
-			[key: string]: PlacementConfig;
-		};
+		placements: PlacementConfig[];
 		walls?: {
 			[key: string]: boolean;
 		};
