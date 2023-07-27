@@ -95,10 +95,16 @@ declare global {
 		faceHero?: string;
 	};
 
+	type MapChangeEvent = {
+		type: 'MAP_CHANGE';
+		map: MapName;
+	};
+
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
 		| StandEvent
 		| TextMessageEvent
+		| MapChangeEvent
 	);
 
 	// Custom Events

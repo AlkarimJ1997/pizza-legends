@@ -103,6 +103,15 @@ export class OverworldEvent {
 		});
 	}
 
+	changeMap(resolve: () => void) {
+		const { map } = this.event as MapChangeEvent;
+
+		this.overworld.id = map;
+		this.overworld.destroy();
+		this.overworld.start();
+		resolve();
+	}
+
 	init() {
 		return new Promise<void>(resolve => {
 			switch (this.event.type) {
@@ -112,6 +121,8 @@ export class OverworldEvent {
 					return this.walk(resolve);
 				case BEHAVIOR_TYPES.MESSAGE:
 					return this.textMessage(resolve);
+				case BEHAVIOR_TYPES.MAP_CHANGE:
+					return this.changeMap(resolve);
 				default:
 					return resolve();
 			}

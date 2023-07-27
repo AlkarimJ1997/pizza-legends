@@ -9,6 +9,7 @@ export const BEHAVIOR_TYPES = {
 	WALK: 'WALK',
 	STAND: 'STAND',
 	MESSAGE: 'MESSAGE',
+	MAP_CHANGE: 'MAP_CHANGE',
 } as const;
 
 export const CUSTOM_EVENTS = {

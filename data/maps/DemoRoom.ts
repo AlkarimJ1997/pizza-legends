@@ -82,7 +82,7 @@ const OVERWORLD_STATE: OverworldConfig = {
 						type: BEHAVIOR_TYPES.STAND,
 						direction: DIRECTIONS.DOWN,
 						time: 100,
-            who: 'npcB',
+						who: 'npcB',
 					},
 					{
 						type: BEHAVIOR_TYPES.WALK,
@@ -95,6 +95,11 @@ const OVERWORLD_STATE: OverworldConfig = {
 						who: 'hero',
 					},
 				],
+			},
+		],
+		[asGridCoord(5, 9)]: [
+			{
+				events: [{ type: BEHAVIOR_TYPES.MAP_CHANGE, map: 'Kitchen' }],
 			},
 		],
 	},

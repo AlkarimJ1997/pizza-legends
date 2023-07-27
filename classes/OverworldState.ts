@@ -27,7 +27,7 @@ export class OverworldState {
 	isCutscenePlaying: boolean = false;
 	heroRef: HeroPlacement | undefined;
 
-	directionControls: DirectionControls;
+	directionControls: DirectionControls | null = null;
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
@@ -36,7 +36,6 @@ export class OverworldState {
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
-		this.directionControls = new DirectionControls();
 
 		this.start();
 	}
@@ -53,24 +52,25 @@ export class OverworldState {
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
+		this.directionControls = new DirectionControls();
 
 		this.bindActionInput();
 		this.bindHeroPositionCheck();
 
 		this.startGameLoop();
-		this.startCutscene([
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-			{
-				type: BEHAVIOR_TYPES.STAND,
-				direction: DIRECTIONS.RIGHT,
-				time: 200,
-				who: 'hero',
-			},
-			{ type: BEHAVIOR_TYPES.MESSAGE, text: 'WHY HELLO THERE!' },
-		]);
+		// this.startCutscene([
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+		// 	{
+		// 		type: BEHAVIOR_TYPES.STAND,
+		// 		direction: DIRECTIONS.RIGHT,
+		// 		time: 200,
+		// 		who: 'hero',
+		// 	},
+		// 	{ type: BEHAVIOR_TYPES.MESSAGE, text: 'WHY HELLO THERE!' },
+		// ]);
 	}
 
 	bindActionInput() {
@@ -151,7 +151,7 @@ export class OverworldState {
 
 	tick() {
 		// Check for movement
-		if (this.directionControls.direction) {
+		if (this.directionControls?.direction) {
 			this.heroRef?.controllerMoveRequested(this.directionControls.direction);
 		}
 
@@ -172,5 +172,7 @@ export class OverworldState {
 
 	destroy() {
 		// TODO ~ tear down the map
+		this.gameLoop?.stop();
+		this.directionControls?.unbind();
 	}
 }
