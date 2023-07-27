@@ -91,7 +91,7 @@ declare global {
 		time: number;
 	};
 
-	type MessageEvent = {
+	type TextMessageEvent = {
 		type: 'MESSAGE';
 		text: string;
 		faceHero?: string;
@@ -100,7 +100,7 @@ declare global {
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
 		| StandEvent
-		| MessageEvent
+		| TextMessageEvent
 	);
 
 	// Custom Events

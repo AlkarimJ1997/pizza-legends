@@ -2,8 +2,7 @@ import { Message } from '@/classes/Message';
 import type { OverworldState } from '@/classes/OverworldState';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
-import TextMessage from '@/components/TextMessage';
-import { BEHAVIOR_TYPES, CUSTOM_EVENTS, PLACEMENT_TYPES } from '@/utils/consts';
+import { BEHAVIOR_TYPES, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
 
 interface OverworldEventProps {
@@ -20,22 +19,11 @@ export class OverworldEvent {
 		this.event = event;
 	}
 
-	// Type Guards
-	private isStandEvent(event: BehaviorEvent): event is StandEvent {
-		return event.type === BEHAVIOR_TYPES.STAND;
-	}
-
-	private isWalkEvent(event: BehaviorEvent): event is WalkEvent {
-		return event.type === BEHAVIOR_TYPES.WALK;
-	}
-
-	private isMessageEvent(event: BehaviorEvent): event is MessageEvent {
-		return event.type === BEHAVIOR_TYPES.MESSAGE;
-	}
-
 	stand(resolve: () => void) {
-		if (!this.isStandEvent(this.event)) {
-			throw new Error('Event is not a stand event');
+		const { direction, time } = this.event as StandEvent;
+
+		if (!direction || !time) {
+			throw new Error('Stand event is missing direction or time');
 		}
 
 		const who = this.overworld.placements.find(p => {
@@ -46,8 +34,8 @@ export class OverworldEvent {
 
 		who.startBehavior({
 			type: BEHAVIOR_TYPES.STAND,
-			direction: this.event.direction,
-			time: this.event.time,
+			direction,
+			time,
 		});
 
 		const completeHandler = (e: CustomEvent<{ whoId: string }>) => {
@@ -61,8 +49,10 @@ export class OverworldEvent {
 	}
 
 	walk(resolve: () => void) {
-		if (!this.isWalkEvent(this.event)) {
-			throw new Error('Event is not a walk event');
+		const { direction } = this.event as WalkEvent;
+
+		if (!direction) {
+			throw new Error('Walk event is missing direction');
 		}
 
 		const who = this.overworld.placements.find(p => {
@@ -73,7 +63,7 @@ export class OverworldEvent {
 
 		who.startBehavior({
 			type: BEHAVIOR_TYPES.WALK,
-			direction: this.event.direction,
+			direction,
 			retry: true,
 		});
 
@@ -88,14 +78,16 @@ export class OverworldEvent {
 	}
 
 	textMessage(resolve: () => void) {
-		if (!this.isMessageEvent(this.event)) {
-			throw new Error('Event is not a message event');
+		const { text, faceHero } = this.event as TextMessageEvent;
+
+		if (!text) {
+			throw new Error('Text message event is missing text');
 		}
 
-		if (this.event.faceHero) {
+		if (faceHero) {
 			const hero = this.overworld.heroRef;
 			const who = this.overworld.placements.find(p => {
-				return p.id === this.event.faceHero;
+				return p.id === faceHero;
 			}) as NPCPlacement;
 
 			if (who && hero) {
@@ -105,7 +97,7 @@ export class OverworldEvent {
 		}
 
 		this.overworld.message = new Message({
-			text: this.event.text,
+			text,
 			onComplete: () => resolve(),
 			overworld: this.overworld,
 		});
