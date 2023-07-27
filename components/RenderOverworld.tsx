@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { OverworldState } from '@/classes/OverworldState';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
+import TextMessage from '@/components/TextMessage';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -37,6 +38,7 @@ const RenderOverworld = () => {
 					<BackgroundLayer overworld={overworld} />
 					<PlacementsLayer overworld={overworld} />
 				</div>
+				<TextMessage overworld={overworld} />
 			</div>
 		</div>
 	);

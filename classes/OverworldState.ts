@@ -1,12 +1,15 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { BEHAVIOR_TYPES, MAPS } from '@/utils/consts';
+import { BEHAVIOR_TYPES, DIRECTIONS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
+import type { Message } from '@/classes/Message';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
 import { OverworldEvent } from '@/classes/OverworldEvent';
+import { KeyPressListener } from '@/classes/KeyPressListener';
+import { getNextCoords } from '@/utils/helpers';
 
 export class OverworldState {
 	id: MapName;
@@ -20,6 +23,8 @@ export class OverworldState {
 	directionControls: DirectionControls;
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
+
+	message: Message | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -40,20 +45,39 @@ export class OverworldState {
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
 
+		this.bindActionInput();
 		this.startGameLoop();
 		this.startCutscene([
-      { type: BEHAVIOR_TYPES.MESSAGE, text: 'Hello World' },
-			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-			// { type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-			// {
-			// 	type: BEHAVIOR_TYPES.STAND,
-			// 	direction: DIRECTIONS.RIGHT,
-			// 	time: 300,
-			// 	who: 'hero',
-			// },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
+			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
+			{
+				type: BEHAVIOR_TYPES.STAND,
+				direction: DIRECTIONS.RIGHT,
+				time: 200,
+				who: 'hero',
+			},
+			{ type: BEHAVIOR_TYPES.MESSAGE, text: 'WHY HELLO THERE!' },
 		]);
+	}
+
+	bindActionInput() {
+		new KeyPressListener('Enter', () => {
+			// Is there a person here to talk to?
+			if (!this.heroRef) return;
+
+			const { x, y, movingPixelDirection: direction } = this.heroRef;
+			const nextCoords = getNextCoords(x, y, direction);
+
+			const match = this.placements.find(p => {
+				return p.x === nextCoords.x && p.y === nextCoords.y;
+			});
+
+			if (match && match.talking.length > 0 && !this.isCutscenePlaying) {
+				this.startCutscene(match.talking[0].events);
+			}
+		});
 	}
 
 	startGameLoop() {
@@ -121,6 +145,7 @@ export class OverworldState {
 			placements: this.placements,
 			cameraTransformX: this.camera?.transformX ?? '',
 			cameraTransformY: this.camera?.transformY ?? '',
+			message: this.message,
 		};
 	}
 

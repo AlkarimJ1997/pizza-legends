@@ -22,6 +22,23 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{ type: BEHAVIOR_TYPES.STAND, direction: DIRECTIONS.RIGHT, time: 1200 },
 				{ type: BEHAVIOR_TYPES.STAND, direction: DIRECTIONS.UP, time: 300 },
 			],
+			talking: [
+				{
+					events: [
+						{
+							type: BEHAVIOR_TYPES.MESSAGE,
+							text: "I'm busy...",
+							faceHero: 'npcA',
+						},
+						{ type: BEHAVIOR_TYPES.MESSAGE, text: 'Go away!' },
+						{
+							type: BEHAVIOR_TYPES.WALK,
+							direction: DIRECTIONS.UP,
+							who: 'hero',
+						},
+					],
+				},
+			],
 		},
 		{
 			id: 'npcB',

@@ -7,6 +7,7 @@ import {
 	SHADOW,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
+import type { Message } from '@/classes/Message';
 
 declare global {
 	// Utilities
@@ -30,6 +31,7 @@ declare global {
 		type: 'HERO' | 'NPC';
 		direction?: Direction;
 		behaviorLoop?: BehaviorEvent[];
+		talking?: TalkingConfig[];
 	};
 
 	type WallConfig = {
@@ -38,12 +40,7 @@ declare global {
 		type: 'WALL';
 	};
 
-	type MessageConfig = {
-		text: string;
-		type: 'MESSAGE';
-	};
-
-	type PlacementConfig = PersonConfig | WallConfig | MessageConfig;
+	type PlacementConfig = PersonConfig | WallConfig;
 
 	// Overworld Stuff
 	type OverworldConfig = {
@@ -56,6 +53,7 @@ declare global {
 		placements: Placement[];
 		cameraTransformX: string;
 		cameraTransformY: string;
+		message: Message | null;
 	};
 
 	// Animation
@@ -71,6 +69,11 @@ declare global {
 
 	type AnimationMap = {
 		[key in AnimationName]: [number, number][];
+	};
+
+	// Talking
+	type TalkingConfig = {
+		events: BehaviorEvent[];
 	};
 
 	// Behavior Events
@@ -91,6 +94,7 @@ declare global {
 	type MessageEvent = {
 		type: 'MESSAGE';
 		text: string;
+		faceHero?: string;
 	};
 
 	type BehaviorEvent = { who?: string } & (

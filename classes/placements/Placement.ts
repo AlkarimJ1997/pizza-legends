@@ -13,7 +13,11 @@ export abstract class Placement {
 	movingPixelsRemaining: number = 0;
 	movingPixelDirection: Direction = DIRECTIONS.DOWN;
 
+	// Collision detection
 	intentPosition: { x: number; y: number } | null = null;
+
+	// Talking
+	talking: TalkingConfig[] = [];
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.x = properties.x;
@@ -24,6 +28,11 @@ export abstract class Placement {
 		// Movement
 		if ('direction' in properties) {
 			this.movingPixelDirection = properties.direction ?? DIRECTIONS.DOWN;
+		}
+
+		// Talking
+		if ('talking' in properties) {
+			this.talking = properties.talking ?? [];
 		}
 	}
 

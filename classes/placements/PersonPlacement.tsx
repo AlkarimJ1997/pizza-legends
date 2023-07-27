@@ -52,7 +52,7 @@ export abstract class PersonPlacement extends Placement {
 		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
-	startBehavior(behavior: BehaviorEvent) {
+	startBehavior(behavior: WalkEvent | StandEvent) {
 		this.movingPixelDirection = behavior.direction;
 
 		if (behavior.type === BEHAVIOR_TYPES.WALK) {

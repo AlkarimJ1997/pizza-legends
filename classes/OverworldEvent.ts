@@ -1,7 +1,10 @@
+import { Message } from '@/classes/Message';
 import type { OverworldState } from '@/classes/OverworldState';
+import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import TextMessage from '@/components/TextMessage';
 import { BEHAVIOR_TYPES, CUSTOM_EVENTS, PLACEMENT_TYPES } from '@/utils/consts';
+import { oppositeDirection } from '@/utils/helpers';
 
 interface OverworldEventProps {
 	overworld: OverworldState;
@@ -62,9 +65,24 @@ export class OverworldEvent {
 	textMessage(resolve: () => void) {
 		if (!('text' in this.event)) return resolve();
 
-		this.overworld.addPlacement({
-			text: this.event.text,
-			type: PLACEMENT_TYPES.MESSAGE,
+		const { text, faceHero } = this.event;
+
+		if (faceHero) {
+			const hero = this.overworld.heroRef;
+			const who = this.overworld.placements.find(p => {
+				return p.id === faceHero;
+			}) as NPCPlacement;
+
+			if (who && hero) {
+				who.movingPixelDirection = oppositeDirection(hero.movingPixelDirection);
+				who.updateSprite();
+			}
+		}
+
+		this.overworld.message = new Message({
+			text,
+			onComplete: () => resolve(),
+			overworld: this.overworld,
 		});
 	}
 
