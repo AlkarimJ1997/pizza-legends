@@ -1,7 +1,12 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { BEHAVIOR_TYPES, DIRECTIONS, MAPS } from '@/utils/consts';
+import {
+	BEHAVIOR_TYPES,
+	CUSTOM_EVENTS,
+	DIRECTIONS,
+	MAPS,
+} from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
@@ -17,8 +22,9 @@ export class OverworldState {
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
 	walls: string[] = [];
-	isCutscenePlaying: boolean = false;
+	cutsceneSpaces: { [key: string]: StoryConfig[] } = {};
 
+	isCutscenePlaying: boolean = false;
 	heroRef: HeroPlacement | undefined;
 
 	directionControls: DirectionControls;
@@ -43,11 +49,14 @@ export class OverworldState {
 			return placementFactory.createPlacement(config, this);
 		});
 		this.walls = overworldData.walls || [];
+		this.cutsceneSpaces = overworldData.cutsceneSpaces || {};
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
 
 		this.bindActionInput();
+		this.bindHeroPositionCheck();
+
 		this.startGameLoop();
 		this.startCutscene([
 			{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
@@ -80,6 +89,23 @@ export class OverworldState {
 				this.startCutscene(match.talking[0].events);
 			}
 		});
+	}
+
+	bindHeroPositionCheck() {
+		document.addEventListener(
+			CUSTOM_EVENTS.WALK,
+			(e: CustomEvent<{ whoId: string }>) => {
+				if (e.detail.whoId !== 'hero' || !this.heroRef) return;
+
+				const { x, y } = this.heroRef;
+				const match = this.cutsceneSpaces[`${x},${y}`];
+
+				if (!match || this.isCutscenePlaying) return;
+
+				this.heroRef.updateSprite();
+				this.startCutscene(match[0].events);
+			}
+		);
 	}
 
 	startGameLoop() {
@@ -120,16 +146,6 @@ export class OverworldState {
 			}
 
 			return false;
-		});
-	}
-
-	addPlacement(config: PlacementConfig) {
-		this.placements.push(placementFactory.createPlacement(config, this));
-	}
-
-	deletePlacement(placementToRemove: Placement) {
-		this.placements = this.placements.filter(p => {
-			return p.id !== placementToRemove.id;
 		});
 	}
 

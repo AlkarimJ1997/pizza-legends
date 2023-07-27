@@ -31,7 +31,7 @@ declare global {
 		type: 'HERO' | 'NPC';
 		direction?: Direction;
 		behaviorLoop?: BehaviorEvent[];
-		talking?: TalkingConfig[];
+		talking?: StoryConfig[];
 	};
 
 	type PlacementConfig = PersonConfig;
@@ -40,7 +40,10 @@ declare global {
 	type OverworldConfig = {
 		map: MapSrc;
 		placements: PlacementConfig[];
-    walls?: string[];
+		walls?: string[];
+		cutsceneSpaces?: {
+			[key: string]: StoryConfig[];
+		};
 	};
 
 	type OverworldChanges = {
@@ -66,8 +69,8 @@ declare global {
 		[key in AnimationName]: [number, number][];
 	};
 
-	// Talking
-	type TalkingConfig = {
+	// Story Flag events (Talking or Cutscene Spaces)
+	type StoryConfig = {
 		events: BehaviorEvent[];
 	};
 
