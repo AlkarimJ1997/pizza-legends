@@ -20,12 +20,31 @@ export class OverworldEvent {
 		this.event = event;
 	}
 
+	// Type Guards
+	private isStandEvent(event: BehaviorEvent): event is StandEvent {
+		return event.type === BEHAVIOR_TYPES.STAND;
+	}
+
+	private isWalkEvent(event: BehaviorEvent): event is WalkEvent {
+		return event.type === BEHAVIOR_TYPES.WALK;
+	}
+
+	private isMessageEvent(event: BehaviorEvent): event is MessageEvent {
+		return event.type === BEHAVIOR_TYPES.MESSAGE;
+	}
+
 	stand(resolve: () => void) {
-		const who = this.overworld.placements.find(p => p.id === this.event.who);
+		if (!this.isStandEvent(this.event)) {
+			throw new Error('Event is not a stand event');
+		}
 
-		if (!who || !('time' in this.event)) return resolve();
+		const who = this.overworld.placements.find(p => {
+			return p.id === this.event.who;
+		}) as PersonPlacement | undefined;
 
-		(who as PersonPlacement).startBehavior({
+		if (!who) return resolve();
+
+		who.startBehavior({
 			type: BEHAVIOR_TYPES.STAND,
 			direction: this.event.direction,
 			time: this.event.time,
@@ -42,11 +61,17 @@ export class OverworldEvent {
 	}
 
 	walk(resolve: () => void) {
-		const who = this.overworld.placements.find(p => p.id === this.event.who);
+		if (!this.isWalkEvent(this.event)) {
+			throw new Error('Event is not a walk event');
+		}
 
-		if (!who || !('direction' in this.event)) return resolve();
+		const who = this.overworld.placements.find(p => {
+			return p.id === this.event.who;
+		}) as PersonPlacement | undefined;
 
-		(who as PersonPlacement).startBehavior({
+		if (!who) return resolve();
+
+		who.startBehavior({
 			type: BEHAVIOR_TYPES.WALK,
 			direction: this.event.direction,
 			retry: true,
@@ -63,14 +88,14 @@ export class OverworldEvent {
 	}
 
 	textMessage(resolve: () => void) {
-		if (!('text' in this.event)) return resolve();
+		if (!this.isMessageEvent(this.event)) {
+			throw new Error('Event is not a message event');
+		}
 
-		const { text, faceHero } = this.event;
-
-		if (faceHero) {
+		if (this.event.faceHero) {
 			const hero = this.overworld.heroRef;
 			const who = this.overworld.placements.find(p => {
-				return p.id === faceHero;
+				return p.id === this.event.faceHero;
 			}) as NPCPlacement;
 
 			if (who && hero) {
@@ -80,7 +105,7 @@ export class OverworldEvent {
 		}
 
 		this.overworld.message = new Message({
-			text,
+			text: this.event.text,
 			onComplete: () => resolve(),
 			overworld: this.overworld,
 		});
