@@ -1,6 +1,5 @@
 import { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import { NPCPlacement } from '@/classes/placements/NPCPlacement';
-import { WallPlacement } from '@/classes/placements/WallPlacement';
 import { PLACEMENT_TYPES } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,8 +18,6 @@ class PlacementFactory {
 				return new HeroPlacement(config as PersonConfig, overworld);
 			case PLACEMENT_TYPES.NPC:
 				return new NPCPlacement(config as PersonConfig, overworld);
-			case PLACEMENT_TYPES.WALL:
-				return new WallPlacement(config, overworld);
 			default:
 				throw new Error(`Unknown placement type: ${config}`);
 		}

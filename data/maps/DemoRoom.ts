@@ -54,11 +54,8 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN },
 			],
 		},
-		{ x: 7, y: 5, type: PLACEMENT_TYPES.WALL },
-		{ x: 8, y: 5, type: PLACEMENT_TYPES.WALL },
-		{ x: 7, y: 6, type: PLACEMENT_TYPES.WALL },
-		{ x: 8, y: 6, type: PLACEMENT_TYPES.WALL },
 	],
+	walls: ['7x5', '8x5', '7x6', '8x6'],
 };
 
 export default OVERWORLD_STATE;

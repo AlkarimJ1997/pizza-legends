@@ -16,6 +16,7 @@ export class OverworldState {
 	onEmit: (newState: OverworldChanges) => void;
 	map: MapSrc = MAPS.DemoRoom;
 	placements: Placement[] = [];
+	walls: string[] = [];
 	isCutscenePlaying: boolean = false;
 
 	heroRef: HeroPlacement | undefined;
@@ -41,6 +42,7 @@ export class OverworldState {
 		this.placements = overworldData.placements.map(config => {
 			return placementFactory.createPlacement(config, this);
 		});
+		this.walls = overworldData.walls || [];
 
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
@@ -106,6 +108,9 @@ export class OverworldState {
 
 	isPositionOccupied(nextPosition: { x: number; y: number }) {
 		const { x, y } = nextPosition;
+
+		// Check for walls
+		if (this.walls.includes(`${x}x${y}`)) return true;
 
 		// Check for other placements
 		return this.placements.find(p => {

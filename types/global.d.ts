@@ -34,18 +34,13 @@ declare global {
 		talking?: TalkingConfig[];
 	};
 
-	type WallConfig = {
-		x: number;
-		y: number;
-		type: 'WALL';
-	};
-
-	type PlacementConfig = PersonConfig | WallConfig;
+	type PlacementConfig = PersonConfig;
 
 	// Overworld Stuff
 	type OverworldConfig = {
 		map: MapSrc;
 		placements: PlacementConfig[];
+    walls?: string[];
 	};
 
 	type OverworldChanges = {
