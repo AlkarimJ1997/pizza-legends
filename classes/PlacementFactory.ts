@@ -22,7 +22,7 @@ class PlacementFactory {
 			case PLACEMENT_TYPES.WALL:
 				return new WallPlacement(config, overworld);
 			default:
-				throw new Error(`Unknown placement type: ${config.type}`);
+				throw new Error(`Unknown placement type: ${config}`);
 		}
 	}
 }
