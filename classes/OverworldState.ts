@@ -58,19 +58,9 @@ export class OverworldState {
 		this.bindHeroPositionCheck();
 
 		this.startGameLoop();
-		// this.startCutscene([
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.DOWN, who: 'hero' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.UP, who: 'npcA' },
-		// 	{ type: BEHAVIOR_TYPES.WALK, direction: DIRECTIONS.LEFT, who: 'npcA' },
-		// 	{
-		// 		type: BEHAVIOR_TYPES.STAND,
-		// 		direction: DIRECTIONS.RIGHT,
-		// 		time: 200,
-		// 		who: 'hero',
-		// 	},
-		// 	{ type: BEHAVIOR_TYPES.MESSAGE, text: 'WHY HELLO THERE!' },
-		// ]);
+		this.startCutscene([
+			{ type: BEHAVIOR_TYPES.MESSAGE, text: 'This is the very first message!' },
+		]);
 	}
 
 	bindActionInput() {

@@ -1,4 +1,5 @@
 import { KeyPressListener } from '@/classes/KeyPressListener';
+import { RevealingText } from '@/classes/RevealingText';
 import type { OverworldState } from '@/classes/OverworldState';
 
 interface MessageProps {
@@ -13,6 +14,7 @@ export class Message {
 	overworld: OverworldState;
 
 	actionListener: KeyPressListener;
+	revealingText: RevealingText;
 
 	constructor({ text, onComplete, overworld }: MessageProps) {
 		this.text = text;
@@ -23,7 +25,13 @@ export class Message {
 			this.actionListener.unbind();
 			this.done();
 		});
+
+		// Revealing text
+		this.revealingText = new RevealingText({ element: this });
+    this.revealingText.init();
 	}
+
+	warpToEnd() {}
 
 	done() {
 		this.overworld.message = null;

@@ -107,6 +107,13 @@ declare global {
 		| MapChangeEvent
 	);
 
+	// Revealing Text
+	type RevealingCharacter = {
+		char: string;
+		delayAfter: number;
+		show: boolean;
+	};
+
 	// Custom Events
 	type CustomEventMap = {
 		PersonWalkingComplete: CustomEvent<{ whoId: string }>;

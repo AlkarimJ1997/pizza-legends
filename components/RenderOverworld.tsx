@@ -12,7 +12,7 @@ const RenderOverworld = () => {
 	useEffect(() => {
 		// Create and subscribe to overworld state changes
 		const overworldState = new OverworldState(
-			'DemoRoom',
+			'Kitchen',
 			(newState: OverworldChanges) => {
 				setOverworld(newState);
 			}
