@@ -1,4 +1,4 @@
-import { DIRECTIONS, directionUpdateMap } from '@/utils/consts';
+import { BG_COLORS, DIRECTIONS, directionUpdateMap } from '@/utils/consts';
 
 export const asGridCoord = (x: number, y: number) => `${x},${y}`;
 
@@ -29,4 +29,8 @@ export const oppositeDirection = (direction: Direction) => {
 		default:
 			return DIRECTIONS.LEFT;
 	}
+};
+
+export const setBackgroundColor = (mapId: MapName) => {
+	document.body.style.backgroundColor = BG_COLORS[mapId];
 };

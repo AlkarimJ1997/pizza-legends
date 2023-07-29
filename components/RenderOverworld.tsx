@@ -6,6 +6,7 @@ import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
 import TextMessage from '@/components/ui/TextMessage';
 import SceneChange from '@/components/ui/SceneChange';
+import { setBackgroundColor } from '@/utils/helpers';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -27,6 +28,7 @@ const RenderOverworld = () => {
 
 	if (!overworld) return null;
 
+	setBackgroundColor(overworld.id);
 	const { cameraTransformX: x, cameraTransformY: y } = overworld;
 
 	return (

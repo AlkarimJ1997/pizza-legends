@@ -149,6 +149,7 @@ export class OverworldState {
 
 	getState() {
 		return {
+      id: this.id,
 			map: this.map,
 			placements: this.placements,
 			cameraTransformX: this.camera?.transformX ?? '',

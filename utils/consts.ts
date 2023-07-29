@@ -68,6 +68,17 @@ export const MAPS = {
 	},
 } as const;
 
+export const BG_COLORS: Record<MapName, string> = {
+	DemoRoom: '#e7c6b1',
+	Kitchen: '#c7c7e2',
+	DiningRoom: '#e1ad7d',
+	GreenKitchen: '#c9e1ac',
+	PizzaShop: '#e3c1ad',
+	Street: '#bfbebd',
+	StreetNorth: '#acbd9e',
+	TestWalkingMap: '#c0e7d9',
+};
+
 export const DIRECTIONS = {
 	UP: 'UP',
 	DOWN: 'DOWN',

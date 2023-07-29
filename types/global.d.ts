@@ -48,6 +48,7 @@ declare global {
 	};
 
 	type OverworldChanges = {
+		id: MapName;
 		map: MapSrc;
 		placements: Placement[];
 		cameraTransformX: string;
