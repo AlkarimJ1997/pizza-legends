@@ -125,10 +125,11 @@ export class OverworldEvent {
 
 	battle(resolve: () => void) {
 		this.overworld.battle = new Battle({
-			onComplete: () => {
-				resolve();
-			},
+			overworld: this.overworld,
+			onComplete: () => resolve(),
 		});
+
+		this.overworld.battle.init();
 	}
 
 	init() {

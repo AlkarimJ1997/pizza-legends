@@ -1,6 +1,14 @@
 import { Combatant } from '@/classes/battle/Combatant';
 import { TEAMS } from '@/utils/consts';
 import Pizzas from '@/data/PizzaMap';
+import { TurnCycle } from '@/classes/battle/TurnCycle';
+import { BattleEvent } from '@/classes/battle/BattleEvent';
+import type { OverworldState } from '@/classes/OverworldState';
+
+interface BattleProps {
+	onComplete: () => void;
+	overworld: OverworldState;
+}
 
 type ActiveCombatants = {
 	PLAYER: string;
@@ -10,9 +18,12 @@ type ActiveCombatants = {
 export class Battle {
 	combatants: Combatant[];
 	activeCombatants: ActiveCombatants;
+	overworld: OverworldState;
 	onComplete: () => void;
 
-	constructor({ onComplete }: { onComplete: () => void }) {
+	turnCycle: TurnCycle | null = null;
+
+	constructor({ overworld, onComplete }: BattleProps) {
 		this.combatants = [
 			new Combatant({
 				config: {
@@ -60,8 +71,21 @@ export class Battle {
 			ENEMY: 'enemy1',
 		};
 
+		this.overworld = overworld;
 		this.onComplete = onComplete;
 	}
 
-	init() {}
+	init() {
+		this.turnCycle = new TurnCycle({
+			battle: this,
+			onNewEvent: event => {
+				return new Promise(resolve => {
+					const battleEvent = new BattleEvent(event, this);
+					battleEvent.init(resolve);
+				});
+			},
+		});
+
+		this.turnCycle.init();
+	}
 }

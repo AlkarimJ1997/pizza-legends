@@ -110,7 +110,7 @@ declare global {
 		map: MapName;
 	};
 
-	type BattleEvent = {
+	type BattleStartEvent = {
 		type: 'BATTLE';
 	};
 
@@ -119,7 +119,7 @@ declare global {
 		| StandEvent
 		| TextMessageEvent
 		| MapChangeEvent
-		| BattleEvent
+		| BattleStartEvent
 	);
 
 	// Revealing Text
@@ -150,6 +150,14 @@ declare global {
 		src: ValueOf<typeof PIZZA_SKINS>;
 		icon: ValueOf<typeof PIZZA_ICONS>;
 	};
+
+  type MoveConfig = {
+    name: string;
+    success: BehaviorEvent[];
+  }
+
+  // Battle Events
+  type BattleAction = TextMessageEvent;
 
 	// Custom Events
 	type CustomEventMap = {
