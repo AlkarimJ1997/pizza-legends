@@ -38,6 +38,10 @@ body {
 	.battle-shadow {
 		background: url(/images/characters/shadow.png) no-repeat no-repeat;
 	}
+
+	.combatant-plate {
+		background: url(/images/ui/combatant-plate.png) no-repeat no-repeat;
+	}
 }
 
 @media screen and (min-width: 360px) and (min-height: 360px) {

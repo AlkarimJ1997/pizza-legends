@@ -146,7 +146,7 @@ declare global {
 		name: string;
 		type: keyof typeof PIZZA_TYPES;
 		src: ValueOf<typeof PIZZA_SKINS>;
-		icon: ValueOf<keyof typeof PIZZA_ICONS>;
+		icon: ValueOf<typeof PIZZA_ICONS>;
 	};
 
 	// Custom Events

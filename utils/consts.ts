@@ -97,6 +97,7 @@ export const directionUpdateMap = {
 // Battle specific stuff
 export const STATUSES = {
 	CLUMSY: 'CLUMSY',
+  SAUCY: 'SAUCY',
 } as const;
 
 export const TEAMS = {
