@@ -2,8 +2,14 @@ import { Combatant } from '@/classes/battle/Combatant';
 import { TEAMS } from '@/utils/consts';
 import Pizzas from '@/data/PizzaMap';
 
+type ActiveCombatants = {
+	PLAYER: string;
+	ENEMY: string;
+};
+
 export class Battle {
 	combatants: { [key: string]: Combatant };
+	activeCombatants: ActiveCombatants;
 	onComplete: () => void;
 
 	constructor({ onComplete }: { onComplete: () => void }) {
@@ -12,9 +18,10 @@ export class Battle {
 				config: {
 					...Pizzas.s001,
 					belongsToTeam: TEAMS.PLAYER,
-					hp: 50,
+					hp: 30,
 					maxHp: 50,
-					xp: 0,
+					xp: 75,
+					maxXp: 100,
 					level: 1,
 					status: null,
 				},
@@ -24,9 +31,10 @@ export class Battle {
 				config: {
 					...Pizzas.v001,
 					belongsToTeam: TEAMS.ENEMY,
-					hp: 50,
+					hp: 20,
 					maxHp: 50,
 					xp: 20,
+					maxXp: 100,
 					level: 1,
 				},
 				battle: this,
@@ -35,13 +43,19 @@ export class Battle {
 				config: {
 					...Pizzas.f001,
 					belongsToTeam: TEAMS.ENEMY,
-					hp: 50,
+					hp: 25,
 					maxHp: 50,
 					xp: 30,
+					maxXp: 100,
 					level: 1,
 				},
 				battle: this,
 			}),
+		};
+
+		this.activeCombatants = {
+			PLAYER: 'player1',
+			ENEMY: 'enemy1',
 		};
 
 		this.onComplete = onComplete;

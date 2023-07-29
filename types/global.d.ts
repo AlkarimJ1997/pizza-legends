@@ -135,6 +135,7 @@ declare global {
     hp: number;
 		maxHp: number;
 		xp: number;
+    maxXp: number;
 		level: number;
 		status?: {
 			type: keyof typeof STATUSES;

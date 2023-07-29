@@ -37,7 +37,9 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 						<p className='absolute top-[-8px] left-[-2px] whitespace-nowrap bg-slate-800 text-slate-100 text-[5px] px-[2px] m-0'>
 							{config.name}
 						</p>
-						<p className='absolute text-[12px] top-[-1px] right-[2px] w-[17px] h-[12px] flex items-center justify-center m-0 bg-[#F8C594] border border-[#A48465]'></p>
+						<p className='absolute text-[12px] top-[-1px] right-[2px] w-[17px] h-[12px] flex items-center justify-center m-0 bg-[#F8C594] border border-[#A48465]'>
+							{config.level}
+						</p>
 						<div className='absolute w-[22px] h-[12px] bottom-[1px] left-[3px] overflow-hidden hidden'>
 							<Image
 								src={config.src}
@@ -56,15 +58,39 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 						/>
 						<svg
 							viewBox='0 0 26 3'
-							className='absolute w-[26px] h-[3px] top-[4px] left-[20px] [&>rect]:transition-all [&>rect]:duration-200'>
-							<rect x={0} y={0} width='0%' height={1} fill='#82ff71' />
-							<rect x={0} y={1} width='0%' height={2} fill='#3ef126' />
+							className='absolute w-[26.5px] h-[3px] top-[4px] left-[19.5px] [&>rect]:transition-all [&>rect]:duration-200'>
+							<rect
+								x={0}
+								y={0}
+								width={`${combatants[id].hpPercentage}%`}
+								height={1}
+								fill='#82ff71'
+							/>
+							<rect
+								x={0}
+								y={1}
+								width={`${combatants[id].hpPercentage}%`}
+								height={2}
+								fill='#3ef126'
+							/>
 						</svg>
 						<svg
 							viewBox='0 0 26 2'
 							className='absolute w-[26px] h-[2px] top-[8px] left-[20px]'>
-							<rect x={0} y={0} width='0%' height={1} fill='#ffd76a' />
-							<rect x={0} y={1} width='0%' height={1} fill='#ffc934' />
+							<rect
+								x={0}
+								y={0}
+								width={`${combatants[id].xpPercentage}%`}
+								height={1}
+								fill='#ffd76a'
+							/>
+							<rect
+								x={0}
+								y={1}
+								width={`${combatants[id].xpPercentage}%`}
+								height={1}
+								fill='#ffc934'
+							/>
 						</svg>
 						<p
 							className={clsx(
