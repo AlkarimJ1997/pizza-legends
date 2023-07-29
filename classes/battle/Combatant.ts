@@ -25,10 +25,9 @@ export class Combatant {
 	}
 
 	get isActive() {
-		return (
-			this.battle.activeCombatants[this.config.belongsToTeam] ===
-			this.config.id
-		);
+		const { id, belongsToTeam } = this.config;
+
+		return this.battle.activeCombatants[belongsToTeam] === id;
 	}
 
 	update(changes: Partial<CombatantConfig> = {}) {

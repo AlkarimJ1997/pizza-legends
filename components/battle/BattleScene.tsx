@@ -26,13 +26,14 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 					alt='Trainer'
 					className='top-[42px] right-[-1px]'
 				/>
-				{Object.entries(combatants).map(([id, { config }]) => (
+				{combatants.map(({ config, hpPercentage, xpPercentage, isActive }) => (
 					<div
-						key={id}
+						key={config.id}
 						className={clsx(
 							'combatant-plate absolute w-[67px] h-[14px] scale-[2]',
 							config.belongsToTeam === TEAMS.PLAYER && 'top-[70px] left-[46px]',
-							config.belongsToTeam === TEAMS.ENEMY && 'top-[28px] right-[77px]'
+							config.belongsToTeam === TEAMS.ENEMY && 'top-[28px] right-[77px]',
+							isActive ? 'opacity-100' : 'opacity-0'
 						)}>
 						<p className='absolute top-[-8px] left-[-2px] whitespace-nowrap bg-slate-800 text-slate-100 text-[5px] px-[2px] m-0'>
 							{config.name}
@@ -62,14 +63,14 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 							<rect
 								x={0}
 								y={0}
-								width={`${combatants[id].hpPercentage}%`}
+								width={`${hpPercentage}%`}
 								height={1}
 								fill='#82ff71'
 							/>
 							<rect
 								x={0}
 								y={1}
-								width={`${combatants[id].hpPercentage}%`}
+								width={`${hpPercentage}%`}
 								height={2}
 								fill='#3ef126'
 							/>
@@ -80,14 +81,14 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 							<rect
 								x={0}
 								y={0}
-								width={`${combatants[id].xpPercentage}%`}
+								width={`${xpPercentage}%`}
 								height={1}
 								fill='#ffd76a'
 							/>
 							<rect
 								x={0}
 								y={1}
-								width={`${combatants[id].xpPercentage}%`}
+								width={`${xpPercentage}%`}
 								height={1}
 								fill='#ffc934'
 							/>

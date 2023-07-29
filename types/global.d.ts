@@ -131,6 +131,7 @@ declare global {
 
 	// Battle
 	type CombatantConfig = PizzaConfig & {
+    id: string;
 		belongsToTeam: keyof typeof TEAMS;
     hp: number;
 		maxHp: number;

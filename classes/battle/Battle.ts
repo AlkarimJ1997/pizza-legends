@@ -8,28 +8,29 @@ type ActiveCombatants = {
 };
 
 export class Battle {
-	combatants: { [key: string]: Combatant };
+	combatants: Combatant[];
 	activeCombatants: ActiveCombatants;
 	onComplete: () => void;
 
 	constructor({ onComplete }: { onComplete: () => void }) {
-		this.combatants = {
-			player1: new Combatant({
+		this.combatants = [
+			new Combatant({
 				config: {
 					...Pizzas.s001,
+					id: 'player1',
 					belongsToTeam: TEAMS.PLAYER,
 					hp: 30,
 					maxHp: 50,
 					xp: 75,
 					maxXp: 100,
 					level: 1,
-					status: null,
 				},
 				battle: this,
 			}),
-			enemy1: new Combatant({
+			new Combatant({
 				config: {
 					...Pizzas.v001,
+					id: 'enemy1',
 					belongsToTeam: TEAMS.ENEMY,
 					hp: 20,
 					maxHp: 50,
@@ -39,9 +40,10 @@ export class Battle {
 				},
 				battle: this,
 			}),
-			enemy2: new Combatant({
+			new Combatant({
 				config: {
 					...Pizzas.f001,
+					id: 'enemy2',
 					belongsToTeam: TEAMS.ENEMY,
 					hp: 25,
 					maxHp: 50,
@@ -51,7 +53,7 @@ export class Battle {
 				},
 				battle: this,
 			}),
-		};
+		];
 
 		this.activeCombatants = {
 			PLAYER: 'player1',
