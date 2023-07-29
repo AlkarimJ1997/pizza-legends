@@ -3,6 +3,8 @@ interface PlacementsLayerProps {
 }
 
 const PlacementsLayer = ({ overworld }: PlacementsLayerProps) => {
+	if (overworld.battle) return null;
+
 	return (
 		<div>
 			{overworld.placements

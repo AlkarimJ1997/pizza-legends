@@ -35,11 +35,9 @@ const RenderOverworld = () => {
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center'>
-			<div
-				className={clsx(
-					'h-gameHeight w-gameWidth scale-pixelSize',
-					overworld.battle && 'hidden'
-				)}>
+			<div className='h-gameHeight w-gameWidth scale-pixelSize' style={{
+        outline: '1px solid red'
+      }}>
 				<div
 					style={{
 						transform: `translate3d(${x}, ${y}, 0)`,

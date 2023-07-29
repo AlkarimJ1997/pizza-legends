@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { useState, useEffect, useRef } from 'react';
 
 interface BackgroundLayerProps {
@@ -48,6 +49,8 @@ const BackgroundLayer = ({ overworld }: BackgroundLayerProps) => {
 		ctx?.drawImage(mapImages.lower, 0, 0);
 		ctx?.drawImage(mapImages.upper, 0, 0);
 	}, [mapImages]);
+
+	if (overworld.battle) return null;
 
 	return (
 		<div className='absolute'>
