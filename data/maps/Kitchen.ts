@@ -1,4 +1,4 @@
-import { BEHAVIOR_TYPES, MAPS, PLACEMENT_TYPES, SKINS } from '@/utils/consts';
+import { EVENTS, MAPS, PLACEMENT_TYPES, SKINS } from '@/utils/consts';
 
 const OVERWORLD_STATE: OverworldConfig = {
 	map: MAPS.Kitchen,
@@ -14,7 +14,7 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{
 					events: [
 						{
-							type: BEHAVIOR_TYPES.MESSAGE,
+							type: EVENTS.MESSAGE,
 							text: 'You made it!',
 							faceHero: 'npcB',
 						},

@@ -1,5 +1,5 @@
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
-import { BEHAVIOR_TYPES } from '@/utils/consts';
+import { EVENTS } from '@/utils/consts';
 import Person from '@/components/Person';
 
 export class HeroPlacement extends PersonPlacement {
@@ -9,10 +9,7 @@ export class HeroPlacement extends PersonPlacement {
 		}
 
 		// Start the walk behavior
-		this.startBehavior({
-			type: BEHAVIOR_TYPES.WALK,
-			direction,
-		});
+		this.startBehavior({ type: EVENTS.WALK, direction });
 		this.updateSprite();
 	}
 

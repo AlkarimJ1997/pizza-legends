@@ -5,7 +5,7 @@ export const PLACEMENT_TYPES = {
 	NPC: 'NPC',
 } as const;
 
-export const BEHAVIOR_TYPES = {
+export const EVENTS = {
 	WALK: 'WALK',
 	STAND: 'STAND',
 	MESSAGE: 'MESSAGE',

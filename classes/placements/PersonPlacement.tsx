@@ -1,6 +1,6 @@
 import { Placement } from '@/classes/placements/Placement';
 import {
-	BEHAVIOR_TYPES,
+	EVENTS,
 	CELL_SIZE,
 	CUSTOM_EVENTS,
 	directionUpdateMap,
@@ -55,7 +55,7 @@ export abstract class PersonPlacement extends Placement {
 	startBehavior(behavior: WalkEvent | StandEvent) {
 		this.movingPixelDirection = behavior.direction;
 
-		if (behavior.type === BEHAVIOR_TYPES.WALK) {
+		if (behavior.type === EVENTS.WALK) {
 			if (!this.canMoveToNextDestination(behavior.direction)) {
 				behavior.retry && setTimeout(() => this.startBehavior(behavior), 10);
 				this.updateSprite();
@@ -68,7 +68,7 @@ export abstract class PersonPlacement extends Placement {
 			return;
 		}
 
-		if (behavior.type === BEHAVIOR_TYPES.STAND) {
+		if (behavior.type === EVENTS.STAND) {
 			setTimeout(() => {
 				emitEvent(CUSTOM_EVENTS.STAND, { whoId: this.id! });
 			}, behavior.time);
@@ -124,7 +124,7 @@ export abstract class PersonPlacement extends Placement {
 		this.y += y;
 		this.intentPosition = null;
 
-		if (!this.overworld.directionControls.direction) {
+		if (!this.overworld.directionControls?.direction) {
 			this.updateSprite();
 		}
 	}

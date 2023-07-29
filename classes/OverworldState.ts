@@ -1,12 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import {
-	BEHAVIOR_TYPES,
-	CUSTOM_EVENTS,
-	DIRECTIONS,
-	MAPS,
-} from '@/utils/consts';
+import { EVENTS, CUSTOM_EVENTS, DIRECTIONS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
@@ -61,7 +56,7 @@ export class OverworldState {
 
 		this.startGameLoop();
 		// this.startCutscene([
-		// 	{ type: BEHAVIOR_TYPES.MESSAGE, text: 'This is the very first message!' },
+		// 	{ type: EVENTS.MESSAGE, text: 'This is the very first message!' },
 		// ]);
 	}
 

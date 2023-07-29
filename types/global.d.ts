@@ -3,7 +3,7 @@ import {
 	DIRECTIONS,
 	MAPS,
 	PLACEMENT_TYPES,
-	BEHAVIOR_TYPES,
+	EVENTS,
 	SHADOW,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
@@ -53,7 +53,7 @@ declare global {
 		cameraTransformX: string;
 		cameraTransformY: string;
 		message: Message | null;
-    sceneTransition: SceneTransition | null;
+		sceneTransition: SceneTransition | null;
 	};
 
 	// Animation
@@ -77,7 +77,7 @@ declare global {
 	};
 
 	// Behavior Events
-	type BehaviorType = keyof typeof BEHAVIOR_TYPES;
+	type BehaviorType = keyof typeof EVENTS;
 
 	type WalkEvent = {
 		type: 'WALK';

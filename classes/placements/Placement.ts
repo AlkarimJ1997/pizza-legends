@@ -17,7 +17,7 @@ export abstract class Placement {
 	intentPosition: { x: number; y: number } | null = null;
 
 	// Talking
-	talking: TalkingConfig[] = [];
+	talking: StoryConfig[] = [];
 
 	constructor(properties: PlacementConfig, overworld: OverworldState) {
 		this.x = properties.x;

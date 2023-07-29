@@ -3,7 +3,7 @@ import type { OverworldState } from '@/classes/OverworldState';
 import { SceneTransition } from '@/classes/SceneTransition';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
-import { BEHAVIOR_TYPES, CUSTOM_EVENTS } from '@/utils/consts';
+import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
 
 interface OverworldEventProps {
@@ -34,7 +34,7 @@ export class OverworldEvent {
 		if (!who) return resolve();
 
 		who.startBehavior({
-			type: BEHAVIOR_TYPES.STAND,
+			type: EVENTS.STAND,
 			direction,
 			time,
 		});
@@ -63,7 +63,7 @@ export class OverworldEvent {
 		if (!who) return resolve();
 
 		who.startBehavior({
-			type: BEHAVIOR_TYPES.WALK,
+			type: EVENTS.WALK,
 			direction,
 			retry: true,
 		});
@@ -125,13 +125,13 @@ export class OverworldEvent {
 	init() {
 		return new Promise<void>(resolve => {
 			switch (this.event.type) {
-				case BEHAVIOR_TYPES.STAND:
+				case EVENTS.STAND:
 					return this.stand(resolve);
-				case BEHAVIOR_TYPES.WALK:
+				case EVENTS.WALK:
 					return this.walk(resolve);
-				case BEHAVIOR_TYPES.MESSAGE:
+				case EVENTS.MESSAGE:
 					return this.textMessage(resolve);
-				case BEHAVIOR_TYPES.MAP_CHANGE:
+				case EVENTS.MAP_CHANGE:
 					return this.changeMap(resolve);
 				default:
 					return resolve();
