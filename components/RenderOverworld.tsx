@@ -35,9 +35,12 @@ const RenderOverworld = () => {
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center'>
-			<div className='h-gameHeight w-gameWidth scale-pixelSize' style={{
-        outline: '1px solid red'
-      }}>
+			<div
+				className={clsx(
+					overworld.battle &&
+						'w-battleWidth h-battleHeight scale-battlePixelSize',
+					!overworld.battle && 'w-gameWidth h-gameHeight scale-pixelSize'
+				)}>
 				<div
 					style={{
 						transform: `translate3d(${x}, ${y}, 0)`,
@@ -45,10 +48,10 @@ const RenderOverworld = () => {
 					<BackgroundLayer overworld={overworld} />
 					<PlacementsLayer overworld={overworld} />
 				</div>
+				<BattleScene overworld={overworld} />
 				<TextMessage overworld={overworld} />
 			</div>
 			<SceneChange overworld={overworld} />
-			<BattleScene overworld={overworld} />
 		</div>
 	);
 };
