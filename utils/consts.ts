@@ -18,6 +18,10 @@ export const CUSTOM_EVENTS = {
 	STAND: 'PersonStandingComplete',
 } as const;
 
+export const STATUSES = {
+  CLUMSY: 'CLUMSY',
+} as const;
+
 export const SKINS = {
 	HERO: '/images/characters/people/hero.png',
 	ERIO: '/images/characters/people/erio.png',

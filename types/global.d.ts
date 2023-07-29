@@ -5,6 +5,7 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	SHADOW,
+  STATUSES,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -123,6 +124,18 @@ declare global {
 		delayAfter: number;
 		show: boolean;
 	};
+
+  // Battle
+  type CombatantConfig = {
+    hp: number;
+    maxHp: number;
+    xp: number;
+    level: number;
+    status: {
+      type: keyof typeof STATUSES;
+      expiresIn: number;
+    } | null;
+  }
 
 	// Custom Events
 	type CustomEventMap = {
