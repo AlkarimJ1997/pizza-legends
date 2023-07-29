@@ -5,7 +5,10 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	SHADOW,
-  STATUSES,
+	STATUSES,
+	PIZZA_TYPES,
+	PIZZA_SKINS,
+	PIZZA_ICONS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -125,17 +128,24 @@ declare global {
 		show: boolean;
 	};
 
-  // Battle
-  type CombatantConfig = {
-    hp: number;
-    maxHp: number;
-    xp: number;
-    level: number;
-    status: {
-      type: keyof typeof STATUSES;
-      expiresIn: number;
-    } | null;
-  }
+	// Battle
+	type CombatantConfig = {
+		hp: number;
+		maxHp: number;
+		xp: number;
+		level: number;
+		status: {
+			type: keyof typeof STATUSES;
+			expiresIn: number;
+		} | null;
+	};
+
+	type PizzaConfig = {
+		name: string;
+		type: keyof typeof PIZZA_TYPES;
+		src: ValueOf<typeof PIZZA_SKINS>;
+		icon: ValueOf<keyof typeof PIZZA_ICONS>;
+	};
 
 	// Custom Events
 	type CustomEventMap = {

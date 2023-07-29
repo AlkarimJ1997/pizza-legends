@@ -1,5 +1,4 @@
 import { Combatant } from '@/classes/battle/Combatant';
-import { STATUSES } from '@/utils/consts';
 
 export class Battle {
 	combatants: { [key: string]: Combatant };
@@ -7,16 +6,16 @@ export class Battle {
 
 	constructor({ onComplete }: { onComplete: () => void }) {
 		this.combatants = {
-			player1: new Combatant(
-				{
+			player1: new Combatant({
+				config: {
 					hp: 50,
 					maxHp: 50,
 					xp: 0,
 					level: 1,
 					status: null,
 				},
-				this
-			),
+				battle: this,
+			}),
 		};
 
 		this.onComplete = onComplete;

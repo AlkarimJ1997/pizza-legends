@@ -10,16 +10,12 @@ export const EVENTS = {
 	STAND: 'STAND',
 	MESSAGE: 'MESSAGE',
 	MAP_CHANGE: 'MAP_CHANGE',
-  BATTLE: 'BATTLE',
+	BATTLE: 'BATTLE',
 } as const;
 
 export const CUSTOM_EVENTS = {
 	WALK: 'PersonWalkingComplete',
 	STAND: 'PersonStandingComplete',
-} as const;
-
-export const STATUSES = {
-  CLUMSY: 'CLUMSY',
 } as const;
 
 export const SKINS = {
@@ -96,4 +92,31 @@ export const directionUpdateMap = {
 	[DIRECTIONS.RIGHT]: { x: 1, y: 0 },
 	[DIRECTIONS.UP]: { x: 0, y: -1 },
 	[DIRECTIONS.DOWN]: { x: 0, y: 1 },
+} as const;
+
+// Battle specific stuff
+export const STATUSES = {
+	CLUMSY: 'CLUMSY',
+} as const;
+
+export const PIZZA_TYPES = {
+	NORMAL: 'NORMAL',
+	SPICY: 'SPICY',
+	VEGGIE: 'VEGGIE',
+	FUNGI: 'FUNGI',
+	CHILL: 'CHILL',
+} as const;
+
+export const PIZZA_SKINS = {
+	S001: '/images/characters/pizzas/s001.png',
+	V001: '/images/characters/pizzas/v001.png',
+	F001: '/images/characters/pizzas/f001.png',
+} as const;
+
+export const PIZZA_ICONS = {
+	NORMAL: '/images/icons/normal.png',
+	SPICY: '/images/icons/spicy.png',
+	VEGGIE: '/images/icons/veggie.png',
+	FUNGI: '/images/icons/fungi.png',
+	CHILL: '/images/icons/chill.png',
 } as const;
