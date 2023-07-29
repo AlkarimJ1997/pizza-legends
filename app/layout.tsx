@@ -1,14 +1,7 @@
 import './globals.css';
-import {
-	Abel,
-	Exo_2,
-	Monda,
-	Electrolize,
-	Changa,
-	Audiowide,
-} from 'next/font/google';
+import { Exo_2, Monda, Electrolize, Changa } from 'next/font/google';
 
-const primary = Exo_2({
+const primary = Changa({
 	subsets: ['latin'],
 });
 

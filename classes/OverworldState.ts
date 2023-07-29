@@ -55,9 +55,9 @@ export class OverworldState {
 		this.bindHeroPositionCheck();
 
 		this.startGameLoop();
-		// this.startCutscene([
-		// 	{ type: EVENTS.MESSAGE, text: 'This is the very first message!' },
-		// ]);
+		this.startCutscene([
+			{ type: EVENTS.MESSAGE, text: 'This is the very first message!' },
+		]);
 	}
 
 	bindActionInput() {
