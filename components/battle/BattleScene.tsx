@@ -101,6 +101,21 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 							)}></p>
 					</div>
 				))}
+				{combatants.map(({ config, isActive }) => (
+					<img
+						key={config.id}
+						src={config.src}
+						alt={config.name}
+						className={clsx(
+							'pizza-shadow inline absolute scale-[2]',
+							config.belongsToTeam === TEAMS.PLAYER &&
+								'bottom-[73px] left-[51px]',
+							config.belongsToTeam === TEAMS.ENEMY &&
+								'top-[47px] right-[100px]',
+							isActive ? 'opacity-100' : 'opacity-0'
+						)}
+					/>
+				))}
 			</div>
 		</div>
 	);
