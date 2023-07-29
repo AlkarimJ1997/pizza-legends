@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { OverworldState } from '@/classes/OverworldState';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
-import TextMessage from '@/components/TextMessage';
-import SceneChange from '@/components/SceneChange';
+import TextMessage from '@/components/ui/TextMessage';
+import SceneChange from '@/components/ui/SceneChange';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
