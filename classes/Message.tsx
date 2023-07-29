@@ -22,19 +22,22 @@ export class Message {
 		this.overworld = overworld;
 
 		this.actionListener = new KeyPressListener('Enter', () => {
-			this.actionListener.unbind();
 			this.done();
 		});
 
 		// Revealing text
 		this.revealingText = new RevealingText({ element: this });
-    this.revealingText.init();
+		this.revealingText.init();
 	}
 
-	warpToEnd() {}
-
 	done() {
+		if (!this.revealingText.isDone) {
+			this.revealingText.warpToDone();
+			return;
+		}
+
 		this.overworld.message = null;
+		this.actionListener.unbind();
 		this.onComplete();
 	}
 }

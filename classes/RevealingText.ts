@@ -5,14 +5,31 @@ export class RevealingText {
 	speed: number;
 
 	characters: RevealingCharacter[] = [];
-  isDone: boolean = false;
+	timeout: NodeJS.Timeout | null = null;
+	isDone: boolean = false;
 
 	constructor(config: { element: Message; speed?: number }) {
 		this.element = config.element;
-		this.speed = config.speed || 70;
+		this.speed = config.speed || 60;
+	}
+
+	revealOneCharacter() {
+		const next = this.characters.find(char => !char.show);
+
+		if (!next) {
+			this.isDone = true;
+			return;
+		}
+
+		next.show = true;
+		this.timeout = setTimeout(() => {
+			this.revealOneCharacter();
+		}, next.delayAfter);
 	}
 
 	warpToDone() {
+		this.timeout && clearTimeout(this.timeout);
+		this.isDone = true;
 		this.characters.forEach(char => {
 			char.show = true;
 		});
@@ -26,5 +43,7 @@ export class RevealingText {
 				show: false,
 			});
 		});
+
+		this.revealOneCharacter();
 	}
 }
