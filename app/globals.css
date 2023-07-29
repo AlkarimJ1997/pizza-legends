@@ -23,6 +23,12 @@ body {
 		image-rendering: pixelated;
 		image-rendering: crisp-edges;
 	}
+
+	.battle {
+		background-image: url(/images/maps/StreetBattle.png);
+		background-size: cover;
+		image-rendering: pixelated;
+	}
 }
 
 @media screen and (min-width: 360px) and (min-height: 360px) {

@@ -1,6 +1,7 @@
 import { Message } from '@/classes/Message';
 import type { OverworldState } from '@/classes/OverworldState';
 import { SceneTransition } from '@/classes/SceneTransition';
+import { Battle } from '@/classes/battle/Battle';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
@@ -122,6 +123,14 @@ export class OverworldEvent {
 		this.overworld.sceneTransition.init();
 	}
 
+	battle(resolve: () => void) {
+		this.overworld.battle = new Battle({
+			onComplete: () => {
+				resolve();
+			},
+		});
+	}
+
 	init() {
 		return new Promise<void>(resolve => {
 			switch (this.event.type) {
@@ -133,6 +142,8 @@ export class OverworldEvent {
 					return this.textMessage(resolve);
 				case EVENTS.MAP_CHANGE:
 					return this.changeMap(resolve);
+				case EVENTS.BATTLE:
+					return this.battle(resolve);
 				default:
 					return resolve();
 			}

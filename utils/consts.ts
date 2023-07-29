@@ -10,6 +10,7 @@ export const EVENTS = {
 	STAND: 'STAND',
 	MESSAGE: 'MESSAGE',
 	MAP_CHANGE: 'MAP_CHANGE',
+  BATTLE: 'BATTLE',
 } as const;
 
 export const CUSTOM_EVENTS = {

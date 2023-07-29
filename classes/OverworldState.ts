@@ -11,6 +11,7 @@ import { OverworldEvent } from '@/classes/OverworldEvent';
 import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
 import { SceneTransition } from '@/classes/SceneTransition';
+import { Battle } from '@/classes/battle/Battle';
 
 export class OverworldState {
 	id: MapName;
@@ -29,6 +30,7 @@ export class OverworldState {
 
 	message: Message | null = null;
 	sceneTransition: SceneTransition | null = null;
+	battle: Battle | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -55,9 +57,7 @@ export class OverworldState {
 		this.bindHeroPositionCheck();
 
 		this.startGameLoop();
-		this.startCutscene([
-			{ type: EVENTS.MESSAGE, text: 'This is the very first message!' },
-		]);
+		this.startCutscene([{ type: EVENTS.BATTLE }]);
 	}
 
 	bindActionInput() {
@@ -149,13 +149,14 @@ export class OverworldState {
 
 	getState() {
 		return {
-      id: this.id,
+			id: this.id,
 			map: this.map,
 			placements: this.placements,
 			cameraTransformX: this.camera?.transformX ?? '',
 			cameraTransformY: this.camera?.transformY ?? '',
 			message: this.message,
 			sceneTransition: this.sceneTransition,
+			battle: this.battle,
 		};
 	}
 

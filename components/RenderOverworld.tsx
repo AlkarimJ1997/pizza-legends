@@ -7,6 +7,7 @@ import PlacementsLayer from '@/components/PlacementsLayer';
 import TextMessage from '@/components/ui/TextMessage';
 import SceneChange from '@/components/ui/SceneChange';
 import { setBackgroundColor } from '@/utils/helpers';
+import BattleScene from '@/components/battle/BattleScene';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -44,6 +45,7 @@ const RenderOverworld = () => {
 				<TextMessage overworld={overworld} />
 			</div>
 			<SceneChange overworld={overworld} />
+			<BattleScene overworld={overworld} />
 		</div>
 	);
 };

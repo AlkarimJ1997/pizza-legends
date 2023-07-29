@@ -9,6 +9,7 @@ import {
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
 import type { SceneTransition } from '@/classes/SceneTransition';
+import { Battle } from '@/classes/battle/Battle';
 
 declare global {
 	// Utilities
@@ -55,6 +56,7 @@ declare global {
 		cameraTransformY: string;
 		message: Message | null;
 		sceneTransition: SceneTransition | null;
+		battle: Battle | null;
 	};
 
 	// Animation
@@ -103,11 +105,16 @@ declare global {
 		map: MapName;
 	};
 
+	type BattleEvent = {
+		type: 'BATTLE';
+	};
+
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
 		| StandEvent
 		| TextMessageEvent
 		| MapChangeEvent
+		| BattleEvent
 	);
 
 	// Revealing Text
