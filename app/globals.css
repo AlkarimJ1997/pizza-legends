@@ -7,6 +7,11 @@
 	--game-viewport-height: 180px;
 	--game-cell-size: 16px;
 	--pixel-size: 1;
+
+	/* Battle variables */
+	--battle-viewport-width: 352px;
+	--battle-viewport-height: 198px;
+	--battle-pixel-size: 1;
 }
 
 html,
@@ -29,34 +34,43 @@ body {
 		background-size: cover;
 		image-rendering: pixelated;
 	}
+
+	.battle-shadow {
+		background: url(/images/characters/shadow.png) no-repeat no-repeat;
+	}
 }
 
 @media screen and (min-width: 360px) and (min-height: 360px) {
 	:root {
 		--pixel-size: 2;
+		--battle-pixel-size: 1.5;
 	}
 }
 
 @media screen and (min-width: 540px) and (min-height: 540px) {
 	:root {
 		--pixel-size: 3;
+		--battle-pixel-size: 2;
 	}
 }
 
 @media screen and (min-width: 720px) and (min-height: 720px) {
 	:root {
 		--pixel-size: 4;
+		--battle-pixel-size: 2.5;
 	}
 }
 
 @media screen and (min-width: 900px) and (min-height: 900px) {
 	:root {
 		--pixel-size: 5;
+		--battle-pixel-size: 3;
 	}
 }
 
 @media screen and (min-width: 1080px) and (min-height: 1080px) {
 	:root {
 		--pixel-size: 6;
+		--battle-pixel-size: 3.5;
 	}
 }

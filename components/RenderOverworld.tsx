@@ -8,6 +8,7 @@ import TextMessage from '@/components/ui/TextMessage';
 import SceneChange from '@/components/ui/SceneChange';
 import { setBackgroundColor } from '@/utils/helpers';
 import BattleScene from '@/components/battle/BattleScene';
+import clsx from 'clsx';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -33,8 +34,12 @@ const RenderOverworld = () => {
 	const { cameraTransformX: x, cameraTransformY: y } = overworld;
 
 	return (
-		<div className='absolute inset-0 flex items-center justify-center'>
-			<div className='h-gameHeight w-gameWidth scale-pixelSize'>
+		<div className='fixed inset-0 flex items-center justify-center'>
+			<div
+				className={clsx(
+					'h-gameHeight w-gameWidth scale-pixelSize',
+					overworld.battle && 'hidden'
+				)}>
 				<div
 					style={{
 						transform: `translate3d(${x}, ${y}, 0)`,

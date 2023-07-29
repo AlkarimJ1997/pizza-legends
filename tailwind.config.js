@@ -9,12 +9,15 @@ module.exports = {
 		extend: {
 			width: {
 				gameWidth: 'var(--game-viewport-width)',
+        battleWidth: 'var(--battle-viewport-width)',
 			},
 			height: {
 				gameHeight: 'var(--game-viewport-height)',
+        battleHeight: 'var(--battle-viewport-height)',
 			},
 			scale: {
 				pixelSize: 'var(--pixel-size)',
+        battlePixelSize: 'var(--battle-pixel-size)',
 			},
 			animation: {
 				'fade-in': 'fade-in 0.5s forwards',

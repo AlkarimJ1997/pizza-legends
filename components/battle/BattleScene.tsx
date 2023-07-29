@@ -1,4 +1,5 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
+import BattleImage from '@/components/battle/BattleImage';
 
 interface BattleSceneProps {
 	overworld: OverworldChanges;
@@ -8,21 +9,17 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 	if (!overworld.battle) return null;
 
 	return (
-		<div className='fixed inset-0 battle'>
-			<div className='Battle_hero'>
-				<Image
+		<div className='fixed inset-0 grid place-items-center'>
+			<div className='battle w-battleWidth h-battleHeight scale-battlePixelSize'>
+				<BattleImage
 					src='/images/characters/people/hero.png'
 					alt='Hero'
-					width={128}
-					height={128}
+					className='bottom-[57px] left-[1px] [&>img]:-translate-y-16'
 				/>
-			</div>
-			<div className='Battle_trainer'>
-				<Image
+				<BattleImage
 					src='/images/characters/people/npc3.png'
 					alt='Trainer'
-					width={128}
-					height={128}
+					className='top-[42px] right-[-1px]'
 				/>
 			</div>
 		</div>
