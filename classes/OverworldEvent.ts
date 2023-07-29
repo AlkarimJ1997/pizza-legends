@@ -1,5 +1,6 @@
 import { Message } from '@/classes/Message';
 import type { OverworldState } from '@/classes/OverworldState';
+import { SceneTransition } from '@/classes/SceneTransition';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { BEHAVIOR_TYPES, CUSTOM_EVENTS } from '@/utils/consts';
@@ -106,10 +107,19 @@ export class OverworldEvent {
 	changeMap(resolve: () => void) {
 		const { map } = this.event as MapChangeEvent;
 
-		this.overworld.id = map;
-		this.overworld.destroy();
-		this.overworld.start();
-		resolve();
+		this.overworld.sceneTransition = new SceneTransition({
+			overworld: this.overworld,
+			callback: () => {
+				this.overworld.id = map;
+				this.overworld.destroy();
+				this.overworld.start();
+				resolve();
+
+				this.overworld.sceneTransition?.fadeOut();
+			},
+		});
+
+		this.overworld.sceneTransition.init();
 	}
 
 	init() {

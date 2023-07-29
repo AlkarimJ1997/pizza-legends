@@ -5,6 +5,7 @@ import { OverworldState } from '@/classes/OverworldState';
 import BackgroundLayer from '@/components/BackgroundLayer';
 import PlacementsLayer from '@/components/PlacementsLayer';
 import TextMessage from '@/components/TextMessage';
+import SceneChange from '@/components/SceneChange';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -12,7 +13,7 @@ const RenderOverworld = () => {
 	useEffect(() => {
 		// Create and subscribe to overworld state changes
 		const overworldState = new OverworldState(
-			'Kitchen',
+			'DemoRoom',
 			(newState: OverworldChanges) => {
 				setOverworld(newState);
 			}
@@ -40,6 +41,7 @@ const RenderOverworld = () => {
 				</div>
 				<TextMessage overworld={overworld} />
 			</div>
+			<SceneChange overworld={overworld} />
 		</div>
 	);
 };

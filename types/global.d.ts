@@ -8,6 +8,7 @@ import {
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
+import type { SceneTransition } from '@/classes/SceneTransition';
 
 declare global {
 	// Utilities
@@ -52,6 +53,7 @@ declare global {
 		cameraTransformX: string;
 		cameraTransformY: string;
 		message: Message | null;
+    sceneTransition: SceneTransition | null;
 	};
 
 	// Animation
