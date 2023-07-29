@@ -99,6 +99,11 @@ export const STATUSES = {
 	CLUMSY: 'CLUMSY',
 } as const;
 
+export const TEAMS = {
+  PLAYER: 'PLAYER',
+  ENEMY: 'ENEMY',
+} as const;
+
 export const PIZZA_TYPES = {
 	NORMAL: 'NORMAL',
 	SPICY: 'SPICY',

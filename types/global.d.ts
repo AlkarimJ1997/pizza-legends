@@ -9,6 +9,7 @@ import {
 	PIZZA_TYPES,
 	PIZZA_SKINS,
 	PIZZA_ICONS,
+  TEAMS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -129,12 +130,13 @@ declare global {
 	};
 
 	// Battle
-	type CombatantConfig = {
-		hp: number;
+	type CombatantConfig = PizzaConfig & {
+		belongsToTeam: keyof typeof TEAMS;
+    hp: number;
 		maxHp: number;
 		xp: number;
 		level: number;
-		status: {
+		status?: {
 			type: keyof typeof STATUSES;
 			expiresIn: number;
 		} | null;
