@@ -15,6 +15,7 @@ export const EVENTS = {
 
 export const BATTLE_EVENTS = {
   SUBMISSION_MENU: 'SUBMISSION_MENU',
+  STATE_CHANGE: 'STATE_CHANGE',
 } as const;
 
 export const CUSTOM_EVENTS = {

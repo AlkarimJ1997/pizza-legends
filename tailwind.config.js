@@ -9,19 +9,20 @@ module.exports = {
 		extend: {
 			width: {
 				gameWidth: 'var(--game-viewport-width)',
-        battleWidth: 'var(--battle-viewport-width)',
+				battleWidth: 'var(--battle-viewport-width)',
 			},
 			height: {
 				gameHeight: 'var(--game-viewport-height)',
-        battleHeight: 'var(--battle-viewport-height)',
+				battleHeight: 'var(--battle-viewport-height)',
 			},
 			scale: {
 				pixelSize: 'var(--pixel-size)',
-        battlePixelSize: 'var(--battle-pixel-size)',
+				battlePixelSize: 'var(--battle-pixel-size)',
 			},
 			animation: {
 				'fade-in': 'fade-in 0.5s forwards',
 				'fade-out': 'fade-out 0.5s forwards',
+				blink: 'blink 0.3s steps(2, start) infinite',
 			},
 			keyframes: {
 				'fade-in': {
@@ -31,6 +32,9 @@ module.exports = {
 				'fade-out': {
 					from: { opacity: 1 },
 					to: { opacity: 0 },
+				},
+				blink: {
+					to: { visibility: 'hidden' },
 				},
 			},
 		},

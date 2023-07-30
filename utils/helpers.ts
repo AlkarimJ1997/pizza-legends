@@ -34,3 +34,9 @@ export const oppositeDirection = (direction: Direction) => {
 export const setBackgroundColor = (mapId: MapName) => {
 	document.body.style.backgroundColor = BG_COLORS[mapId];
 };
+
+export const wait = (ms: number) => {
+	return new Promise<void>(resolve => {
+		setTimeout(() => resolve(), ms);
+	});
+};

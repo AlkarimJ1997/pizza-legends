@@ -165,16 +165,26 @@ declare global {
 		target: Combatant;
 	};
 
+	type BattleMessageEvent = TextMessageEvent & {
+		submission?: Submission;
+		caster?: Combatant;
+	};
+
 	type SubmissionMenuEvent = {
 		type: 'SUBMISSION_MENU';
 		caster: Combatant;
 		target: Combatant;
 	};
 
-	type BattleAction = (TextMessageEvent | SubmissionMenuEvent) & {
-		submission?: Submission;
-		caster?: Combatant;
-	};
+	type StateChangeEvent = {
+		type: 'STATE_CHANGE';
+		damage: number;
+	} & { submission?: Submission; caster?: Combatant };
+
+	type BattleAction =
+		| BattleMessageEvent
+		| SubmissionMenuEvent
+		| StateChangeEvent;
 
 	// Custom Events
 	type CustomEventMap = {

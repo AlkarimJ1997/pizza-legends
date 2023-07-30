@@ -9,6 +9,8 @@ export class Combatant {
 	config: CombatantConfig;
 	battle: Battle;
 
+  isBlinking: boolean = false;
+
 	constructor({ config, battle }: CombatantProps) {
 		this.config = config;
 		this.battle = battle;

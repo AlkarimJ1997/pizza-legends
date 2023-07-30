@@ -100,7 +100,7 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 						)}></p>
 				</div>
 			))}
-			{combatants.map(({ config, isActive }) => (
+			{combatants.map(({ config, isActive, isBlinking }) => (
 				<img
 					key={config.id}
 					src={config.src}
@@ -110,7 +110,8 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 						config.belongsToTeam === TEAMS.PLAYER &&
 							'bottom-[73px] left-[51px]',
 						config.belongsToTeam === TEAMS.ENEMY && 'top-[47px] right-[100px]',
-						isActive ? 'opacity-100' : 'opacity-0'
+						isActive ? 'opacity-100' : 'opacity-0',
+						isBlinking && 'animate-blink'
 					)}
 				/>
 			))}
