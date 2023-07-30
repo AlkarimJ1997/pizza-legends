@@ -34,11 +34,7 @@ export const oliveOil: MoveConfig = {
 	name: 'Olive Oil',
 	success: [
 		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
-		{
-			type: BATTLE_EVENTS.ANIMATION,
-			animation: ANIMATIONS.GLOB,
-			color: '#2A2A2A',
-		},
+		{ type: BATTLE_EVENTS.ANIMATION, animation: ANIMATIONS.GLOB },
 		{
 			type: BATTLE_EVENTS.STATE_CHANGE,
 			status: {
