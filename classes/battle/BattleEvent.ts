@@ -3,9 +3,7 @@ import { Message } from '@/classes/Message';
 import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
 
-type ResolveFn = (
-	value: void | Submission | PromiseLike<void | Submission>
-) => void;
+type ResolveFn = (value: void | Submission) => void;
 
 export class BattleEvent {
 	event: BattleAction;
