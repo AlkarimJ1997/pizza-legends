@@ -1,4 +1,5 @@
 import { Battle } from '@/classes/battle/Battle';
+import { ANIMATIONS } from '@/utils/consts';
 
 interface CombatantProps {
 	config: CombatantConfig;
@@ -10,6 +11,7 @@ export class Combatant {
 	battle: Battle;
 
   isBlinking: boolean = false;
+  animation: BattleAnimationName | null = null;
 
 	constructor({ config, battle }: CombatantProps) {
 		this.config = config;

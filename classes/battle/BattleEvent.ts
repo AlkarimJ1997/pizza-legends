@@ -3,6 +3,7 @@ import { Message } from '@/classes/Message';
 import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
 import { wait } from '@/utils/helpers';
+import Animations from '@/data/AnimationMap';
 
 type ResolveFn = (value: void | Submission) => void;
 
@@ -69,6 +70,13 @@ export class BattleEvent {
 		menu.init();
 	}
 
+	animation(resolve: ResolveFn) {
+		const { animation } = this.event as BattleAnimationEvent;
+
+		const fn = Animations[animation];
+		fn(this.event, resolve);
+	}
+
 	init(resolve: ResolveFn) {
 		switch (this.event.type) {
 			case EVENTS.MESSAGE:
@@ -77,6 +85,8 @@ export class BattleEvent {
 				return this.submissionMenu(resolve);
 			case BATTLE_EVENTS.STATE_CHANGE:
 				return this.stateChange(resolve);
+			case BATTLE_EVENTS.ANIMATION:
+				return this.animation(resolve);
 			default:
 				return resolve();
 		}

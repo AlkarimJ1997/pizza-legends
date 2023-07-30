@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import BattleImage from '@/components/battle/BattleImage';
-import { STATUSES, TEAMS } from '@/utils/consts';
+import { ANIMATIONS, STATUSES, TEAMS } from '@/utils/consts';
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -12,6 +12,12 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 	if (!overworld.battle) return null;
 
 	const { combatants } = overworld.battle;
+	const ClassMap = {
+		[ANIMATIONS.SPIN]: {
+			[TEAMS.PLAYER]: 'animate-spin-right',
+			[TEAMS.ENEMY]: 'animate-spin-left',
+		},
+	};
 
 	return (
 		<div className='battle w-battleWidth h-battleHeight'>
@@ -100,7 +106,7 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 						)}></p>
 				</div>
 			))}
-			{combatants.map(({ config, isActive, isBlinking }) => (
+			{combatants.map(({ config, isActive, isBlinking, animation }) => (
 				<img
 					key={config.id}
 					src={config.src}
@@ -111,7 +117,8 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 							'bottom-[73px] left-[51px]',
 						config.belongsToTeam === TEAMS.ENEMY && 'top-[47px] right-[100px]',
 						isActive ? 'opacity-100' : 'opacity-0',
-						isBlinking && 'animate-blink'
+						isBlinking && 'animate-blink',
+						animation && ClassMap[animation][config.belongsToTeam]
 					)}
 				/>
 			))}

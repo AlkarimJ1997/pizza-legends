@@ -14,7 +14,7 @@ export abstract class PersonPlacement extends Placement {
 	skin: Skin;
 
 	animations: AnimationMap;
-	currentAnimation: AnimationName;
+	currentAnimation: WalkAnimationName;
 	currentAnimationFrame: number;
 	animationFrameLimit: number;
 	animationFrameProgress: number;
@@ -129,7 +129,7 @@ export abstract class PersonPlacement extends Placement {
 		}
 	}
 
-	setAnimation(key: AnimationName) {
+	setAnimation(key: WalkAnimationName) {
 		if (this.currentAnimation === key) return;
 
 		this.currentAnimation = key;
@@ -141,11 +141,11 @@ export abstract class PersonPlacement extends Placement {
 		const dir = this.movingPixelDirection.toLowerCase();
 
 		if (this.movingPixelsRemaining > 0) {
-			this.setAnimation(`walk-${dir}` as AnimationName);
+			this.setAnimation(`walk-${dir}` as WalkAnimationName);
 			return;
 		}
 
-		this.setAnimation(`idle-${dir}` as AnimationName);
+		this.setAnimation(`idle-${dir}` as WalkAnimationName);
 	}
 
 	updateIntentPosition(direction: Direction) {

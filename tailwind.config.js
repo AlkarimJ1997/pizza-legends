@@ -23,6 +23,8 @@ module.exports = {
 				'fade-in': 'fade-in 0.5s forwards',
 				'fade-out': 'fade-out 0.5s forwards',
 				blink: 'blink 0.3s steps(2, start) infinite',
+				'spin-right': 'spin-right 0.8s',
+				'spin-left': 'spin-left 0.8s',
 			},
 			keyframes: {
 				'fade-in': {
@@ -35,6 +37,20 @@ module.exports = {
 				},
 				blink: {
 					to: { visibility: 'hidden' },
+				},
+				'spin-right': {
+					'0%': { transform: 'translate3d(0, 0, 0) rotate(0deg) scale(2)' },
+					'25%': {
+						transform: 'translate3d(135px, -30px, 0) rotate(45deg) scale(2)',
+					},
+					'100%': { transform: 'translate3d(0, 0, 0) scale(2)' },
+				},
+				'spin-left': {
+					'0%': { transform: 'translate3d(0, 0, 0) rotate(0deg) scale(2)' },
+					'25%': {
+						transform: 'translate3d(-100%, 25%, 0) rotate(45deg) scale(2)',
+					},
+					'100%': { transform: 'translate3d(0, 0, 0) scale(2)' },
 				},
 			},
 		},

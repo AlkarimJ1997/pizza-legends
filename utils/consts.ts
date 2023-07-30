@@ -14,8 +14,13 @@ export const EVENTS = {
 } as const;
 
 export const BATTLE_EVENTS = {
-  SUBMISSION_MENU: 'SUBMISSION_MENU',
-  STATE_CHANGE: 'STATE_CHANGE',
+	SUBMISSION_MENU: 'SUBMISSION_MENU',
+	STATE_CHANGE: 'STATE_CHANGE',
+	ANIMATION: 'ANIMATION',
+} as const;
+
+export const ANIMATIONS = {
+	SPIN: 'SPIN',
 } as const;
 
 export const CUSTOM_EVENTS = {
@@ -102,12 +107,12 @@ export const directionUpdateMap = {
 // Battle specific stuff
 export const STATUSES = {
 	CLUMSY: 'CLUMSY',
-  SAUCY: 'SAUCY',
+	SAUCY: 'SAUCY',
 } as const;
 
 export const TEAMS = {
-  PLAYER: 'PLAYER',
-  ENEMY: 'ENEMY',
+	PLAYER: 'PLAYER',
+	ENEMY: 'ENEMY',
 } as const;
 
 export const PIZZA_TYPES = {

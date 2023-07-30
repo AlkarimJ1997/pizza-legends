@@ -10,6 +10,7 @@ import {
 	PIZZA_SKINS,
 	PIZZA_ICONS,
 	TEAMS,
+	ANIMATIONS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -67,7 +68,7 @@ declare global {
 	};
 
 	// Animation
-	type AnimationName =
+	type WalkAnimationName =
 		| 'idle-up'
 		| 'idle-down'
 		| 'idle-left'
@@ -78,7 +79,7 @@ declare global {
 		| 'walk-right';
 
 	type AnimationMap = {
-		[key in AnimationName]: [number, number][];
+		[key in WalkAnimationName]: [number, number][];
 	};
 
 	// Story Flag events (Talking or Cutscene Spaces)
@@ -181,10 +182,17 @@ declare global {
 		damage: number;
 	} & { submission?: Submission; caster?: Combatant };
 
+	type BattleAnimationName = keyof typeof ANIMATIONS;
+	type BattleAnimationEvent = {
+		type: 'ANIMATION';
+		animation: BattleAnimationName;
+	} & { submission?: Submission; caster?: Combatant };
+
 	type BattleAction =
 		| BattleMessageEvent
 		| SubmissionMenuEvent
-		| StateChangeEvent;
+		| StateChangeEvent
+		| BattleAnimationEvent;
 
 	// Custom Events
 	type CustomEventMap = {
