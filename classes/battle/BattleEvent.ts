@@ -32,25 +32,31 @@ export class BattleEvent {
 	}
 
 	async stateChange(resolve: ResolveFn) {
-		const { damage, caster, submission } = this.event as StateChangeEvent;
+		const event = this.event as StateChangeEvent;
 
-		if (!submission) return resolve();
+		if (!event.submission) return resolve();
 
-		if (damage) {
+		if (event.damage) {
 			// Modify the target's health
-			submission.target.update({
-				hp: submission.target.config.hp - damage,
+			event.submission.target.update({
+				hp: event.submission.target.config.hp - event.damage,
 			});
 
 			// Start blinking
-			submission.target.isBlinking = true;
+			event.submission.target.isBlinking = true;
 		}
 
-		// Wait a little bit for the animation to play
+		if (event.recovery) {
+			const who = event.onCaster ? event.caster : event.submission.target;
+
+			who?.update({
+				hp: Math.min(who.config.hp + event.recovery, who.config.maxHp),
+			});
+		}
 
 		// Stop blinking
 		await wait(600);
-		submission.target.isBlinking = false;
+		event.submission.target.isBlinking = false;
 
 		// Resolve
 		resolve();

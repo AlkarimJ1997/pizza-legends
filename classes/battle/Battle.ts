@@ -1,5 +1,5 @@
 import { Combatant } from '@/classes/battle/Combatant';
-import { TEAMS } from '@/utils/consts';
+import { STATUSES, TEAMS } from '@/utils/consts';
 import Pizzas from '@/data/PizzaMap';
 import { TurnCycle } from '@/classes/battle/TurnCycle';
 import { BattleEvent } from '@/classes/battle/BattleEvent';
@@ -35,6 +35,10 @@ export class Battle {
 					xp: 75,
 					maxXp: 100,
 					level: 1,
+					status: {
+						type: STATUSES.SAUCY,
+						expiresIn: 1,
+					},
 				},
 				battle: this,
 			}),

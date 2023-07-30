@@ -179,7 +179,9 @@ declare global {
 
 	type StateChangeEvent = {
 		type: 'STATE_CHANGE';
-		damage: number;
+		damage?: number;
+    recovery?: number;
+    onCaster?: boolean;
 	} & { submission?: Submission; caster?: Combatant };
 
 	type BattleAnimationName = keyof typeof ANIMATIONS;

@@ -103,7 +103,9 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 							'absolute text-[5px] left-[47px] bottom-[-3px] px-[2px] bg-black/80 text-slate-100 m-0',
 							config.status?.type === STATUSES.CLUMSY && 'bg-[#582A79]',
 							config.status?.type === STATUSES.SAUCY && 'text-red-400'
-						)}></p>
+						)}>
+						{config.status?.type}
+					</p>
 				</div>
 			))}
 			{combatants.map(({ config, isActive, isBlinking, animation }) => (

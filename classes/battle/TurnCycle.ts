@@ -54,6 +54,23 @@ export class TurnCycle {
 			await this.onNewEvent(eventConfig);
 		}
 
+		// Check for post events (i.e. status effects)
+		const postEvents = caster.getPostEvents();
+
+		for (const event of postEvents) {
+			const eventConfig = {
+				...event,
+				submission,
+				caster,
+			};
+
+			await this.onNewEvent(eventConfig);
+		}
+
+		// Check for status expiration
+		const expiredEvent = caster.decrementStatus();
+		expiredEvent && (await this.onNewEvent(expiredEvent));
+
 		this.currentTeam = this.targetTeam;
 		this.turn();
 	}
