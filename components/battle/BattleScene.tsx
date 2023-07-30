@@ -33,11 +33,7 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 				/>
 			))}
 			{combatants.map(combatant => (
-				<Pizza
-					key={combatant.config.id}
-					combatant={combatant}
-					team={combatant.config.belongsToTeam}
-				/>
+				<Pizza key={combatant.config.id} combatant={combatant} />
 			))}
 		</div>
 	);

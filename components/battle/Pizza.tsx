@@ -5,11 +5,11 @@ import clsx from 'clsx';
 
 interface PizzaProps {
 	combatant: Combatant;
-	team: keyof typeof TEAMS;
 }
 
-const Pizza = ({ combatant, team }: PizzaProps) => {
+const Pizza = ({ combatant }: PizzaProps) => {
 	const { config, isActive, isBlinking, animateSpin, animateGlob } = combatant;
+	const team = config.belongsToTeam;
 
 	return (
 		<div>
