@@ -3,6 +3,10 @@ import { Message } from '@/classes/Message';
 import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
 
+type ResolveFn = (
+	value: void | Submission | PromiseLike<void | Submission>
+) => void;
+
 export class BattleEvent {
 	event: BattleAction;
 	battle: Battle;
@@ -12,7 +16,7 @@ export class BattleEvent {
 		this.battle = battle;
 	}
 
-	textMessage(resolve: any) {
+	textMessage(resolve: ResolveFn) {
 		const { text } = this.event as TextMessageEvent;
 
 		this.battle.overworld.message = new Message({
@@ -22,13 +26,13 @@ export class BattleEvent {
 		});
 	}
 
-	submissionMenu(resolve: any) {
+	submissionMenu(resolve: ResolveFn) {
 		const { caster, target } = this.event as SubmissionEvent;
 
 		const menu = new SubmissionMenu({
 			caster,
 			target,
-			onComplete: submission => {
+			onComplete: (submission: Submission) => {
 				resolve(submission);
 			},
 		});
@@ -36,7 +40,7 @@ export class BattleEvent {
 		menu.init();
 	}
 
-	init(resolve: any) {
+	init(resolve: ResolveFn) {
 		switch (this.event.type) {
 			case EVENTS.MESSAGE:
 				return this.textMessage(resolve);
