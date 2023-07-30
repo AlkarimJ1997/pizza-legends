@@ -1,6 +1,8 @@
 import { TEAMS, STATUSES } from '@/utils/consts';
 import Image from 'next/image';
 import clsx from 'clsx';
+import BarSvg from '@/assets/BarSvg';
+import StatusIndicator from '@/components/battle/Status';
 
 interface BattleHudProps {
 	config: CombatantConfig;
@@ -42,26 +44,21 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 				height={30}
 				className='absolute top-[-2px] left-[3px] w-[16px] h-[16px]'
 			/>
-			<svg
+			<BarSvg
+				data={hp}
 				viewBox='0 0 26 3'
-				className='absolute w-[26.5px] h-[3px] top-[4px] left-[19.5px] [&>rect]:transition-all [&>rect]:duration-200'>
-				<rect x={0} y={0} width={`${hp}%`} height={1} fill='#82ff71' />
-				<rect x={0} y={1} width={`${hp}%`} height={2} fill='#3ef126' />
-			</svg>
-			<svg
+				primaryFill='#82ff71'
+				secondaryFill='#3ef126'
+				className='h-[3px] top-[4px]'
+			/>
+			<BarSvg
+				data={xp}
 				viewBox='0 0 26 2'
-				className='absolute w-[26px] h-[2px] top-[8px] left-[20px] [&>rect]:transition-all [&>rect]:duration-200'>
-				<rect x={0} y={0} width={`${xp}%`} height={1} fill='#ffd76a' />
-				<rect x={0} y={1} width={`${xp}%`} height={1} fill='#ffc934' />
-			</svg>
-			<p
-				className={clsx(
-					'absolute text-[5px] left-[47px] bottom-[-3px] px-[2px] bg-black/80 text-slate-100 m-0',
-					config.status?.type === STATUSES.CLUMSY && 'bg-[#582A79]',
-					config.status?.type === STATUSES.SAUCY && 'text-red-400'
-				)}>
-				{config.status?.type}
-			</p>
+				primaryFill='#ffd76a'
+				secondaryFill='#ffc934'
+				className='h-[2px] top-[8px]'
+			/>
+			{config.status && <StatusIndicator status={config.status} />}
 		</div>
 	);
 };
