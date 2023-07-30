@@ -23,17 +23,17 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 				alt='Trainer'
 				className='top-[42px] right-[-1px]'
 			/>
-			{combatants.map(({ config, hpPercentage, xpPercentage, isActive }) => (
-				<BattleHud
-					key={config.id}
-					config={config}
-					isActive={isActive}
-					hp={hpPercentage}
-					xp={xpPercentage}
-				/>
-			))}
 			{combatants.map(combatant => (
-				<Pizza key={combatant.config.id} combatant={combatant} />
+				<>
+					<BattleHud
+						key={combatant.config.id}
+						config={combatant.config}
+						isActive={combatant.isActive}
+						hp={combatant.hpPercentage}
+						xp={combatant.xpPercentage}
+					/>
+					<Pizza key={combatant.config.id} combatant={combatant} />
+				</>
 			))}
 		</div>
 	);
