@@ -2,7 +2,7 @@ import { TEAMS, STATUSES } from '@/utils/consts';
 import Image from 'next/image';
 import clsx from 'clsx';
 import BarSvg from '@/assets/BarSvg';
-import StatusIndicator from '@/components/battle/Status';
+import StatusIndicator from '@/components/battle/StatusIndicator';
 
 interface BattleHudProps {
 	config: CombatantConfig;
