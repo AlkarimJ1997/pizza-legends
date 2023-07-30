@@ -146,6 +146,7 @@ declare global {
 			type: keyof typeof STATUSES;
 			expiresIn: number;
 		} | null;
+    isPlayerControlled?: boolean;
 	};
 
 	type PizzaConfig = {

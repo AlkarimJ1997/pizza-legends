@@ -76,10 +76,10 @@ export class TurnCycle {
 	}
 
 	async init() {
-		await this.onNewEvent({
-			type: EVENTS.MESSAGE,
-			text: 'Trainer wants to battle!',
-		});
+		// await this.onNewEvent({
+		// 	type: EVENTS.MESSAGE,
+		// 	text: 'Trainer wants to battle!',
+		// });
 
 		this.turn();
 	}

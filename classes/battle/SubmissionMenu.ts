@@ -18,6 +18,17 @@ export class SubmissionMenu {
 		this.onComplete = onComplete;
 	}
 
+	getPages() {
+		return {
+			root: [
+        {
+          label: 'Attack',
+        }
+      ],
+			attacks: [],
+		};
+	}
+
 	decide() {
 		this.onComplete({
 			move: Moves[this.caster.config.moves[0]],
@@ -25,7 +36,14 @@ export class SubmissionMenu {
 		});
 	}
 
+	showMenu() {}
+
 	init() {
+		if (this.caster.config.isPlayerControlled) {
+			this.showMenu();
+			return;
+		}
+
 		this.decide();
 	}
 }
