@@ -25,6 +25,8 @@ module.exports = {
 				blink: 'blink 0.3s steps(2, start) infinite',
 				'spin-right': 'spin-right 0.8s',
 				'spin-left': 'spin-left 0.8s',
+				'glob-right': 'glob-right 1s forwards',
+				'glob-left': 'glob-left 1s forwards',
 			},
 			keyframes: {
 				'fade-in': {
@@ -51,6 +53,36 @@ module.exports = {
 						transform: 'translate3d(-100%, 25%, 0) rotate(45deg) scale(2)',
 					},
 					'100%': { transform: 'translate3d(0, 0, 0) scale(2)' },
+				},
+				'glob-right': {
+					'0%': { transform: 'translate3d(0, 0, 0) scale(0.5)', opacity: 1 },
+					'50%': {
+						transform: 'translate3d(10px, -80px, 0) scale(1)',
+						opacity: 1,
+					},
+					'80%': {
+						transform: 'translate3d(149px, -47px, 0) scale(1)',
+						opacity: 1,
+					},
+					'100%': {
+						transform: 'translate3d(149px, -47px, 0) scale(3)',
+						opacity: 0,
+					},
+				},
+				'glob-left': {
+					'0%': { transform: 'translate3d(0, 0, 0) scale(0.5)', opacity: 1 },
+					'50%': {
+						transform: 'translate3d(-10px, -50px, 0) scale(1)',
+						opacity: 1,
+					},
+					'80%': {
+						transform: 'translate3d(-174px, 47px, 0) scale(1)',
+						opacity: 1,
+					},
+					'100%': {
+						transform: 'translate3d(-174px, 47px, 0) scale(3)',
+						opacity: 0,
+					},
 				},
 			},
 		},

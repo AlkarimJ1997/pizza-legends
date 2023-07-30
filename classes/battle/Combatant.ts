@@ -1,5 +1,6 @@
 import { Battle } from '@/classes/battle/Battle';
 import { ANIMATIONS, BATTLE_EVENTS, EVENTS, STATUSES } from '@/utils/consts';
+import { randomFromArray } from '@/utils/helpers';
 
 interface CombatantProps {
 	config: CombatantConfig;
@@ -11,7 +12,10 @@ export class Combatant {
 	battle: Battle;
 
 	isBlinking: boolean = false;
-	animation: BattleAnimationName | null = null;
+  
+  // Animation variables
+	animateSpin: boolean = false;
+  animateGlob: boolean = false;
 
 	constructor({ config, battle }: CombatantProps) {
 		this.config = config;
@@ -43,6 +47,18 @@ export class Combatant {
 		}
 
 		return [];
+	}
+
+	getReplacedEvents(events: BattleAction[]) {
+		const fail = randomFromArray([true, false, false]);
+
+		if (this.config.status?.type === STATUSES.CLUMSY && fail) {
+			return [
+				{ type: EVENTS.MESSAGE, text: `${this.config.name} flops over!` },
+			];
+		}
+
+		return events;
 	}
 
 	decrementStatus() {

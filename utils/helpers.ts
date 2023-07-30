@@ -40,3 +40,7 @@ export const wait = (ms: number) => {
 		setTimeout(() => resolve(), ms);
 	});
 };
+
+export const randomFromArray = <T>(arr: T[]) => {
+	return arr[Math.floor(Math.random() * arr.length)];
+};

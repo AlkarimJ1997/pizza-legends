@@ -21,6 +21,7 @@ export const BATTLE_EVENTS = {
 
 export const ANIMATIONS = {
 	SPIN: 'SPIN',
+  GLOB: 'GLOB',
 } as const;
 
 export const MOVE_TYPES = {

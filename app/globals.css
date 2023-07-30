@@ -12,6 +12,10 @@
 	--battle-viewport-width: 352px;
 	--battle-viewport-height: 198px;
 	--battle-pixel-size: 1;
+
+	/* Animation variables */
+	--glob-clr-default: #dafd2a;
+	--glob-clr: var(--glob-clr-default);
 }
 
 html,

@@ -194,6 +194,7 @@ declare global {
 	type BattleAnimationEvent = {
 		type: 'ANIMATION';
 		animation: BattleAnimationName;
+    color?: string;
 	} & { submission?: Submission; caster?: Combatant };
 
 	type BattleAction =

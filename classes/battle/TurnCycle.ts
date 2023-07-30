@@ -42,7 +42,7 @@ export class TurnCycle {
 			throw new Error('Submission not found');
 		}
 
-		const resultingEvents = submission.move.success;
+		const resultingEvents = caster.getReplacedEvents(submission.move.success);
 
 		for (const event of resultingEvents) {
 			const eventConfig = {
