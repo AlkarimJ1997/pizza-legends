@@ -13,6 +13,10 @@ export const EVENTS = {
 	BATTLE: 'BATTLE',
 } as const;
 
+export const BATTLE_EVENTS = {
+  SUBMISSION_MENU: 'SUBMISSION_MENU',
+} as const;
+
 export const CUSTOM_EVENTS = {
 	WALK: 'PersonWalkingComplete',
 	STAND: 'PersonStandingComplete',

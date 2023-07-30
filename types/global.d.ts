@@ -9,12 +9,13 @@ import {
 	PIZZA_TYPES,
 	PIZZA_SKINS,
 	PIZZA_ICONS,
-  TEAMS,
+	TEAMS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
 import type { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
+import { MoveName } from '@/data/MoveMap';
 
 declare global {
 	// Utilities
@@ -131,12 +132,12 @@ declare global {
 
 	// Battle
 	type CombatantConfig = PizzaConfig & {
-    id: string;
+		id: string;
 		belongsToTeam: keyof typeof TEAMS;
-    hp: number;
+		hp: number;
 		maxHp: number;
 		xp: number;
-    maxXp: number;
+		maxXp: number;
 		level: number;
 		status?: {
 			type: keyof typeof STATUSES;
@@ -149,15 +150,27 @@ declare global {
 		type: keyof typeof PIZZA_TYPES;
 		src: ValueOf<typeof PIZZA_SKINS>;
 		icon: ValueOf<typeof PIZZA_ICONS>;
+		moves: MoveName[];
 	};
 
-  type MoveConfig = {
-    name: string;
-    success: BehaviorEvent[];
-  }
+	type MoveConfig = {
+		name: string;
+		success: BehaviorEvent[];
+	};
 
-  // Battle Events
-  type BattleAction = TextMessageEvent;
+	// Battle Events
+	type Submission = {
+		move: MoveConfig;
+		target: Combatant;
+	};
+
+	type SubmissionEvent = {
+		type: 'SUBMISSION_MENU';
+		caster: Combatant;
+		target: Combatant;
+	};
+
+	type BattleAction = TextMessageEvent | SubmissionEvent;
 
 	// Custom Events
 	type CustomEventMap = {
