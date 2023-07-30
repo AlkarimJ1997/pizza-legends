@@ -21,10 +21,10 @@ export class SubmissionMenu {
 	getPages() {
 		return {
 			root: [
-        {
-          label: 'Attack',
-        }
-      ],
+				{
+					label: 'Attack',
+				},
+			],
 			attacks: [],
 		};
 	}
