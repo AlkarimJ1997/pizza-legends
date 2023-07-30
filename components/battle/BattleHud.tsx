@@ -58,7 +58,7 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 				secondaryFill='#ffc934'
 				className='h-[2px] top-[8px]'
 			/>
-			{config.status && <StatusIndicator status={config.status} />}
+			{config.status && <StatusIndicator status={config.status} team={team} />}
 		</div>
 	);
 };
