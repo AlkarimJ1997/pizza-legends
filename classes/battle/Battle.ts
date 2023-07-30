@@ -35,10 +35,6 @@ export class Battle {
 					xp: 75,
 					maxXp: 100,
 					level: 1,
-					status: {
-						type: STATUSES.SAUCY,
-						expiresIn: 1,
-					},
 				},
 				battle: this,
 			}),

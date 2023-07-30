@@ -1,4 +1,4 @@
-import { BATTLE_EVENTS, EVENTS } from '@/utils/consts';
+import { BATTLE_EVENTS, EVENTS, MOVE_TYPES } from '@/utils/consts';
 import { Message } from '@/classes/Message';
 import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
@@ -36,6 +36,12 @@ export class BattleEvent {
 
 		if (!event.submission) return resolve();
 
+		let who = event.onCaster ? event.caster : event.submission.target;
+
+		if (event.submission.move.targetType === MOVE_TYPES.FRIENDLY) {
+			who = event.caster;
+		}
+
 		if (event.damage) {
 			// Modify the target's health
 			event.submission.target.update({
@@ -47,11 +53,17 @@ export class BattleEvent {
 		}
 
 		if (event.recovery) {
-			const who = event.onCaster ? event.caster : event.submission.target;
-
 			who?.update({
 				hp: Math.min(who.config.hp + event.recovery, who.config.maxHp),
 			});
+		}
+
+		if (event.status) {
+			who?.update({ status: { ...event.status } });
+		}
+
+		if (event.status === null) {
+			who?.update({ status: null });
 		}
 
 		// Stop blinking

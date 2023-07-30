@@ -11,6 +11,7 @@ import {
 	PIZZA_ICONS,
 	TEAMS,
 	ANIMATIONS,
+	MOVE_TYPES,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -157,6 +158,7 @@ declare global {
 
 	type MoveConfig = {
 		name: string;
+		targetType?: keyof typeof MOVE_TYPES;
 		success: BattleAction[];
 	};
 
@@ -180,8 +182,12 @@ declare global {
 	type StateChangeEvent = {
 		type: 'STATE_CHANGE';
 		damage?: number;
-    recovery?: number;
-    onCaster?: boolean;
+		recovery?: number;
+		status?: {
+			type: keyof typeof STATUSES;
+			expiresIn: number;
+		} | null;
+		onCaster?: boolean;
 	} & { submission?: Submission; caster?: Combatant };
 
 	type BattleAnimationName = keyof typeof ANIMATIONS;

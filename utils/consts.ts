@@ -23,6 +23,10 @@ export const ANIMATIONS = {
 	SPIN: 'SPIN',
 } as const;
 
+export const MOVE_TYPES = {
+	FRIENDLY: 'FRIENDLY',
+} as const;
+
 export const CUSTOM_EVENTS = {
 	WALK: 'PersonWalkingComplete',
 	STAND: 'PersonStandingComplete',

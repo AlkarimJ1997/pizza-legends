@@ -1,9 +1,10 @@
-import { tackle } from './moves';
+import { tackle, tomatoSqueeze } from './moves';
 
-export type MoveName = 'tackle';
+export type MoveName = 'tackle' | 'tomatoSqueeze';
 
 const Moves: Record<MoveName, MoveConfig> = {
 	tackle,
+	tomatoSqueeze,
 };
 
 export default Moves;
