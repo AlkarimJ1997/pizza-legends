@@ -14,7 +14,8 @@ import {
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
 import type { SceneTransition } from '@/classes/SceneTransition';
-import { Battle } from '@/classes/battle/Battle';
+import type { Combatant } from '@/classes/battle/Combatant';
+import type { Battle } from '@/classes/battle/Battle';
 import { MoveName } from '@/data/MoveMap';
 
 declare global {
@@ -155,7 +156,7 @@ declare global {
 
 	type MoveConfig = {
 		name: string;
-		success: BehaviorEvent[];
+		success: BattleAction[];
 	};
 
 	// Battle Events
@@ -164,13 +165,16 @@ declare global {
 		target: Combatant;
 	};
 
-	type SubmissionEvent = {
+	type SubmissionMenuEvent = {
 		type: 'SUBMISSION_MENU';
 		caster: Combatant;
 		target: Combatant;
 	};
 
-	type BattleAction = TextMessageEvent | SubmissionEvent;
+	type BattleAction = (TextMessageEvent | SubmissionMenuEvent) & {
+		submission?: Submission;
+		caster?: Combatant;
+	};
 
 	// Custom Events
 	type CustomEventMap = {

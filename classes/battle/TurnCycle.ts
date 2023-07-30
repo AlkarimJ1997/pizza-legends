@@ -28,13 +28,34 @@ export class TurnCycle {
 		const targetId = this.battle.activeCombatants[this.targetTeam];
 		const target = this.battle.combatants.find(c => c.config.id === targetId);
 
+		if (!caster || !target) {
+			throw new Error('Caster or target not found');
+		}
+
 		const submission = await this.onNewEvent({
 			type: BATTLE_EVENTS.SUBMISSION_MENU,
 			caster,
 			target,
 		});
 
-		console.log(submission);
+		if (!submission) {
+			throw new Error('Submission not found');
+		}
+
+		const resultingEvents = submission.move.success;
+
+		for (const event of resultingEvents) {
+			const eventConfig = {
+				...event,
+				submission,
+				caster,
+			};
+
+			await this.onNewEvent(eventConfig);
+		}
+
+		this.currentTeam = this.targetTeam;
+		this.turn();
 	}
 
 	async init() {

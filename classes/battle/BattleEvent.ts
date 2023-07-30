@@ -15,17 +15,24 @@ export class BattleEvent {
 	}
 
 	textMessage(resolve: ResolveFn) {
-		const { text } = this.event as TextMessageEvent;
+		if (!('text' in this.event)) return resolve();
+
+		const { text, caster, submission } = this.event;
+
+		const updatedText = text
+			.replace('{CASTER}', caster?.config.name ?? '')
+			.replace('{TARGET}', submission?.target.config.name ?? '')
+			.replace('{MOVE}', submission?.move.name.toUpperCase() ?? '');
 
 		this.battle.overworld.message = new Message({
-			text,
+			text: updatedText,
 			onComplete: () => resolve(),
 			overworld: this.battle.overworld,
 		});
 	}
 
 	submissionMenu(resolve: ResolveFn) {
-		const { caster, target } = this.event as SubmissionEvent;
+		const { caster, target } = this.event as SubmissionMenuEvent;
 
 		const menu = new SubmissionMenu({
 			caster,
