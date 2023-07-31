@@ -1,8 +1,9 @@
 import { TEAMS, STATUSES } from '@/utils/consts';
 import Image from 'next/image';
 import clsx from 'clsx';
-import BarSvg from '@/assets/BarSvg';
 import StatusIndicator from '@/components/battle/StatusIndicator';
+import HealthBar from '@/components/battle/HealthBar';
+import ExperienceBar from '@/components/battle/ExperienceBar';
 
 interface BattleHudProps {
 	config: CombatantConfig;
@@ -44,20 +45,8 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 				height={30}
 				className='absolute top-[-2px] left-[3px] w-[16px] h-[16px]'
 			/>
-			<BarSvg
-				data={hp}
-				viewBox='0 0 26 3'
-				primaryFill='#82ff71'
-				secondaryFill='#3ef126'
-				className='h-[3px] top-[4px]'
-			/>
-			<BarSvg
-				data={xp}
-				viewBox='0 0 26 2'
-				primaryFill='#ffd76a'
-				secondaryFill='#ffc934'
-				className='h-[2px] top-[8px]'
-			/>
+			<HealthBar hp={hp} />
+			<ExperienceBar xp={xp} />
 			{config.status && <StatusIndicator status={config.status} team={team} />}
 		</div>
 	);
