@@ -12,6 +12,12 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 
 	const { combatants, keyboardMenu } = overworld.battle;
 
+	const setPrevFocus = (buttonEl: HTMLButtonElement | null) => {
+		if (!keyboardMenu) return;
+
+		keyboardMenu.prevFocus = buttonEl;
+	};
+
 	return (
 		<div className='battle w-battleWidth h-battleHeight'>
 			<BattleImage
@@ -25,20 +31,23 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 				className='top-[42px] right-[-1px]'
 			/>
 			{combatants.map(combatant => (
-				<>
+				<div key={combatant.config.id}>
 					<BattleHud
-						key={combatant.config.id}
 						config={combatant.config}
 						isActive={combatant.isActive}
 						hp={combatant.hpPercentage}
 						xp={combatant.xpPercentage}
 					/>
-					<Pizza key={combatant.config.id} combatant={combatant} />
-				</>
+					<Pizza combatant={combatant} />
+				</div>
 			))}
-			{/* {keyboardMenu && (
-				<Menu options={keyboardMenu.options} inBattle={!!overworld.battle} />
-			)} */}
+			{keyboardMenu && (
+				<Menu
+					options={keyboardMenu.options}
+					inBattle={!!overworld.battle}
+					setPrevFocus={setPrevFocus}
+				/>
+			)}
 		</div>
 	);
 };
