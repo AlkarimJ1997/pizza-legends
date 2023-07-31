@@ -5,6 +5,7 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	SHADOW,
+	MENU_OPTIONS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -123,6 +124,15 @@ declare global {
 		char: string;
 		delayAfter: number;
 		show: boolean;
+	};
+
+	// Keyboard Menu stuff
+	type PageOption = {
+		label: ValueOf<typeof MENU_OPTIONS>;
+		description: string;
+		disabled?: boolean;
+		handler: () => void;
+		right?: () => string;
 	};
 
 	// Custom Events

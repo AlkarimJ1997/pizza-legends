@@ -7,6 +7,7 @@ import {
 	MOVE_TYPES,
 	ANIMATIONS,
 } from '@/utils/consts';
+import type { Battle } from '@/classes/battle/Battle';
 import { MoveName } from '@/data/MoveMap';
 
 declare global {
@@ -54,6 +55,7 @@ declare global {
 		type: 'SUBMISSION_MENU';
 		caster: Combatant;
 		target: Combatant;
+    battle: Battle;
 	};
 
 	type StateChangeEvent = {

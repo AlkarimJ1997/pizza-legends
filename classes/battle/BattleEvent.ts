@@ -75,11 +75,12 @@ export class BattleEvent {
 	}
 
 	submissionMenu(resolve: ResolveFn) {
-		const { caster, target } = this.event as SubmissionMenuEvent;
+		const { caster, target, battle } = this.event as SubmissionMenuEvent;
 
 		const menu = new SubmissionMenu({
 			caster,
 			target,
+			battle,
 			onComplete: (submission: Submission) => {
 				resolve(submission);
 			},

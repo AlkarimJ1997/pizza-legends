@@ -1,6 +1,7 @@
 import BattleHud from '@/components/battle/BattleHud';
 import BattleImage from '@/components/battle/BattleImage';
 import Pizza from '@/components/battle/Pizza';
+import Menu from '@/components/ui/Menu';
 
 interface BattleSceneProps {
 	overworld: OverworldChanges;
@@ -9,7 +10,7 @@ interface BattleSceneProps {
 const BattleScene = ({ overworld }: BattleSceneProps) => {
 	if (!overworld.battle) return null;
 
-	const { combatants } = overworld.battle;
+	const { combatants, keyboardMenu } = overworld.battle;
 
 	return (
 		<div className='battle w-battleWidth h-battleHeight'>
@@ -35,6 +36,9 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 					<Pizza key={combatant.config.id} combatant={combatant} />
 				</>
 			))}
+			{/* {keyboardMenu && (
+				<Menu options={keyboardMenu.options} inBattle={!!overworld.battle} />
+			)} */}
 		</div>
 	);
 };

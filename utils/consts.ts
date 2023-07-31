@@ -141,3 +141,9 @@ export const PIZZA_ICONS = {
 	FUNGI: '/images/icons/fungi.png',
 	CHILL: '/images/icons/chill.png',
 } as const;
+
+export const MENU_OPTIONS = {
+  ATTACK: 'Attack',
+  ITEMS: 'Items',
+  SWAP: 'Swap',
+} as const;

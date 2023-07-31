@@ -56,21 +56,31 @@ body {
 @media screen and (min-width: 360px) and (min-height: 360px) {
 	:root {
 		--pixel-size: 2;
-		--battle-pixel-size: 1.5;
 	}
+
+  @media (orientation: landscape) {
+    :root {
+      --battle-pixel-size: 1.5;
+    }
+  }
 }
 
 @media screen and (min-width: 540px) and (min-height: 540px) {
 	:root {
 		--pixel-size: 3;
-		--battle-pixel-size: 2;
+    --battle-pixel-size: 2.5;
 	}
+
+  @media (orientation: landscape) {
+    :root {
+      --battle-pixel-size: 2;
+    }
+  }
 }
 
 @media screen and (min-width: 720px) and (min-height: 720px) {
 	:root {
 		--pixel-size: 4;
-		--battle-pixel-size: 2.5;
 	}
 }
 

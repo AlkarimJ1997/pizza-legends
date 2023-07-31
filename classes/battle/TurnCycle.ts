@@ -36,6 +36,7 @@ export class TurnCycle {
 			type: BATTLE_EVENTS.SUBMISSION_MENU,
 			caster,
 			target,
+			battle: this.battle,
 		});
 
 		if (!submission) {

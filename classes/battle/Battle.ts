@@ -1,9 +1,10 @@
 import { Combatant } from '@/classes/battle/Combatant';
-import { STATUSES, TEAMS } from '@/utils/consts';
-import Pizzas from '@/data/PizzaMap';
-import { TurnCycle } from '@/classes/battle/TurnCycle';
 import { BattleEvent } from '@/classes/battle/BattleEvent';
+import { TurnCycle } from '@/classes/battle/TurnCycle';
+import { KeyboardMenu } from '@/classes/KeyboardMenu';
+import { TEAMS } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
+import Pizzas from '@/data/PizzaMap';
 
 interface BattleProps {
 	onComplete: () => void;
@@ -22,6 +23,7 @@ export class Battle {
 	onComplete: () => void;
 
 	turnCycle: TurnCycle | null = null;
+	keyboardMenu: KeyboardMenu | null = null;
 
 	constructor({ overworld, onComplete }: BattleProps) {
 		this.combatants = [
@@ -35,7 +37,7 @@ export class Battle {
 					xp: 75,
 					maxXp: 100,
 					level: 1,
-          isPlayerControlled: true,
+					isPlayerControlled: true,
 				},
 				battle: this,
 			}),
