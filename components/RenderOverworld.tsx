@@ -49,8 +49,8 @@ const RenderOverworld = () => {
 					<PlacementsLayer overworld={overworld} />
 				</div>
 				<BattleScene overworld={overworld} />
-				<TextMessage overworld={overworld} />
 			</div>
+			<TextMessage overworld={overworld} />
 			<SceneChange overworld={overworld} />
 		</div>
 	);
