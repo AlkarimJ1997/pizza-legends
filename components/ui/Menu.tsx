@@ -4,17 +4,13 @@ import clsx from 'clsx';
 interface MenuProps {
 	options: PageOption[];
 	inBattle: boolean;
-	setPrevFocus: (buttonEl: HTMLButtonElement | null) => void;
 }
 
-const Menu = ({ options, inBattle = false, setPrevFocus }: MenuProps) => {
+const Menu = ({ options, inBattle = false }: MenuProps) => {
 	const [focusedIndex, setFocusedIndex] = useState<number>(0);
 
-	const handleFocus = (
-		e: React.MouseEvent<HTMLButtonElement>,
-		index: number
-	) => {
-		setFocusedIndex(index);
+	const handleFocus = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
+		setFocusedIndex(i);
 		e.currentTarget.focus();
 	};
 
@@ -28,9 +24,10 @@ const Menu = ({ options, inBattle = false, setPrevFocus }: MenuProps) => {
 				{options.map(({ label, description, disabled, handler, right }, i) => (
 					<div key={i} className='relative'>
 						<button
+							autoFocus={i === 0}
 							disabled={!!disabled}
 							onClick={handler}
-							onMouseEnter={e => handleFocus(e, i)}
+							onMouseEnter={event => handleFocus(event, i)}
 							className='flex items-center w-full text-left h-[20px] cursor-pointer p-0 pl-2 text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500'>
 							{label}
 						</button>

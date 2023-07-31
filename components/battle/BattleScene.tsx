@@ -12,12 +12,6 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 
 	const { combatants, keyboardMenu } = overworld.battle;
 
-	const setPrevFocus = (buttonEl: HTMLButtonElement | null) => {
-		if (!keyboardMenu) return;
-
-		keyboardMenu.prevFocus = buttonEl;
-	};
-
 	return (
 		<div className='battle w-battleWidth h-battleHeight'>
 			<BattleImage
@@ -42,11 +36,7 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 				</div>
 			))}
 			{keyboardMenu && (
-				<Menu
-					options={keyboardMenu.options}
-					inBattle={!!overworld.battle}
-					setPrevFocus={setPrevFocus}
-				/>
+				<Menu options={keyboardMenu.options} inBattle={!!overworld.battle} />
 			)}
 		</div>
 	);
