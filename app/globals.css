@@ -57,25 +57,13 @@ body {
 	:root {
 		--pixel-size: 2;
 	}
-
-  @media (orientation: landscape) {
-    :root {
-      --battle-pixel-size: 1.5;
-    }
-  }
 }
 
 @media screen and (min-width: 540px) and (min-height: 540px) {
 	:root {
 		--pixel-size: 3;
-    --battle-pixel-size: 2.5;
+    --battle-pixel-size: 3;
 	}
-
-  @media (orientation: landscape) {
-    :root {
-      --battle-pixel-size: 2;
-    }
-  }
 }
 
 @media screen and (min-width: 720px) and (min-height: 720px) {
