@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import useKeyPress from '@/hooks/useKeyPress';
 
@@ -9,14 +9,15 @@ interface MenuProps {
 
 const Menu = ({ options, inBattle = false }: MenuProps) => {
 	const [focusedIndex, setFocusedIndex] = useState<number>(0);
+	const focusedButtonRef = useRef<HTMLButtonElement>(null);
 
-	const handleFocus = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
-		setFocusedIndex(i);
-		e.currentTarget.focus();
-	};
+	useEffect(() => setFocusedIndex(0), [options]);
+
+	useEffect(() => {
+		focusedButtonRef.current?.focus();
+	}, [focusedIndex]);
 
 	useKeyPress('ArrowUp', () => {
-		// setFocusedIndex(prev => (prev - 1 + options.length) % options.length);
 		let prevIndex = focusedIndex;
 
 		do {
@@ -27,7 +28,6 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 	});
 
 	useKeyPress('ArrowDown', () => {
-		// setFocusedIndex(prev => (prev + 1) % options.length);
 		let nextIndex = focusedIndex;
 
 		do {
@@ -36,6 +36,11 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 
 		setFocusedIndex(nextIndex);
 	});
+
+	const handleFocus = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
+		setFocusedIndex(i);
+		e.currentTarget.focus();
+	};
 
 	return (
 		<div className='bg-slate-800 text-slate-100'>
@@ -47,7 +52,7 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 				{options.map(({ label, description, disabled, handler, right }, i) => (
 					<div key={i} className='relative'>
 						<button
-							autoFocus={i === focusedIndex}
+							ref={focusedIndex === i ? focusedButtonRef : null}
 							disabled={!!disabled}
 							onClick={handler}
 							onMouseEnter={event => handleFocus(event, i)}

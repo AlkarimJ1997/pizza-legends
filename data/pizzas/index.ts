@@ -5,7 +5,7 @@ export const s001: PizzaConfig = {
 	type: PIZZA_TYPES.SPICY,
 	src: PIZZA_SKINS.S001,
 	icon: PIZZA_ICONS.SPICY,
-	moves: ['tackle'],
+	moves: ['tackle', 'tomatoSqueeze', 'oliveOil'],
 };
 
 export const v001: PizzaConfig = {

@@ -38,10 +38,6 @@ export class BattleEvent {
 
 		let who = event.onCaster ? event.caster : event.submission.target;
 
-		if (event.submission.move.targetType === MOVE_TYPES.FRIENDLY) {
-			who = event.caster;
-		}
-
 		if (event.damage) {
 			// Modify the target's health
 			event.submission.target.update({

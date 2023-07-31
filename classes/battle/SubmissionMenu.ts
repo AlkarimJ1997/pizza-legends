@@ -2,6 +2,7 @@ import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
 import Moves from '@/data/MoveMap';
+import { MOVE_TYPES } from '@/utils/consts';
 
 type PageTree = {
 	[key: string]: PageOption[];
@@ -28,6 +29,14 @@ export class SubmissionMenu {
 	}
 
 	getPages(): PageTree {
+		const backOption = {
+			label: 'Back',
+			description: 'Return to previous page',
+			handler: () => {
+				this.battle.keyboardMenu?.setOptions(this.getPages().root);
+			},
+		};
+
 		return {
 			root: [
 				{
@@ -35,15 +44,15 @@ export class SubmissionMenu {
 					description: 'Choose an attack',
 					handler: () => {
 						// Do something when chosen...
-						console.log('Attack chosen');
+						this.battle.keyboardMenu?.setOptions(this.getPages().attacks);
 					},
 				},
 				{
 					label: 'Items',
 					description: 'Choose an item',
-          disabled: true,
 					handler: () => {
 						// Go to items page
+						this.battle.keyboardMenu?.setOptions(this.getPages().items);
 					},
 				},
 				{
@@ -54,20 +63,40 @@ export class SubmissionMenu {
 					},
 				},
 			],
-			attacks: [],
+			attacks: [
+				...this.caster.config.moves.map(move => {
+					const moveData = Moves[move];
+
+					return {
+						label: moveData.name,
+						description: moveData.description,
+						handler: () => {
+							this.menuSubmit(moveData);
+						},
+					};
+				}),
+				backOption,
+			],
+			items: [
+				// Items go here
+				backOption,
+			],
 		};
 	}
 
+	menuSubmit(move: MoveConfig, instanceId: string | null = null) {
+		const target = move.targetType === 'FRIENDLY' ? this.caster : this.target;
+
+		this.battle.keyboardMenu = null;
+		this.onComplete({ move, target });
+	}
+
 	decide() {
-		this.onComplete({
-			move: Moves[this.caster.config.moves[0]],
-			target: this.target,
-		});
+		this.menuSubmit(Moves[this.caster.config.moves[0]]);
 	}
 
 	showMenu() {
 		this.battle.keyboardMenu = new KeyboardMenu();
-		this.battle.keyboardMenu.init();
 		this.battle.keyboardMenu.setOptions(this.getPages().root);
 	}
 

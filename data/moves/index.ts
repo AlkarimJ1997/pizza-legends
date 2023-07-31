@@ -8,6 +8,7 @@ import {
 
 export const tackle: MoveConfig = {
 	name: 'Tackle',
+	description: 'Hurl yourself at your opponent!',
 	success: [
 		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
 		{ type: BATTLE_EVENTS.ANIMATION, animation: ANIMATIONS.SPIN },
@@ -17,6 +18,7 @@ export const tackle: MoveConfig = {
 
 export const tomatoSqueeze: MoveConfig = {
 	name: 'Tomato Squeeze',
+	description: 'Refresh your pizza with a squeeze of tomato juice',
 	targetType: MOVE_TYPES.FRIENDLY,
 	success: [
 		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
@@ -32,6 +34,7 @@ export const tomatoSqueeze: MoveConfig = {
 
 export const oliveOil: MoveConfig = {
 	name: 'Olive Oil',
+	description: "Throw some olive oil in your opponent's eyes!",
 	success: [
 		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
 		{ type: BATTLE_EVENTS.ANIMATION, animation: ANIMATIONS.GLOB },

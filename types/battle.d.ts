@@ -36,6 +36,7 @@ declare global {
 
 	type MoveConfig = {
 		name: string;
+    description: string;
 		targetType?: keyof typeof MOVE_TYPES;
 		success: BattleAction[];
 	};

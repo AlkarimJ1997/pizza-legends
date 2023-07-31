@@ -5,7 +5,6 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	SHADOW,
-	MENU_OPTIONS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -128,7 +127,7 @@ declare global {
 
 	// Keyboard Menu stuff
 	type PageOption = {
-		label: ValueOf<typeof MENU_OPTIONS>;
+		label: string;
 		description: string;
 		disabled?: boolean;
 		handler: () => void;
