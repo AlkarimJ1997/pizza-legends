@@ -1,9 +1,18 @@
 import './globals.css';
-import { Exo_2, Monda, Electrolize, Changa } from 'next/font/google';
+import { Electrolize, Changa, VT323 } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const primary = Changa({
-	subsets: ['latin'],
-});
+// const primary = Electrolize({
+// 	weight: ['400'],
+// 	subsets: ['latin'],
+// });
+
+// const primary = VT323({
+// 	weight: ['400'],
+// 	subsets: ['latin'],
+// });
+
+const primary = localFont({ src: '../fonts/BadComic-Regular.woff2' });
 
 export const metadata = {
 	title: 'Pizza Legends',
