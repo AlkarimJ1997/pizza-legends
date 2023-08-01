@@ -43,13 +43,13 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 	};
 
 	return (
-		<div className='bg-slate-800 text-slate-100'>
+		<div className='text-slate-100'>
 			<div
 				className={clsx(
-					'absolute border border-slate-400 bg-slate-800 text-slate-100 z-10',
-					inBattle && 'right-0 bottom-0 w-[140px]'
+					'absolute bg-slate-700 z-10',
+					inBattle && 'left-0 right-0 bottom-2 w-[140px] mx-auto'
 				)}>
-				{options.map(({ label, description, disabled, handler, right }, i) => (
+				{options.map(({ label, disabled, handler, right }, i) => (
 					<div key={i} className='relative'>
 						<button
 							ref={focusedIndex === i ? focusedButtonRef : null}
@@ -57,7 +57,7 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 							onClick={handler}
 							onMouseEnter={event => handleFocus(event, i)}
 							className={clsx(
-								'flex items-center w-full text-left h-[20px] cursor-pointer p-0 pl-2 text-[10px] focus:outline-none focus:ring-2 focus:ring-indigo-500',
+								'flex items-center w-full text-left h-[15px] cursor-pointer pl-2 text-[7px] focus:outline-none focus:ring-1 focus:ring-indigo-500',
 								disabled && 'opacity-50'
 							)}>
 							{label}
@@ -66,8 +66,8 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 					</div>
 				))}
 			</div>
-			<div className='absolute bottom-0 left-0 right-0 p-0.5 text-slate-100 bg-slate-800 border border-slate-400'>
-				<p className='text-[10px]'>{options[focusedIndex]?.description}</p>
+			<div className='absolute -bottom-5 left-0 right-0 p-0.5 bg-slate-700 border border-indigo-400 max-w-[200px] mx-auto rounded-sm'>
+				<p className='text-[7px]'>{options[focusedIndex]?.description}</p>
 			</div>
 		</div>
 	);
