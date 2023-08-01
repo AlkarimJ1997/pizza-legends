@@ -36,7 +36,7 @@ declare global {
 
 	type MoveConfig = {
 		name: string;
-    description: string;
+		description: string;
 		targetType?: keyof typeof MOVE_TYPES;
 		success: BattleAction[];
 	};
@@ -56,7 +56,7 @@ declare global {
 		type: 'SUBMISSION_MENU';
 		caster: Combatant;
 		target: Combatant;
-    battle: Battle;
+		battle: Battle;
 	};
 
 	type StateChangeEvent = {
@@ -82,6 +82,13 @@ declare global {
 		| SubmissionMenuEvent
 		| StateChangeEvent
 		| BattleAnimationEvent;
+
+	// Battle Items
+	type ItemConfig = {
+		itemId: MoveName;
+		instanceId: string;
+		team: keyof typeof TEAMS;
+	};
 }
 
 export {};

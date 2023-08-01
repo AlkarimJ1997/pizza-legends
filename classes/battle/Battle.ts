@@ -19,6 +19,7 @@ type ActiveCombatants = {
 export class Battle {
 	combatants: Combatant[];
 	activeCombatants: ActiveCombatants;
+  items: ItemConfig[];
 	overworld: OverworldState;
 	onComplete: () => void;
 
@@ -73,6 +74,10 @@ export class Battle {
 			PLAYER: 'player1',
 			ENEMY: 'enemy1',
 		};
+
+    this.items = [
+      { itemId: 'tackle', instanceId: 'p1', team: TEAMS.PLAYER },
+    ];
 
 		this.overworld = overworld;
 		this.onComplete = onComplete;

@@ -48,3 +48,14 @@ export const oliveOil: MoveConfig = {
 		{ type: EVENTS.MESSAGE, text: '{TARGET} is slipping all around!' },
 	],
 };
+
+export const item_heatingLamp: MoveConfig = {
+	name: 'Heating Lamp',
+	description: 'Warm up your pizza on the spot!',
+	targetType: MOVE_TYPES.FRIENDLY,
+	success: [
+		{ type: EVENTS.MESSAGE, text: '{CASTER} used a {MOVE}!' },
+		{ type: BATTLE_EVENTS.STATE_CHANGE, status: null },
+		{ type: EVENTS.MESSAGE, text: '{TARGET} is nice and toasty!' },
+	],
+};
