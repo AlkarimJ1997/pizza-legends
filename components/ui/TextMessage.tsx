@@ -1,3 +1,4 @@
+import SpeechBubble from '@/assets/SpeechBubble';
 import clsx from 'clsx';
 
 interface TextMessageProps {
@@ -12,30 +13,19 @@ const TextMessage = ({ overworld }: TextMessageProps) => {
 	return (
 		<div
 			className={clsx(
-				'py-1 px-2 rounded-md bg-slate-700 text-slate-100 shadow-xl border-2 border-indigo-400 absolute text-sm',
+				'p-[2px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute text-[4px] w-[120px] bottom-0 left-0 right-0 mx-auto min-h-[50px]',
 				overworld.battle && '',
 				!overworld.battle && ''
 			)}>
 			{characters.map(({ char, show }, i) => (
-				<span key={i} className={clsx(show ? 'opacity-100' : 'opacity-0')}>
+				<span
+					key={i}
+					className={clsx('select-none', show ? 'opacity-100' : 'opacity-0')}>
 					{char}
 				</span>
 			))}
-			<div
-				className={clsx(
-					'absolute bottom-1 right-2 text-2xl leading-none md:text-4xl',
-					overworld.battle && 'hidden'
-				)}>
-				{['.', '.', '.'].map((char, i) => (
-					<span
-						key={i}
-						className='animate-pulse'
-						style={{
-							animationDelay: `${i * 0.5}s`,
-						}}>
-						{char}
-					</span>
-				))}
+			<div className='absolute bottom-0.5 right-0.5 animate-pulse'>
+				<SpeechBubble />
 			</div>
 		</div>
 	);
