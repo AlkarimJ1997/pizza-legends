@@ -5,7 +5,10 @@ const useKeyPress = (key: 'ArrowUp' | 'ArrowDown', callback: () => void) => {
 		if (!key || !callback) return;
 
 		const keyHandler = (event: KeyboardEvent) => {
-			event.key === key && callback();
+			if (event.key === key) {
+				event.preventDefault();
+				callback();
+			}
 		};
 
 		document.addEventListener('keydown', keyHandler);

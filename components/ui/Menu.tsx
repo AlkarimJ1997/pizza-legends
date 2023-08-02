@@ -9,32 +9,27 @@ interface MenuProps {
 
 const Menu = ({ options, inBattle = false }: MenuProps) => {
 	const [focusedIndex, setFocusedIndex] = useState<number>(0);
-	const focusedButtonRef = useRef<HTMLButtonElement>(null);
-
-	useEffect(() => setFocusedIndex(0), [options]);
+	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
 	useEffect(() => {
-		focusedButtonRef.current?.focus();
-	}, [focusedIndex]);
+		if (buttonRefs.current.length === 0) return;
+
+		setFocusedIndex(0);
+		buttonRefs.current[0]?.focus();
+	}, [options]);
 
 	useKeyPress('ArrowUp', () => {
-		let prevIndex = focusedIndex;
+		if (focusedIndex === 0) return;
 
-		do {
-			prevIndex = (prevIndex - 1 + options.length) % options.length;
-		} while (options[prevIndex].disabled && prevIndex !== focusedIndex);
-
-		setFocusedIndex(prevIndex);
+		setFocusedIndex(idx => idx - 1);
+		buttonRefs.current[focusedIndex - 1]?.focus();
 	});
 
 	useKeyPress('ArrowDown', () => {
-		let nextIndex = focusedIndex;
+		if (focusedIndex === options.length - 1) return;
 
-		do {
-			nextIndex = (nextIndex + 1) % options.length;
-		} while (options[nextIndex].disabled && nextIndex !== focusedIndex);
-
-		setFocusedIndex(nextIndex);
+		setFocusedIndex(idx => idx + 1);
+		buttonRefs.current[focusedIndex + 1]?.focus();
 	});
 
 	const handleFocus = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
@@ -52,7 +47,7 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 				{options.map(({ label, disabled, handler, right }, i) => (
 					<div key={i} className='relative'>
 						<button
-							ref={focusedIndex === i ? focusedButtonRef : null}
+							ref={el => (buttonRefs.current[i] = el)}
 							disabled={!!disabled}
 							onClick={handler}
 							onMouseEnter={event => handleFocus(event, i)}
@@ -62,7 +57,7 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 							)}>
 							{label}
 						</button>
-						<span className='absolute top-0 bottom-0 right-0'>{right?.()}</span>
+						{/* <span className='absolute top-0 bottom-0 right-0'>{right?.()}</span> */}
 					</div>
 				))}
 			</div>
