@@ -5,7 +5,7 @@ export const s001: PizzaConfig = {
 	type: PIZZA_TYPES.SPICY,
 	src: PIZZA_SKINS.S001,
 	icon: PIZZA_ICONS.SPICY,
-	moves: ['tackle', 'tomatoSqueeze', 'oliveOil'],
+	actions: ['tackle', 'tomatoSqueeze', 'oliveOil'],
 };
 
 export const v001: PizzaConfig = {
@@ -13,7 +13,7 @@ export const v001: PizzaConfig = {
 	type: PIZZA_TYPES.VEGGIE,
 	src: PIZZA_SKINS.V001,
 	icon: PIZZA_ICONS.VEGGIE,
-	moves: ['tackle'],
+	actions: ['tackle'],
 };
 
 export const f001: PizzaConfig = {
@@ -21,5 +21,5 @@ export const f001: PizzaConfig = {
 	type: PIZZA_TYPES.FUNGI,
 	src: PIZZA_SKINS.F001,
 	icon: PIZZA_ICONS.FUNGI,
-	moves: ['tackle'],
+	actions: ['tackle'],
 };

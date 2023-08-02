@@ -1,8 +1,7 @@
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
-import Moves from '@/data/MoveMap';
-import { MOVE_TYPES } from '@/utils/consts';
+import Actions from '@/data/ActionMap';
 
 type PageTree = {
 	[key: string]: PageOption[];
@@ -64,14 +63,14 @@ export class SubmissionMenu {
 				},
 			],
 			attacks: [
-				...this.caster.config.moves.map(move => {
-					const moveData = Moves[move];
+				...this.caster.config.actions.map(action => {
+					const actionData = Actions[action];
 
 					return {
-						label: moveData.name,
-						description: moveData.description,
+						label: actionData.name,
+						description: actionData.description,
 						handler: () => {
-							this.menuSubmit(moveData);
+							this.menuSubmit(actionData);
 						},
 					};
 				}),
@@ -84,15 +83,15 @@ export class SubmissionMenu {
 		};
 	}
 
-	menuSubmit(move: MoveConfig, instanceId: string | null = null) {
-		const target = move.targetType === 'FRIENDLY' ? this.caster : this.target;
+	menuSubmit(action: ActionConfig, instanceId: string | null = null) {
+		const target = action.targetType === 'FRIENDLY' ? this.caster : this.target;
 
 		this.battle.keyboardMenu = null;
-		this.onComplete({ move, target });
+		this.onComplete({ action, target });
 	}
 
 	decide() {
-		this.menuSubmit(Moves[this.caster.config.moves[0]]);
+		this.menuSubmit(Actions[this.caster.config.actions[0]]);
 	}
 
 	showMenu() {

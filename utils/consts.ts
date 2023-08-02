@@ -24,7 +24,7 @@ export const ANIMATIONS = {
   GLOB: 'GLOB',
 } as const;
 
-export const MOVE_TYPES = {
+export const ACTION_TYPES = {
 	FRIENDLY: 'FRIENDLY',
 } as const;
 

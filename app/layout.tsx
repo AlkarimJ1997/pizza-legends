@@ -11,8 +11,8 @@ import localFont from 'next/font/local';
 
 // const primary = localFont({ src: '../fonts/BadComic-Regular.woff2' });
 
-const primary = Syne_Mono({
-	weight: ['400'],
+const primary = Ubuntu_Mono({
+  weight: ['400', '700'],
 	subsets: ['latin'],
 });
 

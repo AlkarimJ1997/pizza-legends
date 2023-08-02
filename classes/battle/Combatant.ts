@@ -1,5 +1,5 @@
 import { Battle } from '@/classes/battle/Battle';
-import { ANIMATIONS, BATTLE_EVENTS, EVENTS, STATUSES } from '@/utils/consts';
+import { BATTLE_EVENTS, EVENTS, STATUSES } from '@/utils/consts';
 import { randomFromArray } from '@/utils/helpers';
 
 interface CombatantProps {

@@ -4,11 +4,11 @@ import {
 	PIZZA_TYPES,
 	PIZZA_SKINS,
 	PIZZA_ICONS,
-	MOVE_TYPES,
+	ACTION_TYPES,
 	ANIMATIONS,
 } from '@/utils/consts';
 import type { Battle } from '@/classes/battle/Battle';
-import { MoveName } from '@/data/MoveMap';
+import { ActionName } from '@/data/ActionMap';
 
 declare global {
 	type CombatantConfig = PizzaConfig & {
@@ -31,19 +31,19 @@ declare global {
 		type: keyof typeof PIZZA_TYPES;
 		src: ValueOf<typeof PIZZA_SKINS>;
 		icon: ValueOf<typeof PIZZA_ICONS>;
-		moves: MoveName[];
+		actions: ActionName[];
 	};
 
-	type MoveConfig = {
+	type ActionConfig = {
 		name: string;
 		description: string;
-		targetType?: keyof typeof MOVE_TYPES;
+		targetType?: keyof typeof ACTION_TYPES;
 		success: BattleAction[];
 	};
 
 	// Battle Events
 	type Submission = {
-		move: MoveConfig;
+		action: ActionConfig;
 		target: Combatant;
 	};
 
@@ -85,7 +85,7 @@ declare global {
 
 	// Battle Items
 	type ItemConfig = {
-		itemId: MoveName;
+		itemId: ActionName;
 		instanceId: string;
 		team: keyof typeof TEAMS;
 	};

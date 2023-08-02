@@ -2,26 +2,26 @@ import {
 	ANIMATIONS,
 	BATTLE_EVENTS,
 	EVENTS,
-	MOVE_TYPES,
+	ACTION_TYPES,
 	STATUSES,
 } from '@/utils/consts';
 
-export const tackle: MoveConfig = {
+export const tackle: ActionConfig = {
 	name: 'Tackle',
 	description: 'Hurl yourself at your opponent!',
 	success: [
-		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
+		{ type: EVENTS.MESSAGE, text: '{CASTER} used {ACTION}!' },
 		{ type: BATTLE_EVENTS.ANIMATION, animation: ANIMATIONS.SPIN },
 		{ type: BATTLE_EVENTS.STATE_CHANGE, damage: 10 },
 	],
 };
 
-export const tomatoSqueeze: MoveConfig = {
+export const tomatoSqueeze: ActionConfig = {
 	name: 'Tomato Squeeze',
 	description: 'Refresh your pizza with a squeeze of tomato juice',
-	targetType: MOVE_TYPES.FRIENDLY,
+	targetType: ACTION_TYPES.FRIENDLY,
 	success: [
-		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
+		{ type: EVENTS.MESSAGE, text: '{CASTER} used {ACTION}!' },
 		{
 			type: BATTLE_EVENTS.STATE_CHANGE,
 			status: {
@@ -32,11 +32,11 @@ export const tomatoSqueeze: MoveConfig = {
 	],
 };
 
-export const oliveOil: MoveConfig = {
+export const oliveOil: ActionConfig = {
 	name: 'Olive Oil',
 	description: "Throw some olive oil in your opponent's eyes!",
 	success: [
-		{ type: EVENTS.MESSAGE, text: '{CASTER} used {MOVE}!' },
+		{ type: EVENTS.MESSAGE, text: '{CASTER} used {ACTION}!' },
 		{ type: BATTLE_EVENTS.ANIMATION, animation: ANIMATIONS.GLOB },
 		{
 			type: BATTLE_EVENTS.STATE_CHANGE,
@@ -49,12 +49,12 @@ export const oliveOil: MoveConfig = {
 	],
 };
 
-export const item_heatingLamp: MoveConfig = {
+export const item_heatingLamp: ActionConfig = {
 	name: 'Heating Lamp',
 	description: 'Warm up your pizza on the spot!',
-	targetType: MOVE_TYPES.FRIENDLY,
+	targetType: ACTION_TYPES.FRIENDLY,
 	success: [
-		{ type: EVENTS.MESSAGE, text: '{CASTER} used a {MOVE}!' },
+		{ type: EVENTS.MESSAGE, text: '{CASTER} used a {ACTION}!' },
 		{ type: BATTLE_EVENTS.STATE_CHANGE, status: null },
 		{ type: EVENTS.MESSAGE, text: '{TARGET} is nice and toasty!' },
 	],

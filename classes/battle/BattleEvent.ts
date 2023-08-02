@@ -1,4 +1,4 @@
-import { BATTLE_EVENTS, EVENTS, MOVE_TYPES } from '@/utils/consts';
+import { BATTLE_EVENTS, EVENTS } from '@/utils/consts';
 import { Message } from '@/classes/Message';
 import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
@@ -22,7 +22,7 @@ export class BattleEvent {
 		const updatedText = text
 			.replace('{CASTER}', caster?.config.name ?? '')
 			.replace('{TARGET}', submission?.target.config.name ?? '')
-			.replace('{MOVE}', submission?.move.name.toUpperCase() ?? '');
+			.replace('{ACTION}', submission?.action.name.toUpperCase() ?? '');
 
 		this.battle.overworld.message = new Message({
 			text: updatedText,
