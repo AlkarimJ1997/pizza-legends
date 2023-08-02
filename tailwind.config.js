@@ -18,6 +18,7 @@ module.exports = {
 			scale: {
 				pixelSize: 'var(--pixel-size)',
 				battlePixelSize: 'var(--battle-pixel-size)',
+				battlePixelImage: 'calc(var(--battle-pixel-size) * 2)',
 			},
 			animation: {
 				'fade-in': 'fade-in 0.5s forwards',

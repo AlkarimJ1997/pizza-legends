@@ -13,7 +13,12 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 	const { combatants, keyboardMenu } = overworld.battle;
 
 	return (
-		<div className='battle w-battleWidth h-battleHeight'>
+		<div
+			className='w-[90vw] min-h-[50vh] bg-cover max-w-7xl relative'
+			style={{
+				backgroundImage: `url(/images/maps/StreetBattle.png)`,
+				imageRendering: 'pixelated',
+			}}>
 			<BattleImage
 				src='/images/characters/people/hero.png'
 				alt='Hero'

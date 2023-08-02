@@ -33,16 +33,6 @@ body {
 		image-rendering: crisp-edges;
 	}
 
-	.battle {
-		background-image: url(/images/maps/StreetBattle.png);
-		background-size: cover;
-		image-rendering: pixelated;
-	}
-
-	.battle-shadow {
-		background: url(/images/characters/shadow.png) no-repeat no-repeat;
-	}
-
 	.combatant-plate {
 		background: url(/images/ui/combatant-plate.png) no-repeat no-repeat;
 	}

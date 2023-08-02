@@ -11,9 +11,10 @@ const TextMessage = ({ overworld }: TextMessageProps) => {
 
 	return (
 		<div
+    // text-sm sm:text-lg md:text-xl
 			className={clsx(
-				'py-1 px-2 rounded-md bg-slate-700 text-slate-100 shadow-xl border-2 border-indigo-400 absolute bottom-16 text-sm sm:text-lg md:text-xl',
-				overworld.battle && '',
+				'py-1 px-2 rounded-md bg-slate-700 text-slate-100 shadow-xl border-2 border-indigo-400 absolute left-0 right-0 mx-auto',
+				overworld.battle && '-bottom-full text-xl',
 				!overworld.battle && 'min-h-[15vh] w-[90%] max-w-lg'
 			)}>
 			{characters.map(({ char, show }, i) => (
