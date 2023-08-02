@@ -18,11 +18,15 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 	return (
 		<div
 			className={clsx(
-				'combatant-plate absolute w-[67px] h-[14px] scale-[2]',
+				'absolute w-[67px] h-[14px] scale-[2]',
 				team === TEAMS.PLAYER && 'top-[70px] left-[46px]',
 				team === TEAMS.ENEMY && 'top-[28px] right-[77px]',
 				isActive ? 'opacity-100' : 'opacity-0'
-			)}>
+			)}
+			style={{
+				backgroundImage: 'url(/images/ui/combatant-plate.png)',
+				backgroundRepeat: 'no-repeat no-repeat',
+			}}>
 			<p className='absolute top-[-8px] left-[-2px] whitespace-nowrap bg-slate-800 text-slate-100 text-[5px] px-[2px] m-0'>
 				{config.name}
 			</p>

@@ -37,17 +37,20 @@ const RenderOverworld = () => {
 	return (
 		<div className='fixed inset-0 flex items-center justify-center'>
 			<Container inBattle={!!overworld.battle}>
-				<div
-					style={{
-						transform: `translate3d(${x}, ${y}, 0)`,
-					}}>
-					<BackgroundLayer overworld={overworld} />
-					<PlacementsLayer overworld={overworld} />
-				</div>
-				<BattleScene overworld={overworld} />
+				{overworld.battle ? (
+					<BattleScene overworld={overworld} />
+				) : (
+					<div
+						style={{
+							transform: `translate3d(${x}, ${y}, 0)`,
+						}}>
+						<BackgroundLayer overworld={overworld} />
+						<PlacementsLayer overworld={overworld} />
+					</div>
+				)}
+				<TextMessage overworld={overworld} />
+				<SceneChange overworld={overworld} />
 			</Container>
-			<TextMessage overworld={overworld} />
-			<SceneChange overworld={overworld} />
 		</div>
 	);
 };

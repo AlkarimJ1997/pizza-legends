@@ -17,7 +17,7 @@ const Pizza = ({ combatant }: PizzaProps) => {
 				src={config.src}
 				alt={config.name}
 				className={clsx(
-					'pizza-shadow inline absolute scale-[2]',
+					'inline absolute scale-[2]',
 					team === TEAMS.PLAYER && 'bottom-[73px] left-[51px]',
 					team === TEAMS.ENEMY && 'top-[47px] right-[100px]',
 					isActive ? 'opacity-100' : 'opacity-0',
@@ -25,6 +25,10 @@ const Pizza = ({ combatant }: PizzaProps) => {
 					animateSpin && team === TEAMS.PLAYER && 'animate-spin-right',
 					animateSpin && team === TEAMS.ENEMY && 'animate-spin-left'
 				)}
+				style={{
+					backgroundImage: `url(/images/characters/pizzas/pizza-shadow.png)`,
+					backgroundRepeat: 'no-repeat no-repeat',
+				}}
 			/>
 			{animateGlob && (
 				<div
