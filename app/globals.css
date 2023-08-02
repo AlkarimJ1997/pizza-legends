@@ -23,6 +23,10 @@ body {
 	overflow: hidden;
 }
 
+* {
+  user-select: none;
+}
+
 @layer components {
 	.canvas {
 		display: inline-block;

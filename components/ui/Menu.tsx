@@ -57,7 +57,7 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 							)}>
 							{label}
 						</button>
-						{/* <span className='absolute top-0 bottom-0 right-0'>{right?.()}</span> */}
+						<span className='absolute top-0 bottom-0 right-0'>{right?.()}</span>
 					</div>
 				))}
 			</div>

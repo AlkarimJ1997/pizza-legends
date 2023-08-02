@@ -13,20 +13,20 @@ const TextMessage = ({ overworld }: TextMessageProps) => {
 	return (
 		<div
 			className={clsx(
-				'p-[2px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute text-[4px] w-[120px] bottom-0 left-0 right-0 mx-auto min-h-[50px]',
-				overworld.battle && '',
-				!overworld.battle && ''
+				'p-[2px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute left-0 right-0 mx-auto',
+				overworld.battle && 'max-w-[200px] text-[7px] bottom-3',
+				!overworld.battle && 'w-[120px] min-h-[50px] text-[4px] bottom-0'
 			)}>
 			{characters.map(({ char, show }, i) => (
-				<span
-					key={i}
-					className={clsx('select-none', show ? 'opacity-100' : 'opacity-0')}>
+				<span key={i} className={clsx(show ? 'opacity-100' : 'opacity-0')}>
 					{char}
 				</span>
 			))}
-			<div className='absolute bottom-0.5 right-0.5 animate-pulse'>
-				<SpeechBubble />
-			</div>
+			{!overworld.battle && (
+				<div className='absolute bottom-0.5 right-0.5 animate-pulse'>
+					<SpeechBubble />
+				</div>
+			)}
 		</div>
 	);
 };
