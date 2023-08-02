@@ -9,6 +9,7 @@ import SceneChange from '@/components/ui/SceneChange';
 import { setBackgroundColor } from '@/utils/helpers';
 import BattleScene from '@/components/battle/BattleScene';
 import clsx from 'clsx';
+import Container from '@/components/Container';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -35,12 +36,7 @@ const RenderOverworld = () => {
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center'>
-			<div
-				className={clsx(
-					overworld.battle &&
-						'w-battleWidth h-battleHeight scale-battlePixelSize',
-					!overworld.battle && 'w-gameWidth h-gameHeight scale-pixelSize'
-				)}>
+			<Container inBattle={!!overworld.battle}>
 				<div
 					style={{
 						transform: `translate3d(${x}, ${y}, 0)`,
@@ -49,7 +45,7 @@ const RenderOverworld = () => {
 					<PlacementsLayer overworld={overworld} />
 				</div>
 				<BattleScene overworld={overworld} />
-			</div>
+			</Container>
 			<TextMessage overworld={overworld} />
 			<SceneChange overworld={overworld} />
 		</div>
