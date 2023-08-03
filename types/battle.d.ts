@@ -55,9 +55,7 @@ declare global {
 		replacement: Combatant;
 	};
 
-  type ReplacementSubmission = Combatant;
-
-	type Submission = DefaultSubmission | SwapSubmission | ReplacementSubmission;
+	type Submission = DefaultSubmission | SwapSubmission | Combatant;
 
 	// Battle Events
 	type BattleMessageEvent = TextMessageEvent & {

@@ -39,31 +39,21 @@ export class TurnCycle {
 			throw new Error('Caster or target not found');
 		}
 
-		const submission = await this.onNewEvent({
+		const initialSubmission = await this.onNewEvent({
 			type: BATTLE_EVENTS.SUBMISSION_MENU,
 			caster,
 			target,
 		});
 
-		if (!submission) {
-			throw new Error('Submission not found');
-		}
+		if (!initialSubmission) throw new Error('Submission not found');
 
 		// Swapping
-		if ('replacement' in submission) {
-			await this.onNewEvent({
-				type: BATTLE_EVENTS.SWAP,
-				replacement: submission.replacement,
-			});
-
-			await this.onNewEvent({
-				type: EVENTS.MESSAGE,
-				text: `Go get 'em, ${submission.replacement.config.name}!`,
-			});
-
-			this.nextTurn();
+		if ('replacement' in initialSubmission) {
+			await this.handleSwap(initialSubmission.replacement);
 			return;
 		}
+
+		const submission = initialSubmission as DefaultSubmission;
 
 		// Item deletion
 		this.handleItemUsage(submission.instanceId);
@@ -75,17 +65,10 @@ export class TurnCycle {
 			caster,
 		});
 
-		// Did the target die?
-		const targetDead = submission.target.hp <= 0;
-		if (targetDead) {
-			await this.onNewEvent({
-				type: EVENTS.MESSAGE,
-				text: `${submission.target.config.name} fainted!`,
-			});
-		}
+		// Check for battle ending conditions
+		const targetDead = await this.checkForDeath(target);
+		const winner = this.checkForWinner();
 
-		// Do we have a winning team?
-		const winner = this.getWinningTeam();
 		if (winner) {
 			await this.onNewEvent({
 				type: EVENTS.MESSAGE,
@@ -97,22 +80,12 @@ export class TurnCycle {
 
 		// We have a dead target, but no winner, so bring in a replacement
 		if (targetDead) {
-			const replacement = await this.onNewEvent({
+			const replacement = (await this.onNewEvent({
 				type: BATTLE_EVENTS.REPLACEMENT_MENU,
 				team: submission.target.team,
-			});
+			})) as Combatant;
 
-			await this.onNewEvent({
-				type: BATTLE_EVENTS.SWAP,
-				replacement,
-			});
-
-			await this.onNewEvent({
-				type: EVENTS.MESSAGE,
-				text: `Go get 'em, ${replacement.config.name}!`,
-			});
-
-			this.nextTurn();
+			await this.handleSwap(replacement);
 			return;
 		}
 
@@ -136,7 +109,20 @@ export class TurnCycle {
 		this.turn();
 	}
 
-	getWinningTeam() {
+	async checkForDeath(target: Combatant) {
+		const targetDead = target.hp <= 0;
+
+		if (targetDead) {
+			await this.onNewEvent({
+				type: EVENTS.MESSAGE,
+				text: `${target.config.name} fainted!`,
+			});
+		}
+
+		return targetDead;
+	}
+
+	checkForWinner() {
 		let aliveTeams: Partial<Record<keyof typeof TEAMS, boolean>> = {};
 
 		for (const combatant of this.battle.combatants) {
@@ -149,6 +135,20 @@ export class TurnCycle {
 		if (!aliveTeams[TEAMS.ENEMY]) return TEAMS.PLAYER;
 
 		return null;
+	}
+
+	async handleSwap(replacement: Combatant) {
+		await this.onNewEvent({
+			type: BATTLE_EVENTS.SWAP,
+			replacement,
+		});
+
+		await this.onNewEvent({
+			type: EVENTS.MESSAGE,
+			text: `Go get 'em, ${replacement.config.name}!`,
+		});
+
+		this.nextTurn();
 	}
 
 	handleItemUsage(instanceId: string | null) {
