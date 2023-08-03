@@ -85,6 +85,18 @@ export class BattleEvent {
 		menu.init();
 	}
 
+	async swap(resolve: ResolveFn) {
+		const { replacement } = this.event as PizzaSwapEvent;
+
+		this.battle.activeCombatants[replacement.team] = null;
+		await wait(400);
+
+		this.battle.activeCombatants[replacement.team] = replacement.config.id;
+		await wait(400);
+
+		resolve();
+	}
+
 	animation(resolve: ResolveFn) {
 		if (!('animation' in this.event)) {
 			throw new Error('Animation event must have an animation property');
@@ -103,6 +115,8 @@ export class BattleEvent {
 				return this.stateChange(resolve);
 			case BATTLE_EVENTS.ANIMATION:
 				return this.animation(resolve);
+			case BATTLE_EVENTS.SWAP:
+				return this.swap(resolve);
 			default:
 				return resolve();
 		}

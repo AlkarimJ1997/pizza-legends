@@ -27,6 +27,7 @@ export class SubmissionMenu {
 	onComplete: (value: Submission) => void;
 
 	items: QuantityConfig[] = [];
+	party: Combatant[];
 
 	constructor({ caster, target, battle, onComplete }: SubmissionMenuProps) {
 		this.caster = caster;
@@ -34,6 +35,7 @@ export class SubmissionMenu {
 		this.battle = battle;
 		this.onComplete = onComplete;
 
+		// Items
 		this.battle.items.forEach(({ actionId, instanceId, team }) => {
 			if (team === caster.config.belongsToTeam) {
 				let existing = this.items.find(i => i.actionId === actionId);
@@ -49,6 +51,15 @@ export class SubmissionMenu {
 					instanceId,
 				});
 			}
+		});
+
+		// Party members
+		this.party = this.battle.combatants.filter(c => {
+			const notSelf = c.config.id !== caster.config.id;
+			const sameTeam = c.team === caster.team;
+			const alive = c.hp > 0;
+
+			return notSelf && sameTeam && alive;
 		});
 	}
 
@@ -83,7 +94,8 @@ export class SubmissionMenu {
 					label: 'Swap',
 					description: 'Change to another pizza',
 					handler: () => {
-						// See pizza options
+						// Go to party page
+						this.battle.keyboardMenu?.setOptions(this.getPages().party);
 					},
 				},
 			],
@@ -116,7 +128,25 @@ export class SubmissionMenu {
 				}),
 				backOption,
 			],
+			party: [
+				...this.party.map(member => {
+					return {
+						label: member.config.name,
+						description: member.config.description,
+						handler: () => {
+							// Swap me in, coach!
+							this.menuSubmitSwap(member);
+						},
+					};
+				}),
+				backOption,
+			],
 		};
+	}
+
+	menuSubmitSwap(member: Combatant) {
+		this.battle.keyboardMenu = null;
+		this.onComplete({ replacement: member });
 	}
 
 	menuSubmit(action: ActionConfig, instanceId: string | null = null) {

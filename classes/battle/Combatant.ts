@@ -12,23 +12,23 @@ export class Combatant {
 	battle: Battle;
 
 	isBlinking: boolean = false;
-  
-  // Animation variables
+
+	// Animation variables
 	animateSpin: boolean = false;
-  animateGlob: boolean = false;
+	animateGlob: boolean = false;
 
 	constructor({ config, battle }: CombatantProps) {
 		this.config = config;
 		this.battle = battle;
 	}
 
-	get hpPercentage() {
+	get hp() {
 		const percent = (this.config.hp / this.config.maxHp) * 100;
 
 		return Math.min(Math.max(percent, 0), 100);
 	}
 
-	get xpPercentage() {
+	get xp() {
 		return (this.config.xp / this.config.maxXp) * 100;
 	}
 
@@ -36,6 +36,10 @@ export class Combatant {
 		const { id, belongsToTeam } = this.config;
 
 		return this.battle.activeCombatants[belongsToTeam] === id;
+	}
+
+	get team() {
+		return this.config.belongsToTeam;
 	}
 
 	getPostEvents(): BattleAction[] {

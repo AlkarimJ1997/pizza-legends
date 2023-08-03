@@ -1,6 +1,6 @@
 import type { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
-import { BATTLE_EVENTS, TEAMS } from '@/utils/consts';
+import { BATTLE_EVENTS, EVENTS, TEAMS } from '@/utils/consts';
 
 type EventHandlingConfig = {
 	events: BattleAction[];
@@ -50,6 +50,21 @@ export class TurnCycle {
 			throw new Error('Submission not found');
 		}
 
+		// Swapping
+		if ('replacement' in submission) {
+			await this.onNewEvent({
+				type: BATTLE_EVENTS.SWAP,
+				replacement: submission.replacement,
+			});
+
+			await this.onNewEvent({
+				type: EVENTS.MESSAGE,
+				text: `Go get 'em, ${submission.replacement.config.name}!`,
+			});
+
+			return;
+		}
+
 		// Item deletion
 		this.handleItemUsage(submission.instanceId);
 
@@ -94,7 +109,7 @@ export class TurnCycle {
 				caster,
 			};
 
-			await this.onNewEvent(eventConfig);
+			await this.onNewEvent(eventConfig as BattleAction);
 		}
 	}
 

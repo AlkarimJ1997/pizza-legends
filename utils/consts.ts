@@ -17,6 +17,7 @@ export const BATTLE_EVENTS = {
 	SUBMISSION_MENU: 'SUBMISSION_MENU',
 	STATE_CHANGE: 'STATE_CHANGE',
 	ANIMATION: 'ANIMATION',
+  SWAP: 'SWAP',
 } as const;
 
 export const ANIMATIONS = {
@@ -130,6 +131,7 @@ export const PIZZA_TYPES = {
 
 export const PIZZA_SKINS = {
 	S001: '/images/characters/pizzas/s001.png',
+  S002: '/images/characters/pizzas/s002.png',
 	V001: '/images/characters/pizzas/v001.png',
 	F001: '/images/characters/pizzas/f001.png',
 } as const;

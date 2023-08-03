@@ -34,8 +34,8 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 					<BattleHud
 						config={combatant.config}
 						isActive={combatant.isActive}
-						hp={combatant.hpPercentage}
-						xp={combatant.xpPercentage}
+						hp={combatant.hp}
+						xp={combatant.xp}
 					/>
 					<Pizza combatant={combatant} />
 				</div>

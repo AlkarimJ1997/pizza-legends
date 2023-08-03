@@ -12,8 +12,8 @@ interface BattleProps {
 }
 
 type ActiveCombatants = {
-	PLAYER: string;
-	ENEMY: string;
+	PLAYER: string | null;
+	ENEMY: string | null;
 };
 
 export class Battle {
@@ -42,6 +42,20 @@ export class Battle {
 						type: STATUSES.SAUCY,
 						expiresIn: 3,
 					},
+					isPlayerControlled: true,
+				},
+				battle: this,
+			}),
+			new Combatant({
+				config: {
+					...Pizzas.s002,
+					id: 'player2',
+					belongsToTeam: TEAMS.PLAYER,
+					hp: 30,
+					maxHp: 50,
+					xp: 75,
+					maxXp: 100,
+					level: 1,
 					isPlayerControlled: true,
 				},
 				battle: this,

@@ -8,6 +8,7 @@ import {
 	ANIMATIONS,
 } from '@/utils/consts';
 import type { Battle } from '@/classes/battle/Battle';
+import type { Combatant } from '@/classes/battle/Combatant';
 import Actions, { ActionName } from '@/data/ActionMap';
 import Animations from '@/data/AnimationMap';
 
@@ -29,6 +30,7 @@ declare global {
 
 	type PizzaConfig = {
 		name: string;
+		description: string;
 		type: keyof typeof PIZZA_TYPES;
 		src: ValueOf<typeof PIZZA_SKINS>;
 		icon: ValueOf<typeof PIZZA_ICONS>;
@@ -43,14 +45,20 @@ declare global {
 	};
 
 	// Battle Events
-	type Submission = {
+	type DefaultSubmission = {
 		action: ActionConfig;
 		target: Combatant;
-    instanceId: string | null;
+		instanceId: string | null;
 	};
 
+	type SwapSubmission = {
+		replacement: Combatant;
+	};
+
+	type Submission = DefaultSubmission | SwapSubmission;
+
 	type BattleMessageEvent = TextMessageEvent & {
-		submission?: Submission;
+		submission?: DefaultSubmission;
 		caster?: Combatant;
 	};
 
@@ -70,20 +78,26 @@ declare global {
 			expiresIn: number;
 		} | null;
 		onCaster?: boolean;
-	} & { submission?: Submission; caster?: Combatant };
+	} & { submission?: DefaultSubmission; caster?: Combatant };
 
 	type BattleAnimationName = keyof typeof Animations;
 	type BattleAnimationEvent = {
 		type: 'ANIMATION';
 		animation: BattleAnimationName;
 		color?: string;
-	} & { submission?: Submission; caster?: Combatant };
+	} & { submission?: DefaultSubmission; caster?: Combatant };
+
+	type PizzaSwapEvent = {
+		type: 'SWAP';
+		replacement: Combatant;
+	};
 
 	type BattleAction =
 		| BattleMessageEvent
 		| SubmissionMenuEvent
 		| StateChangeEvent
-		| BattleAnimationEvent;
+		| BattleAnimationEvent
+		| PizzaSwapEvent;
 
 	// Battle Items
 	type ItemConfig = {
@@ -92,7 +106,7 @@ declare global {
 		team: keyof typeof TEAMS;
 	};
 
-  type ActionName = keyof typeof Actions;
+	type ActionName = keyof typeof Actions;
 }
 
 export {};
