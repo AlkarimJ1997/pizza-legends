@@ -13,9 +13,9 @@ const TextMessage = ({ overworld }: TextMessageProps) => {
 	return (
 		<div
 			className={clsx(
-				'px-[2px] py-[0.5px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute left-0 right-0 mx-auto',
-				overworld.battle && 'max-w-[200px] text-[7px] bottom-3',
-				!overworld.battle && 'w-[120px] min-h-[50px] text-[4px] bottom-0'
+				'px-[2px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute left-0 right-0 mx-auto',
+				overworld.battle && 'max-w-[200px] py-[1px] text-[7px] bottom-3',
+				!overworld.battle && 'w-[120px] min-h-[50px] text-[4px] bottom-0 py-[0.5px]'
 			)}>
 			{characters.map(({ char, show }, i) => (
 				<span key={i} className={clsx(show ? 'opacity-100' : 'opacity-0')}>

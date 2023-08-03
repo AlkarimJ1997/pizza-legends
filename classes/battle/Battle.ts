@@ -2,7 +2,7 @@ import { Combatant } from '@/classes/battle/Combatant';
 import { BattleEvent } from '@/classes/battle/BattleEvent';
 import { TurnCycle } from '@/classes/battle/TurnCycle';
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
-import { TEAMS } from '@/utils/consts';
+import { STATUSES, TEAMS } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 import Pizzas from '@/data/PizzaMap';
 
@@ -19,7 +19,7 @@ type ActiveCombatants = {
 export class Battle {
 	combatants: Combatant[];
 	activeCombatants: ActiveCombatants;
-  items: ItemConfig[];
+	items: ItemConfig[];
 	overworld: OverworldState;
 	onComplete: () => void;
 
@@ -38,6 +38,10 @@ export class Battle {
 					xp: 75,
 					maxXp: 100,
 					level: 1,
+					status: {
+						type: STATUSES.SAUCY,
+						expiresIn: 3,
+					},
 					isPlayerControlled: true,
 				},
 				battle: this,
@@ -75,9 +79,12 @@ export class Battle {
 			ENEMY: 'enemy1',
 		};
 
-    this.items = [
-      { itemId: 'tackle', instanceId: 'p1', team: TEAMS.PLAYER },
-    ];
+		this.items = [
+			{ actionId: 'item_recoverStatus', instanceId: 'p1', team: TEAMS.PLAYER },
+			{ actionId: 'item_recoverStatus', instanceId: 'p2', team: TEAMS.PLAYER },
+			{ actionId: 'item_recoverStatus', instanceId: 'p3', team: TEAMS.ENEMY },
+			{ actionId: 'item_recoverHp', instanceId: 'p4', team: TEAMS.PLAYER },
+		];
 
 		this.overworld = overworld;
 		this.onComplete = onComplete;

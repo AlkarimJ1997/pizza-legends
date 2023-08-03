@@ -45,19 +45,19 @@ const Menu = ({ options, inBattle = false }: MenuProps) => {
 					inBattle && 'left-0 right-0 bottom-2 w-[140px] mx-auto'
 				)}>
 				{options.map(({ label, disabled, handler, right }, i) => (
-					<div key={i} className='relative'>
+					<div key={i} className='relative flex items-center text-[7px]'>
 						<button
 							ref={el => (buttonRefs.current[i] = el)}
 							disabled={!!disabled}
 							onClick={handler}
 							onMouseEnter={event => handleFocus(event, i)}
 							className={clsx(
-								'flex items-center w-full text-left h-[15px] cursor-pointer pl-2 text-[7px] focus:outline-none focus:ring-1 focus:ring-indigo-500',
+								'flex justify-between items-center w-full h-[15px] cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 px-2',
 								disabled && 'opacity-50'
 							)}>
 							{label}
+							<span className='text-slate-300'>{right?.()}</span>
 						</button>
-						<span className='absolute top-0 bottom-0 right-0'>{right?.()}</span>
 					</div>
 				))}
 			</div>

@@ -49,7 +49,7 @@ export const oliveOil: ActionConfig = {
 	],
 };
 
-export const item_heatingLamp: ActionConfig = {
+export const item_recoverStatus: ActionConfig = {
 	name: 'Heating Lamp',
 	description: 'Warm up your pizza on the spot!',
 	targetType: ACTION_TYPES.FRIENDLY,
@@ -57,5 +57,16 @@ export const item_heatingLamp: ActionConfig = {
 		{ type: EVENTS.MESSAGE, text: '{CASTER} used a {ACTION}!' },
 		{ type: BATTLE_EVENTS.STATE_CHANGE, status: null },
 		{ type: EVENTS.MESSAGE, text: '{TARGET} is nice and toasty!' },
+	],
+};
+
+export const item_recoverHp: ActionConfig = {
+	name: 'Parmesan',
+	description: 'Sprinkle some parmesan on your pizza!',
+	targetType: ACTION_TYPES.FRIENDLY,
+	success: [
+		{ type: EVENTS.MESSAGE, text: '{CASTER} sprinkles on some {ACTION}!' },
+		{ type: BATTLE_EVENTS.STATE_CHANGE, recovery: 10 },
+		{ type: EVENTS.MESSAGE, text: '{TARGET} recovered 10 HP!' },
 	],
 };

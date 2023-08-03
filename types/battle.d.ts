@@ -45,6 +45,7 @@ declare global {
 	type Submission = {
 		action: ActionConfig;
 		target: Combatant;
+    instanceId: string | null;
 	};
 
 	type BattleMessageEvent = TextMessageEvent & {
@@ -85,7 +86,7 @@ declare global {
 
 	// Battle Items
 	type ItemConfig = {
-		itemId: ActionName;
+		actionId: ActionName;
 		instanceId: string;
 		team: keyof typeof TEAMS;
 	};

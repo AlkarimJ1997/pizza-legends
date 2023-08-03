@@ -43,6 +43,13 @@ export class TurnCycle {
 			throw new Error('Submission not found');
 		}
 
+    // Item deletion
+		if (submission.instanceId) {
+			this.battle.items = this.battle.items.filter(i => {
+				return i.instanceId !== submission.instanceId;
+			});
+		}
+
 		const resultingEvents = caster.getReplacedEvents(submission.action.success);
 
 		for (const event of resultingEvents) {
