@@ -44,7 +44,7 @@ declare global {
 		success: BattleAction[];
 	};
 
-	// Battle Events
+	// Submission Types
 	type DefaultSubmission = {
 		action: ActionConfig;
 		target: Combatant;
@@ -55,8 +55,11 @@ declare global {
 		replacement: Combatant;
 	};
 
-	type Submission = DefaultSubmission | SwapSubmission;
+  type ReplacementSubmission = Combatant;
 
+	type Submission = DefaultSubmission | SwapSubmission | ReplacementSubmission;
+
+	// Battle Events
 	type BattleMessageEvent = TextMessageEvent & {
 		submission?: DefaultSubmission;
 		caster?: Combatant;
