@@ -1,5 +1,12 @@
 import type { Battle } from '@/classes/battle/Battle';
+import type { Combatant } from '@/classes/battle/Combatant';
 import { BATTLE_EVENTS, TEAMS } from '@/utils/consts';
+
+type EventHandlingConfig = {
+	events: BattleAction[];
+	submission: Submission;
+	caster: Combatant;
+};
 
 interface TurnCycleProps {
 	battle: Battle;
@@ -43,37 +50,23 @@ export class TurnCycle {
 			throw new Error('Submission not found');
 		}
 
-    // Item deletion
-		if (submission.instanceId) {
-			this.battle.items = this.battle.items.filter(i => {
-				return i.instanceId !== submission.instanceId;
-			});
-		}
+		// Item deletion
+		this.handleItemUsage(submission.instanceId);
 
 		const resultingEvents = caster.getReplacedEvents(submission.action.success);
-
-		for (const event of resultingEvents) {
-			const eventConfig = {
-				...event,
-				submission,
-				caster,
-			};
-
-			await this.onNewEvent(eventConfig);
-		}
+		await this.handleEvents({
+			events: resultingEvents,
+			submission,
+			caster,
+		});
 
 		// Check for post events (i.e. status effects)
 		const postEvents = caster.getPostEvents();
-
-		for (const event of postEvents) {
-			const eventConfig = {
-				...event,
-				submission,
-				caster,
-			};
-
-			await this.onNewEvent(eventConfig);
-		}
+		await this.handleEvents({
+			events: postEvents,
+			submission,
+			caster,
+		});
 
 		// Check for status expiration
 		const expiredEvent = caster.decrementStatus();
@@ -81,6 +74,28 @@ export class TurnCycle {
 
 		this.currentTeam = this.targetTeam;
 		this.turn();
+	}
+
+	handleItemUsage(instanceId: string | null) {
+		if (!instanceId) return;
+
+		this.battle.items = this.battle.items.filter(i => {
+			return i.instanceId !== instanceId;
+		});
+	}
+
+	async handleEvents(config: EventHandlingConfig) {
+		const { events, submission, caster } = config;
+
+		for (const event of events) {
+			const eventConfig = {
+				...event,
+				submission,
+				caster,
+			};
+
+			await this.onNewEvent(eventConfig);
+		}
 	}
 
 	async init() {
