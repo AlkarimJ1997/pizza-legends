@@ -62,7 +62,7 @@ export class TurnCycle {
 				text: `Go get 'em, ${submission.replacement.config.name}!`,
 			});
 
-      this.nextTurn();
+			this.nextTurn();
 			return;
 		}
 
@@ -75,6 +75,47 @@ export class TurnCycle {
 			submission,
 			caster,
 		});
+
+		// Did the target die?
+		const targetDead = submission.target.hp <= 0;
+		if (targetDead) {
+			await this.onNewEvent({
+				type: EVENTS.MESSAGE,
+				text: `${submission.target.config.name} fainted!`,
+			});
+		}
+
+		// Do we have a winning team?
+		const winner = this.getWinningTeam();
+		if (winner) {
+			await this.onNewEvent({
+				type: EVENTS.MESSAGE,
+				text: `${winner} won the battle!`,
+			});
+			// TODO: END THE BATTLE
+			return;
+		}
+
+		// We have a dead target, but no winner, so bring in a replacement
+		if (targetDead) {
+			const replacement = await this.onNewEvent({
+				type: BATTLE_EVENTS.REPLACEMENT_MENU,
+				team: submission.target.team,
+			});
+
+			await this.onNewEvent({
+				type: BATTLE_EVENTS.SWAP,
+				replacement,
+			});
+
+			await this.onNewEvent({
+				type: EVENTS.MESSAGE,
+				text: `Go get 'em, ${replacement.config.name}!`,
+			});
+
+			this.nextTurn();
+			return;
+		}
 
 		// Check for post events (i.e. status effects)
 		const postEvents = caster.getPostEvents();
@@ -94,6 +135,21 @@ export class TurnCycle {
 	nextTurn() {
 		this.currentTeam = this.targetTeam;
 		this.turn();
+	}
+
+	getWinningTeam() {
+		let aliveTeams: Partial<Record<keyof typeof TEAMS, boolean>> = {};
+
+		for (const combatant of this.battle.combatants) {
+			if (combatant.hp > 0) {
+				aliveTeams[combatant.team] = true;
+			}
+		}
+
+		if (!aliveTeams[TEAMS.PLAYER]) return TEAMS.ENEMY;
+		if (!aliveTeams[TEAMS.ENEMY]) return TEAMS.PLAYER;
+    
+    return null;
 	}
 
 	handleItemUsage(instanceId: string | null) {

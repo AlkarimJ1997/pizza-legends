@@ -92,12 +92,18 @@ declare global {
 		replacement: Combatant;
 	};
 
+	type ReplacementMenuEvent = {
+		type: 'REPLACEMENT_MENU';
+		team: keyof typeof TEAMS;
+	};
+
 	type BattleAction =
 		| BattleMessageEvent
 		| SubmissionMenuEvent
 		| StateChangeEvent
 		| BattleAnimationEvent
-		| PizzaSwapEvent;
+		| PizzaSwapEvent
+		| ReplacementMenuEvent;
 
 	// Battle Items
 	type ItemConfig = {

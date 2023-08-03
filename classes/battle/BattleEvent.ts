@@ -4,6 +4,7 @@ import { SubmissionMenu } from '@/classes/battle/SubmissionMenu';
 import type { Battle } from '@/classes/battle/Battle';
 import { wait } from '@/utils/helpers';
 import Animations from '@/data/AnimationMap';
+import type { Combatant } from '@/classes/battle/Combatant';
 
 type ResolveFn = (value: void | Submission) => void;
 
@@ -85,6 +86,16 @@ export class BattleEvent {
 		menu.init();
 	}
 
+	replacementMenu(resolve: ResolveFn) {
+    const menu = new ReplacementMenu({
+      onComplete: (replacement: Combatant) => {
+        resolve(replacement);
+      }
+    })
+    
+    menu.init();
+  }
+
 	async swap(resolve: ResolveFn) {
 		const { replacement } = this.event as PizzaSwapEvent;
 
@@ -111,6 +122,8 @@ export class BattleEvent {
 				return this.textMessage(resolve);
 			case BATTLE_EVENTS.SUBMISSION_MENU:
 				return this.submissionMenu(resolve);
+        case BATTLE_EVENTS.REPLACEMENT_MENU:
+          return this.replacementMenu(resolve);
 			case BATTLE_EVENTS.STATE_CHANGE:
 				return this.stateChange(resolve);
 			case BATTLE_EVENTS.ANIMATION:
