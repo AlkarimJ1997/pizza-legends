@@ -43,7 +43,6 @@ export class TurnCycle {
 			type: BATTLE_EVENTS.SUBMISSION_MENU,
 			caster,
 			target,
-			battle: this.battle,
 		});
 
 		if (!submission) {
@@ -148,8 +147,8 @@ export class TurnCycle {
 
 		if (!aliveTeams[TEAMS.PLAYER]) return TEAMS.ENEMY;
 		if (!aliveTeams[TEAMS.ENEMY]) return TEAMS.PLAYER;
-    
-    return null;
+
+		return null;
 	}
 
 	handleItemUsage(instanceId: string | null) {

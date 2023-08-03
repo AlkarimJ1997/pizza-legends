@@ -65,7 +65,7 @@ export class Battle {
 					...Pizzas.v001,
 					id: 'enemy1',
 					belongsToTeam: TEAMS.ENEMY,
-					hp: 20,
+					hp: 1,
 					maxHp: 50,
 					xp: 20,
 					maxXp: 100,

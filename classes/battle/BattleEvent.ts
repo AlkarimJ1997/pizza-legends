@@ -5,8 +5,9 @@ import type { Battle } from '@/classes/battle/Battle';
 import { wait } from '@/utils/helpers';
 import Animations from '@/data/AnimationMap';
 import type { Combatant } from '@/classes/battle/Combatant';
+import { ReplacementMenu } from '@/classes/battle/ReplacementMenu';
 
-type ResolveFn = (value: void | Submission) => void;
+type ResolveFn = (value: void | Submission | Combatant) => void;
 
 export class BattleEvent {
 	event: BattleAction;
@@ -72,12 +73,12 @@ export class BattleEvent {
 	}
 
 	submissionMenu(resolve: ResolveFn) {
-		const { caster, target, battle } = this.event as SubmissionMenuEvent;
+		const { caster, target } = this.event as SubmissionMenuEvent;
 
 		const menu = new SubmissionMenu({
 			caster,
 			target,
-			battle,
+			battle: this.battle,
 			onComplete: (submission: Submission) => {
 				resolve(submission);
 			},
@@ -87,14 +88,20 @@ export class BattleEvent {
 	}
 
 	replacementMenu(resolve: ResolveFn) {
-    const menu = new ReplacementMenu({
-      onComplete: (replacement: Combatant) => {
-        resolve(replacement);
-      }
-    })
-    
-    menu.init();
-  }
+		if (!('team' in this.event)) {
+			throw new Error('Replacement event must have a team property');
+		}
+
+		const menu = new ReplacementMenu({
+			team: this.event.team,
+			battle: this.battle,
+			onComplete: (replacement: Combatant) => {
+				resolve(replacement);
+			},
+		});
+
+		menu.init();
+	}
 
 	async swap(resolve: ResolveFn) {
 		const { replacement } = this.event as PizzaSwapEvent;
@@ -122,8 +129,8 @@ export class BattleEvent {
 				return this.textMessage(resolve);
 			case BATTLE_EVENTS.SUBMISSION_MENU:
 				return this.submissionMenu(resolve);
-        case BATTLE_EVENTS.REPLACEMENT_MENU:
-          return this.replacementMenu(resolve);
+			case BATTLE_EVENTS.REPLACEMENT_MENU:
+				return this.replacementMenu(resolve);
 			case BATTLE_EVENTS.STATE_CHANGE:
 				return this.stateChange(resolve);
 			case BATTLE_EVENTS.ANIMATION:

@@ -66,7 +66,6 @@ declare global {
 		type: 'SUBMISSION_MENU';
 		caster: Combatant;
 		target: Combatant;
-		battle: Battle;
 	};
 
 	type StateChangeEvent = {
