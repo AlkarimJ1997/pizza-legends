@@ -8,7 +8,8 @@ import {
 	ANIMATIONS,
 } from '@/utils/consts';
 import type { Battle } from '@/classes/battle/Battle';
-import { ActionName } from '@/data/ActionMap';
+import Actions, { ActionName } from '@/data/ActionMap';
+import Animations from '@/data/AnimationMap';
 
 declare global {
 	type CombatantConfig = PizzaConfig & {
@@ -71,7 +72,7 @@ declare global {
 		onCaster?: boolean;
 	} & { submission?: Submission; caster?: Combatant };
 
-	type BattleAnimationName = keyof typeof ANIMATIONS;
+	type BattleAnimationName = keyof typeof Animations;
 	type BattleAnimationEvent = {
 		type: 'ANIMATION';
 		animation: BattleAnimationName;
@@ -90,6 +91,8 @@ declare global {
 		instanceId: string;
 		team: keyof typeof TEAMS;
 	};
+
+  type ActionName = keyof typeof Actions;
 }
 
 export {};

@@ -1,5 +1,5 @@
 import type { Battle } from '@/classes/battle/Battle';
-import { BATTLE_EVENTS, EVENTS, TEAMS } from '@/utils/consts';
+import { BATTLE_EVENTS, TEAMS } from '@/utils/consts';
 
 interface TurnCycleProps {
 	battle: Battle;

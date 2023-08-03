@@ -6,19 +6,12 @@ import {
 	item_recoverHp,
 } from './actions';
 
-export type ActionName =
-	| 'tackle'
-	| 'tomatoSqueeze'
-	| 'oliveOil'
-	| 'item_recoverStatus'
-	| 'item_recoverHp';
-
-const Actions: Record<ActionName, ActionConfig> = {
+const Actions = {
 	tackle,
 	tomatoSqueeze,
 	oliveOil,
 	item_recoverStatus,
 	item_recoverHp,
-};
+} as const;
 
 export default Actions;

@@ -86,10 +86,11 @@ export class BattleEvent {
 	}
 
 	animation(resolve: ResolveFn) {
-		const { animation } = this.event as BattleAnimationEvent;
+		if (!('animation' in this.event)) {
+			throw new Error('Animation event must have an animation property');
+		}
 
-		const fn = Animations[animation];
-		fn(this.event, resolve);
+		Animations[this.event.animation](this.event, resolve);
 	}
 
 	init(resolve: ResolveFn) {

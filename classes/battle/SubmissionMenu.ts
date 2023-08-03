@@ -1,7 +1,7 @@
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
-import Actions, { ActionName } from '@/data/ActionMap';
+import Actions from '@/data/ActionMap';
 
 type PageTree = {
 	[key: string]: PageOption[];

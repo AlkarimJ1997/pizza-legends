@@ -1,11 +1,9 @@
 import { s001, v001, f001 } from './pizzas';
 
-type PizzaName = 's001' | 'v001' | 'f001';
-
-const Pizzas: Record<PizzaName, PizzaConfig> = {
+const Pizzas = {
 	s001,
 	v001,
 	f001,
-};
+} as const;
 
 export default Pizzas;
