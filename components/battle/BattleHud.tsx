@@ -18,7 +18,7 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 	return (
 		<div
 			className={clsx(
-				'absolute w-[67px] h-[14px] scale-[2]',
+				'absolute w-[67px] h-[14px] scale-[2] transition-opacity duration-[400ms]',
 				team === TEAMS.PLAYER && 'top-[70px] left-[46px]',
 				team === TEAMS.ENEMY && 'top-[28px] right-[77px]',
 				isActive ? 'opacity-100' : 'opacity-0'

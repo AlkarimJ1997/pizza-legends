@@ -62,6 +62,7 @@ export class TurnCycle {
 				text: `Go get 'em, ${submission.replacement.config.name}!`,
 			});
 
+      this.nextTurn();
 			return;
 		}
 
@@ -87,6 +88,10 @@ export class TurnCycle {
 		const expiredEvent = caster.decrementStatus();
 		expiredEvent && (await this.onNewEvent(expiredEvent));
 
+		this.nextTurn();
+	}
+
+	nextTurn() {
 		this.currentTeam = this.targetTeam;
 		this.turn();
 	}

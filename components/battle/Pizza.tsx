@@ -17,10 +17,12 @@ const Pizza = ({ combatant }: PizzaProps) => {
 				src={config.src}
 				alt={config.name}
 				className={clsx(
-					'inline absolute scale-[2]',
+					'inline absolute scale-[2] transition-all duration-[400ms]',
 					team === TEAMS.PLAYER && 'bottom-[73px] left-[51px]',
 					team === TEAMS.ENEMY && 'top-[47px] right-[100px]',
-					isActive ? 'opacity-100' : 'opacity-0',
+					isActive
+						? 'opacity-100 [transform:translate3d(0,0,0)_scale(2)]'
+						: 'opacity-0 [transform:translate3d(0,16px,0)_scale(2)]',
 					isBlinking && 'animate-blink',
 					animateSpin && team === TEAMS.PLAYER && 'animate-spin-right',
 					animateSpin && team === TEAMS.ENEMY && 'animate-spin-left'
