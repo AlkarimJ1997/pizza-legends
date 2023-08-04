@@ -11,16 +11,19 @@ type EventHandlingConfig = {
 interface TurnCycleProps {
 	battle: Battle;
 	onNewEvent: (event: BattleAction) => Promise<void | Submission>;
+	onWinner: (winner: keyof typeof TEAMS) => void;
 }
 
 export class TurnCycle {
 	battle: Battle;
 	onNewEvent: (event: BattleAction) => Promise<void | Submission>;
+	onWinner: (winner: keyof typeof TEAMS) => void;
 	currentTeam: keyof typeof TEAMS;
 
-	constructor({ battle, onNewEvent }: TurnCycleProps) {
+	constructor({ battle, onNewEvent, onWinner }: TurnCycleProps) {
 		this.battle = battle;
 		this.onNewEvent = onNewEvent;
+		this.onWinner = onWinner;
 		this.currentTeam = TEAMS.PLAYER;
 	}
 
@@ -74,7 +77,8 @@ export class TurnCycle {
 				type: EVENTS.MESSAGE,
 				text: `${winner} won the battle!`,
 			});
-			// TODO: END THE BATTLE
+			
+      this.onWinner(winner);
 			return;
 		}
 
@@ -126,10 +130,10 @@ export class TurnCycle {
 
 				if (!combatant) throw new Error('Combatant not found');
 
-        await this.onNewEvent({
-          type: EVENTS.MESSAGE,
-          text: `${combatant.config.name} gained ${target.givesExp} XP!`,
-        })
+				await this.onNewEvent({
+					type: EVENTS.MESSAGE,
+					text: `${combatant.config.name} gained ${target.givesExp} XP!`,
+				});
 
 				await this.onNewEvent({
 					type: BATTLE_EVENTS.GIVE_EXP,
@@ -174,14 +178,13 @@ export class TurnCycle {
 	handleItemUsage(instanceId: string | null) {
 		if (!instanceId) return;
 
+    this.battle.usedInstanceIds[instanceId] = true;
 		this.battle.items = this.battle.items.filter(i => {
 			return i.instanceId !== instanceId;
 		});
 	}
 
-  handleExperienceGain() {
-    
-  }
+	handleExperienceGain() {}
 
 	async handleEvents(config: EventHandlingConfig) {
 		const { events, submission, caster } = config;
@@ -198,10 +201,10 @@ export class TurnCycle {
 	}
 
 	async init() {
-		// await this.onNewEvent({
-		// 	type: EVENTS.MESSAGE,
-		// 	text: 'Trainer wants to battle!',
-		// });
+		await this.onNewEvent({
+			type: EVENTS.MESSAGE,
+			text: `${this.battle.trainer.name} wants to battle!`,
+		});
 
 		this.turn();
 	}

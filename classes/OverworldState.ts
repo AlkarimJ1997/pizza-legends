@@ -61,10 +61,6 @@ export class OverworldState {
 		this.bindHeroPositionCheck();
 
 		this.startGameLoop();
-		// this.startCutscene([
-		// 	{ type: EVENTS.MESSAGE, text: 'Welcome to the demo!' },
-		// ]);
-		this.startCutscene([{ type: EVENTS.BATTLE, trainerId: 'beth' }]);
 	}
 
 	bindActionInput() {

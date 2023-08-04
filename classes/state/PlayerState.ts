@@ -15,7 +15,7 @@ class PlayerState {
 				belongsToTeam: TEAMS.PLAYER,
 				hp: 30,
 				maxHp: 50,
-				xp: 75,
+				xp: 90,
 				maxXp: 100,
 				level: 1,
 			},

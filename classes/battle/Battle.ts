@@ -27,6 +27,7 @@ export class Battle {
 	combatants: Combatant[] = [];
 	activeCombatants: ActiveCombatants = { PLAYER: null, ENEMY: null };
 	items: ItemConfig[] = [];
+	usedInstanceIds: { [key: string]: boolean } = {};
 
 	turnCycle: TurnCycle | null = null;
 	keyboardMenu: KeyboardMenu | null = null;
@@ -99,6 +100,9 @@ export class Battle {
 		// 	}),
 		// ];
 		this.loadCombatants();
+		this.overworld.playerState?.inventory.forEach(item => {
+			this.items.push({ ...item, team: TEAMS.PLAYER });
+		});
 	}
 
 	loadCombatants() {
@@ -115,7 +119,7 @@ export class Battle {
 					battle: this,
 				})
 			);
-      
+
 			this.activeCombatants[TEAMS.PLAYER] ??= id;
 		});
 
@@ -140,9 +144,6 @@ export class Battle {
 
 			this.activeCombatants[TEAMS.ENEMY] ??= id;
 		});
-
-		console.log(this.combatants);
-		console.log(this.activeCombatants);
 	}
 
 	// private addCombatant(
@@ -184,6 +185,31 @@ export class Battle {
 					const battleEvent = new BattleEvent(event, this);
 					battleEvent.init(resolve);
 				});
+			},
+			onWinner: winner => {
+				if (winner === TEAMS.PLAYER) {
+					this.overworld.playerState?.party.forEach(p => {
+						const battlePizza = this.combatants.find(c => c.config.id === p.id);
+
+						if (battlePizza) {
+							p.hp = battlePizza.config.hp;
+							p.xp = battlePizza.config.xp;
+							p.maxXp = battlePizza.config.maxXp;
+							p.level = battlePizza.config.level;
+						}
+					});
+
+					// Get rid of player's used items
+					if (this.overworld.playerState) {
+						this.overworld.playerState.inventory =
+							this.overworld.playerState.inventory.filter(({ instanceId }) => {
+								return !this.usedInstanceIds[instanceId];
+							});
+					}
+				}
+
+				this.overworld.battle = null;
+				this.onComplete();
 			},
 		});
 

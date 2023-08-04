@@ -27,8 +27,8 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{
 					events: [
 						{ type: EVENTS.MESSAGE, text: "I'm busy...", faceHero: 'npcA' },
-						{ type: EVENTS.MESSAGE, text: 'Go away!' },
-						{ type: EVENTS.WALK, direction: DIRECTIONS.UP, who: 'hero' },
+						{ type: EVENTS.MESSAGE, text: 'But fine. We can battle!' },
+						{ type: EVENTS.BATTLE, trainerId: 'beth' },
 					],
 				},
 			],
@@ -37,8 +37,16 @@ const OVERWORLD_STATE: OverworldConfig = {
 			id: 'npcB',
 			x: 8,
 			y: 4,
-			skin: SKINS.NPC2,
+			skin: SKINS.ERIO,
 			type: PLACEMENT_TYPES.NPC,
+			talking: [
+				{
+					events: [
+						{ type: EVENTS.MESSAGE, text: 'Bahaha!', faceHero: 'npcB' },
+						{ type: EVENTS.BATTLE, trainerId: 'erio' },
+					],
+				},
+			],
 		},
 	],
 	walls: ['7x5', '8x5', '7x6', '8x6'],
