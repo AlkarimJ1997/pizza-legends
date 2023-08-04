@@ -115,15 +115,13 @@ export class BattleEvent {
 		resolve();
 	}
 
-	giveXp(resolve: ResolveFn) {
+	async giveXp(resolve: ResolveFn) {
 		const { xp, combatant } = this.event as GiveExperienceEvent;
 
 		let amount = xp;
 
-		const step = () => {
-			if (amount <= 0) return resolve();
-
-			amount -= 1;
+		while (amount > 0) {
+			amount--;
 			combatant.update({ xp: combatant.config.xp + 1 });
 
 			if (combatant.config.xp === combatant.config.maxXp) {
@@ -134,10 +132,10 @@ export class BattleEvent {
 				});
 			}
 
-			requestAnimationFrame(step);
-		};
+			await wait(20);
+		}
 
-		requestAnimationFrame(step);
+		resolve();
 	}
 
 	animation(resolve: ResolveFn) {
