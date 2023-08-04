@@ -11,6 +11,8 @@ import type { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
 import Actions, { ActionName } from '@/data/ActionMap';
 import Animations from '@/data/AnimationMap';
+import Pizzas from '@/data/PizzaMap';
+import Trainers from '@/data/TrainerMap';
 
 declare global {
 	type CombatantConfig = PizzaConfig & {
@@ -118,6 +120,27 @@ declare global {
 		instanceId: string;
 		team: keyof typeof TEAMS;
 	};
+
+  type PlayerItem = {
+    actionId: ActionName;
+    instanceId: string;
+  }
+
+  // Trainers
+  type TrainerPizza = {
+    pizzaId: keyof typeof Pizzas;
+    hp?: number;
+    maxHp: number;
+    level: number;
+  }
+
+  type TrainerConfig = {
+    name: string;
+    src: Skin;
+    pizzas: TrainerPizza[];
+  }
+
+  type TrainerId = keyof typeof Trainers;
 
 	type ActionName = keyof typeof Actions;
 }

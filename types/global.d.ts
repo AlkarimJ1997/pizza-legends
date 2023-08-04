@@ -108,6 +108,7 @@ declare global {
 
 	type BattleStartEvent = {
 		type: 'BATTLE';
+		trainerId: TrainerId;
 	};
 
 	type BehaviorEvent = { who?: string } & (

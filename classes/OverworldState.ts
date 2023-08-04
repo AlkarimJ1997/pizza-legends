@@ -60,7 +60,7 @@ export class OverworldState {
 		// this.startCutscene([
 		// 	{ type: EVENTS.MESSAGE, text: 'Welcome to the demo!' },
 		// ]);
-		this.startCutscene([{ type: EVENTS.BATTLE }]);
+		this.startCutscene([{ type: EVENTS.BATTLE, trainerId: 'erio' }]);
 	}
 
 	bindActionInput() {

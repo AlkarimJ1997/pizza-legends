@@ -4,6 +4,7 @@ import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
+import Trainers from '@/data/TrainerMap';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
 
@@ -124,7 +125,10 @@ export class OverworldEvent {
 	}
 
 	battle(resolve: () => void) {
+		const { trainerId } = this.event as BattleStartEvent;
+
 		this.overworld.battle = new Battle({
+			trainer: Trainers[trainerId],
 			overworld: this.overworld,
 			onComplete: () => resolve(),
 		});
