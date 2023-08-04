@@ -121,23 +121,20 @@ export class BattleEvent {
 		let amount = xp;
 
 		const step = () => {
-			if (amount > 0) {
-				amount -= 1;
-				combatant.update({ xp: combatant.config.xp + 1 });
+			if (amount <= 0) return resolve();
 
-				if (combatant.config.xp === combatant.config.maxXp) {
-					combatant.update({
-						xp: 0,
-						maxXp: 100,
-						level: combatant.config.level + 1,
-					});
-				}
+			amount -= 1;
+			combatant.update({ xp: combatant.config.xp + 1 });
 
-				requestAnimationFrame(step);
-				return;
+			if (combatant.config.xp === combatant.config.maxXp) {
+				combatant.update({
+					xp: 0,
+					maxXp: Math.floor(combatant.config.maxXp * 1.5),
+					level: combatant.config.level + 1,
+				});
 			}
 
-			resolve();
+			requestAnimationFrame(step);
 		};
 
 		requestAnimationFrame(step);
