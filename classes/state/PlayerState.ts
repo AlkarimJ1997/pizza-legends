@@ -2,7 +2,7 @@ import type { Combatant } from '@/classes/battle/Combatant';
 import Pizzas from '@/data/PizzaMap';
 import { TEAMS } from '@/utils/consts';
 
-export class PlayerState {
+class PlayerState {
 	party: CombatantConfig[] = [];
 	lineup: string[] = [];
 	inventory: PlayerItem[] = [];
@@ -38,4 +38,4 @@ export class PlayerState {
 	}
 }
 
-window.playerState = new PlayerState();
+export const playerState = new PlayerState();

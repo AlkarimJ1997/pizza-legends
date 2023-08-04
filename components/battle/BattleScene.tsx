@@ -11,7 +11,7 @@ interface BattleSceneProps {
 const BattleScene = ({ overworld }: BattleSceneProps) => {
 	if (!overworld.battle) return null;
 
-	const { combatants, keyboardMenu } = overworld.battle;
+	const { combatants, trainer, keyboardMenu } = overworld.battle;
 
 	return (
 		<div
@@ -26,8 +26,8 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 				className='bottom-[57px] left-[1px] [&>img]:-translate-y-16'
 			/>
 			<BattleImage
-				src='/images/characters/people/npc3.png'
-				alt='Trainer'
+				src={trainer.src}
+				alt={trainer.name}
 				className='top-[42px] right-[-1px]'
 			/>
 			{combatants.map(combatant => (

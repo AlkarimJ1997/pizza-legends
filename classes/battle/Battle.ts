@@ -26,7 +26,7 @@ export class Battle {
 
 	combatants: Combatant[] = [];
 	activeCombatants: ActiveCombatants = { PLAYER: null, ENEMY: null };
-	items: ItemConfig[];
+	items: ItemConfig[] = [];
 
 	turnCycle: TurnCycle | null = null;
 	keyboardMenu: KeyboardMenu | null = null;
@@ -98,36 +98,70 @@ export class Battle {
 		// 		battle: this,
 		// 	}),
 		// ];
+		this.loadCombatants();
+	}
 
-		window.playerState.lineup.forEach(id => {
-			this.addCombatant(id, TEAMS.PLAYER, window.playerState.party[id]);
+	loadCombatants() {
+		this.overworld.playerState?.lineup.forEach(id => {
+			const config = this.overworld.playerState?.party.find(p => p.id === id);
+
+			if (!config) {
+				throw new Error(`Invalid pizza ID ${id}, check playerState lineup`);
+			}
+
+			this.combatants.push(
+				new Combatant({
+					config: { ...config, isPlayerControlled: true },
+					battle: this,
+				})
+			);
+      
+			this.activeCombatants[TEAMS.PLAYER] ??= id;
 		});
 
-    this.trainer.pizzas.forEach(pizza => {
-      this.addCombatant(uuid(), TEAMS.ENEMY, pizza);
-    })
+		this.trainer.pizzas.forEach(({ pizzaId, hp, maxHp, level }) => {
+			const id = uuid();
 
-		this.items = [
-			// { actionId: 'item_recoverStatus', instanceId: 'p1', team: TEAMS.PLAYER },
-			// { actionId: 'item_recoverStatus', instanceId: 'p2', team: TEAMS.PLAYER },
-			// { actionId: 'item_recoverStatus', instanceId: 'p3', team: TEAMS.ENEMY },
-			// { actionId: 'item_recoverHp', instanceId: 'p4', team: TEAMS.PLAYER },
-		];
+			this.combatants.push(
+				new Combatant({
+					config: {
+						...Pizzas[pizzaId],
+						id,
+						belongsToTeam: TEAMS.ENEMY,
+						hp: hp ?? maxHp,
+						maxHp,
+						xp: 0,
+						maxXp: 100,
+						level,
+					},
+					battle: this,
+				})
+			);
+
+			this.activeCombatants[TEAMS.ENEMY] ??= id;
+		});
+
+		console.log(this.combatants);
+		console.log(this.activeCombatants);
 	}
 
-	addCombatant(id: string, team: keyof typeof TEAMS, config: TrainerConfig) {
-		this.combatants.push(
-			new Combatant({
-				config: {
-					belongsToTeam: team,
-					isPlayerControlled: team === TEAMS.PLAYER,
-				},
-				battle: this,
-			})
-		);
+	// private addCombatant(
+	// 	id: string,
+	// 	team: keyof typeof TEAMS,
+	// 	config: CombatantConfig | TrainerPizza
+	// ) {
+	// 	this.combatants.push(
+	// 		new Combatant({
+	// 			config: {
+	// 				belongsToTeam: team,
+	// 				isPlayerControlled: team === TEAMS.PLAYER,
+	// 			},
+	// 			battle: this,
+	// 		})
+	// 	);
 
-		this.activeCombatants[team] ??= id;
-	}
+	// 	this.activeCombatants[team] ??= id;
+	// }
 
 	init() {
 		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
