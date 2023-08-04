@@ -5,6 +5,7 @@ import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { STATUSES, TEAMS } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 import Pizzas from '@/data/PizzaMap';
+import { Team } from '@/classes/battle/Team';
 
 interface BattleProps {
 	onComplete: () => void;
@@ -25,6 +26,9 @@ export class Battle {
 
 	turnCycle: TurnCycle | null = null;
 	keyboardMenu: KeyboardMenu | null = null;
+
+	playerTeam: Team | null = null;
+	trainerTeam: Team | null = null;
 
 	constructor({ overworld, onComplete }: BattleProps) {
 		this.combatants = [
@@ -105,6 +109,19 @@ export class Battle {
 	}
 
 	init() {
+		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
+		this.trainerTeam = new Team(TEAMS.ENEMY, 'Trainer');
+
+		// Load teams with combatants
+		this.combatants.forEach(c => {
+			if (c.team === TEAMS.PLAYER) {
+				this.playerTeam?.combatants.push(c);
+				return;
+			}
+
+			this.trainerTeam?.combatants.push(c);
+		});
+
 		this.turnCycle = new TurnCycle({
 			battle: this,
 			onNewEvent: event => {

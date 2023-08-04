@@ -1,6 +1,7 @@
 import BattleHud from '@/components/battle/BattleHud';
 import BattleImage from '@/components/battle/BattleImage';
 import Pizza from '@/components/battle/Pizza';
+import TeamHud from '@/components/battle/TeamHud';
 import Menu from '@/components/ui/Menu';
 
 interface BattleSceneProps {
@@ -40,6 +41,8 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 					<Pizza combatant={combatant} />
 				</div>
 			))}
+			<TeamHud team={overworld.battle.playerTeam} />
+			<TeamHud team={overworld.battle.trainerTeam} />
 			{keyboardMenu && (
 				<Menu options={keyboardMenu.options} inBattle={!!overworld.battle} />
 			)}
