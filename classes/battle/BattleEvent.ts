@@ -115,6 +115,34 @@ export class BattleEvent {
 		resolve();
 	}
 
+	giveXp(resolve: ResolveFn) {
+		const { xp, combatant } = this.event as GiveExperienceEvent;
+
+		let amount = xp;
+
+		const step = () => {
+			if (amount > 0) {
+				amount -= 1;
+				combatant.update({ xp: combatant.config.xp + 1 });
+
+				if (combatant.config.xp === combatant.config.maxXp) {
+					combatant.update({
+						xp: 0,
+						maxXp: 100,
+						level: combatant.config.level + 1,
+					});
+				}
+
+				requestAnimationFrame(step);
+				return;
+			}
+
+			resolve();
+		};
+
+		requestAnimationFrame(step);
+	}
+
 	animation(resolve: ResolveFn) {
 		if (!('animation' in this.event)) {
 			throw new Error('Animation event must have an animation property');
@@ -137,6 +165,8 @@ export class BattleEvent {
 				return this.animation(resolve);
 			case BATTLE_EVENTS.SWAP:
 				return this.swap(resolve);
+			case BATTLE_EVENTS.GIVE_EXP:
+				return this.giveXp(resolve);
 			default:
 				return resolve();
 		}

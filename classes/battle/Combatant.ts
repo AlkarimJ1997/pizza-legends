@@ -42,6 +42,10 @@ export class Combatant {
 		return this.config.belongsToTeam;
 	}
 
+	get givesExp() {
+		return this.config.level * 20;
+	}
+
 	getPostEvents(): BattleAction[] {
 		if (this.config.status?.type === STATUSES.SAUCY) {
 			return [

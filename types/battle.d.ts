@@ -97,13 +97,20 @@ declare global {
 		team: keyof typeof TEAMS;
 	};
 
+  type GiveExperienceEvent = {
+    type: 'GIVE_EXP';
+    xp: number;
+    combatant: Combatant;
+  }
+
 	type BattleAction =
 		| BattleMessageEvent
 		| SubmissionMenuEvent
 		| StateChangeEvent
 		| BattleAnimationEvent
 		| PizzaSwapEvent
-		| ReplacementMenuEvent;
+		| ReplacementMenuEvent
+    | GiveExperienceEvent;
 
 	// Battle Items
 	type ItemConfig = {

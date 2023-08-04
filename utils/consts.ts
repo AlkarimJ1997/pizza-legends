@@ -19,6 +19,7 @@ export const BATTLE_EVENTS = {
 	ANIMATION: 'ANIMATION',
   SWAP: 'SWAP',
   REPLACEMENT_MENU: 'REPLACEMENT_MENU',
+  GIVE_EXP: 'GIVE_EXP',
 } as const;
 
 export const ANIMATIONS = {

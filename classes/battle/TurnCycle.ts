@@ -117,6 +117,26 @@ export class TurnCycle {
 				type: EVENTS.MESSAGE,
 				text: `${target.config.name} fainted!`,
 			});
+
+			if (target.team === TEAMS.ENEMY) {
+				const activeId = this.battle.activeCombatants[TEAMS.PLAYER];
+				const combatant = this.battle.combatants.find(c => {
+					return c.config.id === activeId;
+				});
+
+				if (!combatant) throw new Error('Combatant not found');
+
+        await this.onNewEvent({
+          type: EVENTS.MESSAGE,
+          text: `${combatant.config.name} gained ${target.givesExp} XP!`,
+        })
+
+				await this.onNewEvent({
+					type: BATTLE_EVENTS.GIVE_EXP,
+					xp: target.givesExp,
+					combatant,
+				});
+			}
 		}
 
 		return targetDead;
@@ -158,6 +178,10 @@ export class TurnCycle {
 			return i.instanceId !== instanceId;
 		});
 	}
+
+  handleExperienceGain() {
+    
+  }
 
 	async handleEvents(config: EventHandlingConfig) {
 		const { events, submission, caster } = config;
