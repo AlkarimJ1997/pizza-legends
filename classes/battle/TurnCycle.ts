@@ -1,6 +1,7 @@
 import type { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
 import { BATTLE_EVENTS, EVENTS, TEAMS } from '@/utils/consts';
+import { wait } from '@/utils/helpers';
 
 type EventHandlingConfig = {
 	events: BattleAction[];
@@ -204,6 +205,7 @@ export class TurnCycle {
 	}
 
 	async init() {
+    await wait(400) // slight delay for scene transition
 		await this.onNewEvent({
 			type: EVENTS.MESSAGE,
 			text: `${this.battle.trainer.name} wants to battle!`,
