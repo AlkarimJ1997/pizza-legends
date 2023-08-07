@@ -40,68 +40,14 @@ export class Battle {
 		this.trainer = trainer;
 		this.overworld = overworld;
 		this.onComplete = onComplete;
-		// this.combatants = [
-		// 	new Combatant({
-		// 		config: {
-		// 			...Pizzas.s001,
-		// 			id: 'player1',
-		// 			belongsToTeam: TEAMS.PLAYER,
-		// 			hp: 30,
-		// 			maxHp: 50,
-		// 			xp: 95,
-		// 			maxXp: 100,
-		// 			level: 1,
-		// 			status: {
-		// 				type: STATUSES.SAUCY,
-		// 				expiresIn: 3,
-		// 			},
-		// 			isPlayerControlled: true,
-		// 		},
-		// 		battle: this,
-		// 	}),
-		// 	new Combatant({
-		// 		config: {
-		// 			...Pizzas.s002,
-		// 			id: 'player2',
-		// 			belongsToTeam: TEAMS.PLAYER,
-		// 			hp: 30,
-		// 			maxHp: 50,
-		// 			xp: 75,
-		// 			maxXp: 100,
-		// 			level: 1,
-		// 			isPlayerControlled: true,
-		// 		},
-		// 		battle: this,
-		// 	}),
-		// 	new Combatant({
-		// 		config: {
-		// 			...Pizzas.v001,
-		// 			id: 'enemy1',
-		// 			belongsToTeam: TEAMS.ENEMY,
-		// 			hp: 1,
-		// 			maxHp: 50,
-		// 			xp: 20,
-		// 			maxXp: 100,
-		// 			level: 1,
-		// 		},
-		// 		battle: this,
-		// 	}),
-		// 	new Combatant({
-		// 		config: {
-		// 			...Pizzas.f001,
-		// 			id: 'enemy2',
-		// 			belongsToTeam: TEAMS.ENEMY,
-		// 			hp: 25,
-		// 			maxHp: 50,
-		// 			xp: 30,
-		// 			maxXp: 100,
-		// 			level: 1,
-		// 		},
-		// 		battle: this,
-		// 	}),
-		// ];
+
 		this.loadCombatants();
-    this.loadItems();
+		this.loadItems();
+	}
+
+	private addCombatant(config: CombatantConfig) {
+		this.combatants.push(new Combatant({ config, battle: this }));
+		this.activeCombatants[config.belongsToTeam] ??= config.id;
 	}
 
 	loadCombatants() {
@@ -112,36 +58,20 @@ export class Battle {
 				throw new Error(`Invalid pizza ID ${id}, check playerState lineup`);
 			}
 
-			this.combatants.push(
-				new Combatant({
-					config: { ...config, isPlayerControlled: true },
-					battle: this,
-				})
-			);
-
-			this.activeCombatants[TEAMS.PLAYER] ??= id;
+			this.addCombatant({ ...config, isPlayerControlled: true });
 		});
 
 		this.trainer.pizzas.forEach(({ pizzaId, hp, maxHp, level }) => {
-			const id = uuid();
-
-			this.combatants.push(
-				new Combatant({
-					config: {
-						...Pizzas[pizzaId],
-						id,
-						belongsToTeam: TEAMS.ENEMY,
-						hp: hp ?? maxHp,
-						maxHp,
-						xp: 0,
-						maxXp: 100,
-						level,
-					},
-					battle: this,
-				})
-			);
-
-			this.activeCombatants[TEAMS.ENEMY] ??= id;
+			this.addCombatant({
+				...Pizzas[pizzaId],
+				id: uuid(),
+				belongsToTeam: TEAMS.ENEMY,
+				hp: hp ?? maxHp,
+				maxHp,
+				xp: 0,
+				maxXp: 100,
+				level,
+			});
 		});
 	}
 
@@ -149,23 +79,20 @@ export class Battle {
 		this.items = playerState.inventory.map(i => ({ ...i, team: TEAMS.PLAYER }));
 	}
 
-	// private addCombatant(
-	// 	id: string,
-	// 	team: keyof typeof TEAMS,
-	// 	config: CombatantConfig | TrainerPizza
-	// ) {
-	// 	this.combatants.push(
-	// 		new Combatant({
-	// 			config: {
-	// 				belongsToTeam: team,
-	// 				isPlayerControlled: team === TEAMS.PLAYER,
-	// 			},
-	// 			battle: this,
-	// 		})
-	// 	);
+	loadTeams() {
+		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
+		this.trainerTeam = new Team(TEAMS.ENEMY, 'Trainer');
 
-	// 	this.activeCombatants[team] ??= id;
-	// }
+		// Load teams with combatants
+		this.combatants.forEach(c => {
+			if (c.team === TEAMS.PLAYER) {
+				this.playerTeam?.combatants.push(c);
+				return;
+			}
+
+			this.trainerTeam?.combatants.push(c);
+		});
+	}
 
 	handleStateUpdate() {
 		playerState.party.forEach(p => {
@@ -191,18 +118,7 @@ export class Battle {
 	}
 
 	init() {
-		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
-		this.trainerTeam = new Team(TEAMS.ENEMY, 'Trainer');
-
-		// Load teams with combatants
-		this.combatants.forEach(c => {
-			if (c.team === TEAMS.PLAYER) {
-				this.playerTeam?.combatants.push(c);
-				return;
-			}
-
-			this.trainerTeam?.combatants.push(c);
-		});
+		this.loadTeams();
 
 		this.turnCycle = new TurnCycle({
 			battle: this,
