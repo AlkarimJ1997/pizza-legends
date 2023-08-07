@@ -7,6 +7,7 @@ import type { OverworldState } from '@/classes/OverworldState';
 import { Team } from '@/classes/battle/Team';
 import Pizzas from '@/data/PizzaMap';
 import { v4 as uuid } from 'uuid';
+import { playerState } from '@/classes/state/PlayerState';
 
 interface BattleProps {
 	trainer: TrainerConfig;
@@ -100,14 +101,14 @@ export class Battle {
 		// 	}),
 		// ];
 		this.loadCombatants();
-		this.overworld.playerState?.inventory.forEach(item => {
+		playerState.inventory.forEach(item => {
 			this.items.push({ ...item, team: TEAMS.PLAYER });
 		});
 	}
 
 	loadCombatants() {
-		this.overworld.playerState?.lineup.forEach(id => {
-			const config = this.overworld.playerState?.party.find(p => p.id === id);
+		playerState.lineup.forEach(id => {
+			const config = playerState.party.find(p => p.id === id);
 
 			if (!config) {
 				throw new Error(`Invalid pizza ID ${id}, check playerState lineup`);
@@ -165,9 +166,7 @@ export class Battle {
 	// }
 
 	handleStateUpdate() {
-		if (!this.overworld.playerState) return;
-
-		this.overworld.playerState.party.forEach(p => {
+		playerState.party.forEach(p => {
 			const battlePizza = this.combatants.find(c => c.config.id === p.id);
 
 			if (battlePizza) {
@@ -179,16 +178,15 @@ export class Battle {
 		});
 
 		// Get rid of player's used items
-		this.overworld.playerState.inventory =
-			this.overworld.playerState.inventory.filter(({ instanceId }) => {
-				return !this.usedInstanceIds[instanceId];
-			});
+		playerState.inventory = playerState.inventory.filter(({ instanceId }) => {
+			return !this.usedInstanceIds[instanceId];
+		});
 	}
 
-  endBattle() {
-    this.overworld.battle = null;
-    this.onComplete();
-  }
+	endBattle() {
+		this.overworld.battle = null;
+		this.onComplete();
+	}
 
 	init() {
 		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
@@ -213,7 +211,7 @@ export class Battle {
 				});
 			},
 			onWinner: winner => {
-        // Only update state if player won (to be nice to the player)
+				// Only update state if player won (to be nice to the player)
 				winner === TEAMS.PLAYER && this.handleStateUpdate();
 				this.endBattle();
 			},

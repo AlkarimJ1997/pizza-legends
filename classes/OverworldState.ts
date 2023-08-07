@@ -12,7 +12,6 @@ import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
 import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
-import { playerState } from '@/classes/state/PlayerState';
 
 export class OverworldState {
 	id: MapName;
@@ -23,7 +22,6 @@ export class OverworldState {
 	cutsceneSpaces: { [key: string]: StoryConfig[] } = {};
 
 	isCutscenePlaying: boolean = false;
-  playerState: typeof playerState | null = null;
 	heroRef: HeroPlacement | undefined;
 
 	directionControls: DirectionControls | null = null;
@@ -50,8 +48,6 @@ export class OverworldState {
 		});
 		this.walls = overworldData.walls || [];
 		this.cutsceneSpaces = overworldData.cutsceneSpaces || {};
-
-    this.playerState = playerState;
     
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
