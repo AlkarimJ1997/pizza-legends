@@ -8,7 +8,6 @@ import TextMessage from '@/components/ui/TextMessage';
 import SceneChange from '@/components/ui/SceneChange';
 import { setBackgroundColor } from '@/utils/helpers';
 import BattleScene from '@/components/battle/BattleScene';
-import clsx from 'clsx';
 import Container from '@/components/Container';
 
 const RenderOverworld = () => {
