@@ -127,13 +127,21 @@ export class OverworldEvent {
 	battle(resolve: () => void) {
 		const { trainerId } = this.event as BattleStartEvent;
 
-		this.overworld.battle = new Battle({
-			trainer: Trainers[trainerId],
+		this.overworld.sceneTransition = new SceneTransition({
 			overworld: this.overworld,
-			onComplete: () => resolve(),
+			callback: () => {
+				this.overworld.battle = new Battle({
+					trainer: Trainers[trainerId],
+					overworld: this.overworld,
+					onComplete: () => resolve(),
+				});
+
+				this.overworld.battle.init();
+				this.overworld.sceneTransition?.fadeOut();
+			},
 		});
 
-		this.overworld.battle.init();
+		this.overworld.sceneTransition.init();
 	}
 
 	init() {
