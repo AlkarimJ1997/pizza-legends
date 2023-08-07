@@ -164,6 +164,32 @@ export class Battle {
 	// 	this.activeCombatants[team] ??= id;
 	// }
 
+	handleStateUpdate() {
+		if (!this.overworld.playerState) return;
+
+		this.overworld.playerState.party.forEach(p => {
+			const battlePizza = this.combatants.find(c => c.config.id === p.id);
+
+			if (battlePizza) {
+				p.hp = battlePizza.config.hp;
+				p.xp = battlePizza.config.xp;
+				p.maxXp = battlePizza.config.maxXp;
+				p.level = battlePizza.config.level;
+			}
+		});
+
+		// Get rid of player's used items
+		this.overworld.playerState.inventory =
+			this.overworld.playerState.inventory.filter(({ instanceId }) => {
+				return !this.usedInstanceIds[instanceId];
+			});
+	}
+
+  endBattle() {
+    this.overworld.battle = null;
+    this.onComplete();
+  }
+
 	init() {
 		this.playerTeam = new Team(TEAMS.PLAYER, 'Hero');
 		this.trainerTeam = new Team(TEAMS.ENEMY, 'Trainer');
@@ -187,29 +213,9 @@ export class Battle {
 				});
 			},
 			onWinner: winner => {
-				if (winner === TEAMS.PLAYER) {
-					this.overworld.playerState?.party.forEach(p => {
-						const battlePizza = this.combatants.find(c => c.config.id === p.id);
-
-						if (battlePizza) {
-							p.hp = battlePizza.config.hp;
-							p.xp = battlePizza.config.xp;
-							p.maxXp = battlePizza.config.maxXp;
-							p.level = battlePizza.config.level;
-						}
-					});
-
-					// Get rid of player's used items
-					if (this.overworld.playerState) {
-						this.overworld.playerState.inventory =
-							this.overworld.playerState.inventory.filter(({ instanceId }) => {
-								return !this.usedInstanceIds[instanceId];
-							});
-					}
-				}
-
-				this.overworld.battle = null;
-				this.onComplete();
+        // Only update state if player won (to be nice to the player)
+				winner === TEAMS.PLAYER && this.handleStateUpdate();
+				this.endBattle();
 			},
 		});
 
