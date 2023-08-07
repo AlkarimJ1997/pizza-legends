@@ -49,8 +49,8 @@ const RenderOverworld = () => {
 					</div>
 				)}
 				<TextMessage overworld={overworld} />
-				<SceneChange overworld={overworld} />
 			</Container>
+			<SceneChange overworld={overworld} />
 		</div>
 	);
 };

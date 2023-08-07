@@ -3,9 +3,7 @@ import { Battle } from '@/classes/battle/Battle';
 import type { Combatant } from '@/classes/battle/Combatant';
 import Actions from '@/data/ActionMap';
 
-type PageTree = {
-	[key: string]: PageOption[];
-};
+type PageTree = { [key: string]: PageOption[] };
 
 type QuantityConfig = {
 	actionId: ActionName;

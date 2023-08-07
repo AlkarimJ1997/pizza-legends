@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import clsx from 'clsx';
 
 interface SceneChangeProps {

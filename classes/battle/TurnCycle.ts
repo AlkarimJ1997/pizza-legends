@@ -77,8 +77,8 @@ export class TurnCycle {
 				type: EVENTS.MESSAGE,
 				text: `${winner} won the battle!`,
 			});
-			
-      this.onWinner(winner);
+
+			this.onWinner(winner);
 			return;
 		}
 
@@ -122,25 +122,7 @@ export class TurnCycle {
 				text: `${target.config.name} fainted!`,
 			});
 
-			if (target.team === TEAMS.ENEMY) {
-				const activeId = this.battle.activeCombatants[TEAMS.PLAYER];
-				const combatant = this.battle.combatants.find(c => {
-					return c.config.id === activeId;
-				});
-
-				if (!combatant) throw new Error('Combatant not found');
-
-				await this.onNewEvent({
-					type: EVENTS.MESSAGE,
-					text: `${combatant.config.name} gained ${target.givesExp} XP!`,
-				});
-
-				await this.onNewEvent({
-					type: BATTLE_EVENTS.GIVE_EXP,
-					xp: target.givesExp,
-					combatant,
-				});
-			}
+			await this.handleExperienceGain(target);
 		}
 
 		return targetDead;
@@ -178,13 +160,34 @@ export class TurnCycle {
 	handleItemUsage(instanceId: string | null) {
 		if (!instanceId) return;
 
-    this.battle.usedInstanceIds[instanceId] = true;
+		this.battle.usedInstanceIds[instanceId] = true;
 		this.battle.items = this.battle.items.filter(i => {
 			return i.instanceId !== instanceId;
 		});
 	}
 
-	handleExperienceGain() {}
+	async handleExperienceGain(target: Combatant) {
+    // Player fainted, so no exp
+		if (target.team === TEAMS.PLAYER) return;
+
+		const activeId = this.battle.activeCombatants[TEAMS.PLAYER];
+		const combatant = this.battle.combatants.find(c => {
+			return c.config.id === activeId;
+		});
+
+		if (!combatant) throw new Error('Combatant not found');
+
+		await this.onNewEvent({
+			type: EVENTS.MESSAGE,
+			text: `${combatant.config.name} gained ${target.givesExp} XP!`,
+		});
+
+		await this.onNewEvent({
+			type: BATTLE_EVENTS.GIVE_EXP,
+			xp: target.givesExp,
+			combatant,
+		});
+	}
 
 	async handleEvents(config: EventHandlingConfig) {
 		const { events, submission, caster } = config;
