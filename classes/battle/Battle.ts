@@ -101,9 +101,7 @@ export class Battle {
 		// 	}),
 		// ];
 		this.loadCombatants();
-		playerState.inventory.forEach(item => {
-			this.items.push({ ...item, team: TEAMS.PLAYER });
-		});
+    this.loadItems();
 	}
 
 	loadCombatants() {
@@ -145,6 +143,10 @@ export class Battle {
 
 			this.activeCombatants[TEAMS.ENEMY] ??= id;
 		});
+	}
+
+	loadItems() {
+		this.items = playerState.inventory.map(i => ({ ...i, team: TEAMS.PLAYER }));
 	}
 
 	// private addCombatant(
