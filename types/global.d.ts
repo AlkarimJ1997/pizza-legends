@@ -11,6 +11,7 @@ import type { Message } from '@/classes/Message';
 import type { SceneTransition } from '@/classes/SceneTransition';
 import type { Combatant } from '@/classes/battle/Combatant';
 import type { Battle } from '@/classes/battle/Battle';
+import type { OverworldHud } from '@/classes/OverworldHud';
 
 declare global {
 	// Utilities
@@ -58,6 +59,7 @@ declare global {
 		message: Message | null;
 		sceneTransition: SceneTransition | null;
 		battle: Battle | null;
+    hud: OverworldHud | null;
 	};
 
 	// Animation

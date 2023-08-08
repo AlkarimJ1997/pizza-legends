@@ -1,7 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { EVENTS, CUSTOM_EVENTS, DIRECTIONS, MAPS } from '@/utils/consts';
+import { CUSTOM_EVENTS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
@@ -12,6 +12,7 @@ import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
 import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
+import { OverworldHud } from '@/classes/OverworldHud';
 
 export class OverworldState {
 	id: MapName;
@@ -31,6 +32,7 @@ export class OverworldState {
 	message: Message | null = null;
 	sceneTransition: SceneTransition | null = null;
 	battle: Battle | null = null;
+	hud: OverworldHud | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -48,10 +50,11 @@ export class OverworldState {
 		});
 		this.walls = overworldData.walls || [];
 		this.cutsceneSpaces = overworldData.cutsceneSpaces || {};
-    
+
 		this.heroRef = this.placements.find(p => p.id === 'hero') as HeroPlacement;
 		this.camera = new Camera(this, this.heroRef);
 		this.directionControls = new DirectionControls();
+		this.hud = new OverworldHud();
 
 		this.bindActionInput();
 		this.bindHeroPositionCheck();
@@ -156,6 +159,7 @@ export class OverworldState {
 			message: this.message,
 			sceneTransition: this.sceneTransition,
 			battle: this.battle,
+			hud: this.hud,
 		};
 	}
 
