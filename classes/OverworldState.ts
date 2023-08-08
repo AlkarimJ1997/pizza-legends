@@ -1,7 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { CUSTOM_EVENTS, MAPS } from '@/utils/consts';
+import { CUSTOM_EVENTS, EVENTS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
@@ -13,6 +13,7 @@ import { getNextCoords } from '@/utils/helpers';
 import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
 import { OverworldHud } from '@/classes/OverworldHud';
+import { Pause } from '@/classes/Pause';
 
 export class OverworldState {
 	id: MapName;
@@ -33,6 +34,7 @@ export class OverworldState {
 	sceneTransition: SceneTransition | null = null;
 	battle: Battle | null = null;
 	hud: OverworldHud | null = null;
+	pause: Pause | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -77,6 +79,12 @@ export class OverworldState {
 			if (match && match.talking.length > 0 && !this.isCutscenePlaying) {
 				this.startCutscene(match.talking[0].events);
 			}
+		});
+
+		new KeyPressListener('Escape', () => {
+			if (this.isCutscenePlaying) return;
+
+			this.startCutscene([{ type: EVENTS.PAUSE }]);
 		});
 	}
 
@@ -139,6 +147,12 @@ export class OverworldState {
 	}
 
 	tick() {
+		// If paused, emit React state and return
+		if (this.pause) {
+			this.onEmit(this.getState());
+			return;
+		}
+
 		// Check for movement
 		if (this.directionControls?.direction) {
 			this.heroRef?.controllerMoveRequested(this.directionControls.direction);
@@ -160,6 +174,7 @@ export class OverworldState {
 			sceneTransition: this.sceneTransition,
 			battle: this.battle,
 			hud: this.hud,
+			pause: this.pause,
 		};
 	}
 

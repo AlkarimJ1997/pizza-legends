@@ -4,6 +4,7 @@ import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
+import { PauseMenu } from '@/classes/PauseMenu';
 import Trainers from '@/data/TrainerMap';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
@@ -144,6 +145,17 @@ export class OverworldEvent {
 		this.overworld.sceneTransition.init();
 	}
 
+	pause(resolve: () => void) {
+		this.overworld.pauseMenu = new PauseMenu({
+			onComplete: () => {
+				resolve();
+				this.overworld.pauseMenu = null;
+			},
+		});
+
+		this.overworld.pauseMenu.init();
+	}
+
 	init() {
 		return new Promise<void>(resolve => {
 			switch (this.event.type) {
@@ -157,6 +169,8 @@ export class OverworldEvent {
 					return this.changeMap(resolve);
 				case EVENTS.BATTLE:
 					return this.battle(resolve);
+				case EVENTS.PAUSE:
+					return this.pause(resolve);
 				default:
 					return resolve();
 			}

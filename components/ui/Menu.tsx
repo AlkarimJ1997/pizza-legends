@@ -7,7 +7,7 @@ interface MenuProps {
 	inBattle: boolean;
 }
 
-const Menu = ({ options, inBattle = false }: MenuProps) => {
+const Menu = ({ options, inBattle = true }: MenuProps) => {
 	const [focusedIndex, setFocusedIndex] = useState<number>(0);
 	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 

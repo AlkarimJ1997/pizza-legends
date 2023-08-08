@@ -12,6 +12,7 @@ import type { SceneTransition } from '@/classes/SceneTransition';
 import type { Combatant } from '@/classes/battle/Combatant';
 import type { Battle } from '@/classes/battle/Battle';
 import type { OverworldHud } from '@/classes/OverworldHud';
+import type { Pause } from '@/classes/Pause';
 
 declare global {
 	// Utilities
@@ -59,7 +60,8 @@ declare global {
 		message: Message | null;
 		sceneTransition: SceneTransition | null;
 		battle: Battle | null;
-    hud: OverworldHud | null;
+		hud: OverworldHud | null;
+		pause: Pause | null;
 	};
 
 	// Animation
@@ -113,12 +115,15 @@ declare global {
 		trainerId: TrainerId;
 	};
 
+	type PauseEvent = { type: 'PAUSE' };
+
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
 		| StandEvent
 		| TextMessageEvent
 		| MapChangeEvent
 		| BattleStartEvent
+		| PauseEvent
 	);
 
 	// Revealing Text

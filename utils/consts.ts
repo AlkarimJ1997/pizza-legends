@@ -11,6 +11,7 @@ export const EVENTS = {
 	MESSAGE: 'MESSAGE',
 	MAP_CHANGE: 'MAP_CHANGE',
 	BATTLE: 'BATTLE',
+  PAUSE: 'PAUSE',
 } as const;
 
 export const BATTLE_EVENTS = {
