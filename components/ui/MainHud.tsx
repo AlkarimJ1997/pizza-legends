@@ -11,7 +11,7 @@ const MainHud = ({ overworld }: HudProps) => {
 
 	return (
 		<div
-			className='absolute left-0 -top-6 scale-[2]'
+			className='absolute left-0 -top-10 scale-[1.5] sm:scale-[2] sm:-top-6'
 			style={{
 				imageRendering: 'pixelated',
 			}}>
