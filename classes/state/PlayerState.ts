@@ -44,11 +44,16 @@ class PlayerState {
 		this.inventory = [{ actionId: 'item_recoverHp', instanceId: 'item1' }];
 	}
 
-  swapLineup(oldId: string, incomingId: string) {
-    const oldIndex = this.lineup.indexOf(oldId);
+	swapLineup(oldId: string, incomingId: string) {
+		const oldIndex = this.lineup.indexOf(oldId);
 
-    this.lineup[oldIndex] = incomingId;
-  }
+		this.lineup[oldIndex] = incomingId;
+	}
+
+	moveToFront(id: string) {
+		this.lineup = this.lineup.filter(i => i !== id);
+		this.lineup.unshift(id);
+	}
 }
 
 export const playerState = new PlayerState();

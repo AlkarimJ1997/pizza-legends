@@ -15,13 +15,17 @@ const MainHud = ({ overworld }: HudProps) => {
 			style={{
 				imageRendering: 'pixelated',
 			}}>
-			{playerState.party
-				.filter(m => playerState.lineup.includes(m.id))
-				.map(member => (
+			{playerState.lineup.map(id => {
+				const member = playerState.party.find(m => m.id === id);
+
+				if (!member) return null;
+
+				return (
 					<div key={member.id} className='relative mb-14'>
 						<PizzaHud config={member} hp={member.hp} xp={member.xp} isActive />
 					</div>
-				))}
+				);
+			})}
 		</div>
 	);
 };

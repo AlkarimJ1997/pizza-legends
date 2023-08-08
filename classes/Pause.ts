@@ -59,6 +59,7 @@ export class Pause {
 				label: 'Move to front',
 				description: 'Move this pizza to the front of your party',
 				handler: () => {
+          playerState.moveToFront(pageKey);
 					this.keyboardMenu?.setOptions(this.getOptions('root'));
 				},
 			},
