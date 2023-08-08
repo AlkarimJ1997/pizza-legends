@@ -1,4 +1,4 @@
-import Menu from '@/components/ui/Menu';
+import Menu from '@/components/battle/BattleMenu';
 
 interface PauseMenuProps {
 	overworld: OverworldChanges;
@@ -11,7 +11,7 @@ const PauseMenu = ({ overworld }: PauseMenuProps) => {
 
 	return (
 		<div className='absolute inset-0 grid place-items-center'>
-			<Menu options={options} inBattle={false} />
+			{/* <Menu options={options} inBattle={false} /> */}
 		</div>
 	);
 };

@@ -2,12 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
 import useKeyPress from '@/hooks/useKeyPress';
 
-interface MenuProps {
+interface BattleMenuProps {
 	options: PageOption[];
-	inBattle: boolean;
 }
 
-const Menu = ({ options, inBattle = true }: MenuProps) => {
+const BattleMenu = ({ options }: BattleMenuProps) => {
 	const [focusedIndex, setFocusedIndex] = useState<number>(0);
 	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -39,11 +38,7 @@ const Menu = ({ options, inBattle = true }: MenuProps) => {
 
 	return (
 		<div className='text-slate-100'>
-			<div
-				className={clsx(
-					'absolute bg-slate-700 z-10',
-					inBattle && 'left-0 right-0 bottom-2 w-[140px] mx-auto'
-				)}>
+			<div className='absolute bg-slate-700 z-10 left-0 right-0 bottom-2 w-[140px] mx-auto'>
 				{options.map(({ label, disabled, handler, right }, i) => (
 					<div key={i} className='relative flex items-center text-[7px]'>
 						<button
@@ -68,4 +63,4 @@ const Menu = ({ options, inBattle = true }: MenuProps) => {
 	);
 };
 
-export default Menu;
+export default BattleMenu;

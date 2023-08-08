@@ -4,10 +4,10 @@ import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
 import type { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
-import { PauseMenu } from '@/classes/PauseMenu';
 import Trainers from '@/data/TrainerMap';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
+import { Pause } from '@/classes/Pause';
 
 interface OverworldEventProps {
 	overworld: OverworldState;
@@ -146,14 +146,14 @@ export class OverworldEvent {
 	}
 
 	pause(resolve: () => void) {
-		this.overworld.pauseMenu = new PauseMenu({
+		this.overworld.pause = new Pause({
 			onComplete: () => {
 				resolve();
-				this.overworld.pauseMenu = null;
+				this.overworld.pause = null;
 			},
 		});
 
-		this.overworld.pauseMenu.init();
+		this.overworld.pause.init();
 	}
 
 	init() {

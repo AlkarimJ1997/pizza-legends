@@ -13,14 +13,16 @@ const TeamHud = ({ team }: { team: Team | null }) => {
 				team.owner === TEAMS.PLAYER && 'left-1',
 				team.owner === TEAMS.ENEMY && 'right-1'
 			)}>
-			{team.combatants.map(combatant => (
-				<div key={combatant.config.id}>
-					<LineupIcon
-						isActive={combatant.isActive}
-						isAlive={combatant.hp > 0}
-					/>
-				</div>
-			))}
+			{team.combatants.map(combatant => {
+        return (
+					<div key={combatant.config.id}>
+						<LineupIcon
+							isActive={combatant.isActive}
+							isAlive={combatant.hp > 0}
+						/>
+					</div>
+				);
+			})}
 		</div>
 	);
 };
