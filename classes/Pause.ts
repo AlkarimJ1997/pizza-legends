@@ -1,5 +1,6 @@
 import { KeyPressListener } from '@/classes/KeyPressListener';
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
+import { playerState } from '@/classes/state/PlayerState';
 import { wait } from '@/utils/helpers';
 
 export class Pause {
@@ -12,27 +13,63 @@ export class Pause {
 		this.onComplete = onComplete;
 	}
 
-	getOptions(pageKey: 'root') {
-		switch (pageKey) {
-			case 'root':
-				return [
-					// ... All pizzas
-					{
-						label: 'Save',
-						description: 'Save your progress',
+	getOptions(pageKey: string): PageOption[] {
+		if (pageKey === 'root') {
+			return [
+				...playerState.lineup.map(id => {
+					const member = playerState.party.find(m => m.id === id);
+
+					if (!member) throw new Error(`Member not found`);
+
+					return {
+						label: member.name,
+						description: member.description,
 						handler: () => {
-							// TODO: Save
+							this.keyboardMenu?.setOptions(this.getOptions(id));
 						},
+					};
+				}),
+				{
+					label: 'Save',
+					description: 'Save your progress',
+					handler: () => {
+						// TODO: Save
 					},
-					{
-						label: 'Close',
-						description: 'Close the pause menu',
-						handler: () => this.close(),
-					},
-				];
-			default:
-				return [];
+				},
+				{
+					label: 'Close',
+					description: 'Close the pause menu',
+					handler: () => this.close(),
+				},
+			];
 		}
+
+		return [
+			...playerState.party
+				.filter(m => !playerState.lineup.includes(m.id))
+				.map(({ name, description, id }) => ({
+					label: `Swap for ${name}`,
+					description,
+					handler: () => {
+						playerState.swapLineup(pageKey, id);
+						this.keyboardMenu?.setOptions(this.getOptions('root'));
+					},
+				})),
+			{
+				label: 'Move to front',
+				description: 'Move this pizza to the front of your party',
+				handler: () => {
+					this.keyboardMenu?.setOptions(this.getOptions('root'));
+				},
+			},
+			{
+				label: 'Back',
+				description: 'Go back to the previous menu',
+				handler: () => {
+					this.keyboardMenu?.setOptions(this.getOptions('root'));
+				},
+			},
+		];
 	}
 
 	close() {

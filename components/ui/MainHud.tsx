@@ -7,7 +7,7 @@ interface HudProps {
 const MainHud = ({ overworld }: HudProps) => {
 	if (!overworld.hud || overworld.battle) return null;
 
-	const { party } = overworld.hud.playerState;
+	const { playerState } = overworld.hud;
 
 	return (
 		<div
@@ -15,11 +15,13 @@ const MainHud = ({ overworld }: HudProps) => {
 			style={{
 				imageRendering: 'pixelated',
 			}}>
-			{party.map(member => (
-				<div key={member.id} className='relative mb-14'>
-					<PizzaHud config={member} hp={member.hp} xp={member.xp} isActive />
-				</div>
-			))}
+			{playerState.party
+				.filter(m => playerState.lineup.includes(m.id))
+				.map(member => (
+					<div key={member.id} className='relative mb-14'>
+						<PizzaHud config={member} hp={member.hp} xp={member.xp} isActive />
+					</div>
+				))}
 		</div>
 	);
 };

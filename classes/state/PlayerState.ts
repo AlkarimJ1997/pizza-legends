@@ -1,4 +1,3 @@
-import type { Combatant } from '@/classes/battle/Combatant';
 import Pizzas from '@/data/PizzaMap';
 import { TEAMS } from '@/utils/consts';
 
@@ -29,13 +28,27 @@ class PlayerState {
 				maxXp: 100,
 				level: 1,
 			},
+			{
+				...Pizzas.f001,
+				id: 'p3',
+				belongsToTeam: TEAMS.PLAYER,
+				hp: 50,
+				maxHp: 50,
+				xp: 75,
+				maxXp: 100,
+				level: 1,
+			},
 		];
 
 		this.lineup = ['p1', 'p2'];
-		this.inventory = [
-			{ actionId: 'item_recoverHp', instanceId: 'item1' },
-		];
+		this.inventory = [{ actionId: 'item_recoverHp', instanceId: 'item1' }];
 	}
+
+  swapLineup(oldId: string, incomingId: string) {
+    const oldIndex = this.lineup.indexOf(oldId);
+
+    this.lineup[oldIndex] = incomingId;
+  }
 }
 
 export const playerState = new PlayerState();
