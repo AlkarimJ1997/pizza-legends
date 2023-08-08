@@ -1,11 +1,10 @@
-import BattleHud from '@/components/battle/BattleHud';
-import Image from 'next/image';
+import PizzaHud from '@/components/ui/PizzaHud';
 
 interface HudProps {
 	overworld: OverworldChanges;
 }
 
-const Hud = ({ overworld }: HudProps) => {
+const MainHud = ({ overworld }: HudProps) => {
 	if (!overworld.hud || overworld.battle) return null;
 
 	const { party } = overworld.hud.playerState;
@@ -18,11 +17,11 @@ const Hud = ({ overworld }: HudProps) => {
 			}}>
 			{party.map(member => (
 				<div key={member.id} className='relative mb-14'>
-					<BattleHud config={member} hp={member.hp} xp={member.xp} isActive />
+					<PizzaHud config={member} hp={member.hp} xp={member.xp} isActive />
 				</div>
 			))}
 		</div>
 	);
 };
 
-export default Hud;
+export default MainHud;

@@ -1,4 +1,4 @@
-import { TEAMS, STATUSES } from '@/utils/consts';
+import { TEAMS } from '@/utils/consts';
 import Image from 'next/image';
 import clsx from 'clsx';
 import StatusIndicator from '@/components/battle/StatusIndicator';
@@ -10,9 +10,16 @@ interface BattleHudProps {
 	isActive: boolean;
 	hp: number;
 	xp: number;
+	inBattle?: boolean;
 }
 
-const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
+const PizzaHud = ({
+	config,
+	isActive,
+	hp,
+	xp,
+	inBattle = false,
+}: BattleHudProps) => {
 	const team = config.belongsToTeam;
 
 	return (
@@ -33,22 +40,25 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 			<p className='absolute text-[12px] top-[-1px] right-[2px] w-[17px] h-[12px] flex items-center justify-center m-0 bg-[#F8C594] border border-[#A48465]'>
 				{config.level}
 			</p>
-			<div className='absolute w-[22px] h-[12px] bottom-[1px] left-[3px] overflow-hidden hidden'>
+			{inBattle ? (
 				<Image
-					src={config.src}
-					alt={config.name}
+					src={config.icon}
+					alt={config.type}
 					width={30}
 					height={30}
-					className='block absolute bottom-[-7px] left-[-11px]'
+					className='absolute top-[-2px] left-[3px] w-[16px] h-[16px]'
 				/>
-			</div>
-			<Image
-				src={config.icon}
-				alt={config.type}
-				width={30}
-				height={30}
-				className='absolute top-[-2px] left-[3px] w-[16px] h-[16px]'
-			/>
+			) : (
+				<div className='absolute w-[22px] h-[12px] bottom-[1px] left-[3px] overflow-hidden'>
+					<Image
+						src={config.src}
+						alt={config.name}
+						width={32}
+						height={32}
+						className='object-cover absolute bottom-[-2px] left-[-3px]'
+					/>
+				</div>
+			)}
 			<HealthBar hp={hp} />
 			<ExperienceBar xp={xp} />
 			{config.status && <StatusIndicator status={config.status} team={team} />}
@@ -56,4 +66,4 @@ const BattleHud = ({ config, isActive, hp, xp }: BattleHudProps) => {
 	);
 };
 
-export default BattleHud;
+export default PizzaHud;

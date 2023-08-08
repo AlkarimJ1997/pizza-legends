@@ -9,7 +9,7 @@ import SceneChange from '@/components/ui/SceneChange';
 import { setBackgroundColor } from '@/utils/helpers';
 import BattleScene from '@/components/battle/BattleScene';
 import Container from '@/components/Container';
-import Hud from '@/components/ui/Hud';
+import MainHud from '@/components/ui/MainHud';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -50,7 +50,7 @@ const RenderOverworld = () => {
 				)}
 				<TextMessage overworld={overworld} />
 			</Container>
-			<Hud overworld={overworld} />
+			<MainHud overworld={overworld} />
 			<SceneChange overworld={overworld} />
 		</div>
 	);

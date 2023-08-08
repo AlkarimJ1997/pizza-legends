@@ -1,4 +1,3 @@
-import { Combatant } from '@/classes/battle/Combatant';
 import { playerState } from '@/classes/state/PlayerState';
 
 export class OverworldHud {
@@ -7,8 +6,4 @@ export class OverworldHud {
 	constructor() {
 		this.playerState = playerState;
 	}
-
-	update() {}
-
-	init() {}
 }

@@ -1,4 +1,4 @@
-import BattleHud from '@/components/battle/BattleHud';
+import PizzaHud from '@/components/ui/PizzaHud';
 import BattleImage from '@/components/battle/BattleImage';
 import Pizza from '@/components/battle/Pizza';
 import TeamHud from '@/components/battle/TeamHud';
@@ -32,11 +32,12 @@ const BattleScene = ({ overworld }: BattleSceneProps) => {
 			/>
 			{combatants.map(combatant => (
 				<div key={combatant.config.id}>
-					<BattleHud
+					<PizzaHud
 						config={combatant.config}
 						isActive={combatant.isActive}
 						hp={combatant.hp}
 						xp={combatant.xp}
+						inBattle
 					/>
 					<Pizza combatant={combatant} />
 				</div>
