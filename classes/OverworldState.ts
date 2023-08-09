@@ -14,6 +14,7 @@ import { SceneTransition } from '@/classes/SceneTransition';
 import { Battle } from '@/classes/battle/Battle';
 import { OverworldHud } from '@/classes/OverworldHud';
 import { Pause } from '@/classes/Pause';
+import { playerState } from '@/classes/state/PlayerState';
 
 export class OverworldState {
 	id: MapName;
@@ -66,19 +67,9 @@ export class OverworldState {
 
 	bindActionInput() {
 		new KeyPressListener('Enter', () => {
-			// Is there a person here to talk to?
-			if (!this.heroRef) return;
+			if (this.isCutscenePlaying) return;
 
-			const { x, y, movingPixelDirection: direction } = this.heroRef;
-			const nextCoords = getNextCoords(x, y, direction);
-
-			const match = this.placements.find(p => {
-				return p.x === nextCoords.x && p.y === nextCoords.y;
-			});
-
-			if (match && match.talking.length > 0 && !this.isCutscenePlaying) {
-				this.startCutscene(match.talking[0].events);
-			}
+			this.checkForActionCutscene();
 		});
 
 		new KeyPressListener('Escape', () => {
@@ -105,6 +96,28 @@ export class OverworldState {
 		);
 	}
 
+	checkForActionCutscene() {
+		// Is there a person here to talk to?
+		if (!this.heroRef) return;
+
+		const { x, y, movingPixelDirection: direction } = this.heroRef;
+		const nextCoords = getNextCoords(x, y, direction);
+
+		const match = this.placements.find(p => {
+			return p.x === nextCoords.x && p.y === nextCoords.y;
+		});
+
+		if (match && match.talking.length > 0) {
+			const relevantScenario = match.talking.find(scenario => {
+				if (!scenario.required) return true;
+
+				return scenario.required.every(sf => playerState.storyFlags[sf]);
+			});
+
+			relevantScenario && this.startCutscene(relevantScenario.events);
+		}
+	}
+
 	startGameLoop() {
 		this.gameLoop?.stop();
 
@@ -123,7 +136,10 @@ export class OverworldState {
 				event,
 			});
 
-			await eventHandler.init();
+			const result = await eventHandler.init();
+
+			// Don't continue events if player lost the battle
+			if (result === 'LOST_BATTLE') break;
 		}
 
 		this.isCutscenePlaying = false;

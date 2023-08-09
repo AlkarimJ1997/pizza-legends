@@ -5,6 +5,7 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	SHADOW,
+	STORY_FLAGS,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -81,6 +82,7 @@ declare global {
 
 	// Story Flag events (Talking or Cutscene Spaces)
 	type StoryConfig = {
+		required?: StoryFlag[];
 		events: BehaviorEvent[];
 	};
 
@@ -117,6 +119,11 @@ declare global {
 
 	type PauseEvent = { type: 'PAUSE' };
 
+	type StoryFlagEvent = {
+		type: 'STORY_FLAG';
+		flag: StoryFlag;
+	};
+
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
 		| StandEvent
@@ -124,6 +131,7 @@ declare global {
 		| MapChangeEvent
 		| BattleStartEvent
 		| PauseEvent
+		| StoryFlagEvent
 	);
 
 	// Revealing Text
@@ -141,6 +149,9 @@ declare global {
 		handler: () => void;
 		right?: () => string;
 	};
+
+	// Story Progress
+	type StoryFlag = keyof typeof STORY_FLAGS;
 
 	// Custom Events
 	type CustomEventMap = {

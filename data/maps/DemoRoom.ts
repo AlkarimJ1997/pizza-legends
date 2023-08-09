@@ -4,6 +4,7 @@ import {
 	PLACEMENT_TYPES,
 	EVENTS,
 	DIRECTIONS,
+	STORY_FLAGS,
 } from '@/utils/consts';
 import { asGridCoord } from '@/utils/helpers';
 
@@ -25,10 +26,25 @@ const OVERWORLD_STATE: OverworldConfig = {
 			],
 			talking: [
 				{
+					required: [STORY_FLAGS.TALKED_TO_ERIO],
 					events: [
-						{ type: EVENTS.MESSAGE, text: "I'm busy...", faceHero: 'npcA' },
-						{ type: EVENTS.MESSAGE, text: 'But fine. We can battle!' },
+						{
+							type: EVENTS.MESSAGE,
+							text: "Isn't Erio the coolest?",
+							faceHero: 'npcA',
+						},
+					],
+				},
+				{
+					events: [
+						{
+							type: EVENTS.MESSAGE,
+							text: "I'm going to crush you!",
+							faceHero: 'npcA',
+						},
 						{ type: EVENTS.BATTLE, trainerId: 'beth' },
+						{ type: EVENTS.STORY_FLAG, flag: 'DEFEATED_BETH' },
+						{ type: EVENTS.MESSAGE, text: 'You crushed me like weak pepper!' },
 					],
 				},
 			],
@@ -43,7 +59,8 @@ const OVERWORLD_STATE: OverworldConfig = {
 				{
 					events: [
 						{ type: EVENTS.MESSAGE, text: 'Bahaha!', faceHero: 'npcB' },
-						{ type: EVENTS.BATTLE, trainerId: 'erio' },
+						{ type: EVENTS.STORY_FLAG, flag: 'TALKED_TO_ERIO' },
+						// { type: EVENTS.BATTLE, trainerId: 'erio' },
 					],
 				},
 			],

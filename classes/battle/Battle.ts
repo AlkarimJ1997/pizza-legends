@@ -12,7 +12,7 @@ import { playerState } from '@/classes/state/PlayerState';
 interface BattleProps {
 	trainer: TrainerConfig;
 	overworld: OverworldState;
-	onComplete: () => void;
+	onComplete: (didWin: boolean) => void;
 }
 
 type ActiveCombatants = {
@@ -23,7 +23,7 @@ type ActiveCombatants = {
 export class Battle {
 	trainer: TrainerConfig;
 	overworld: OverworldState;
-	onComplete: () => void;
+	onComplete: (didWin: boolean) => void;
 
 	combatants: Combatant[] = [];
 	activeCombatants: ActiveCombatants = { PLAYER: null, ENEMY: null };
@@ -112,9 +112,9 @@ export class Battle {
 		});
 	}
 
-	endBattle() {
+	endBattle(didWin: boolean) {
 		this.overworld.battle = null;
-		this.onComplete();
+		this.onComplete(didWin);
 	}
 
 	init() {
@@ -130,8 +130,10 @@ export class Battle {
 			},
 			onWinner: winner => {
 				// Only update state if player won (to be nice to the player)
-				winner === TEAMS.PLAYER && this.handleStateUpdate();
-				this.endBattle();
+				const didWin = winner === TEAMS.PLAYER;
+
+				didWin && this.handleStateUpdate();
+				this.endBattle(didWin);
 			},
 		});
 

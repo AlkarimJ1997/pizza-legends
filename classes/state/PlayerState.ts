@@ -5,6 +5,7 @@ class PlayerState {
 	party: CombatantConfig[] = [];
 	lineup: string[] = [];
 	inventory: PlayerItem[] = [];
+	storyFlags: Partial<Record<StoryFlag, boolean>> = {};
 
 	constructor() {
 		this.party = [
@@ -12,7 +13,7 @@ class PlayerState {
 				...Pizzas.s001,
 				id: 'p1',
 				belongsToTeam: TEAMS.PLAYER,
-				hp: 30,
+				hp: 1,
 				maxHp: 50,
 				xp: 90,
 				maxXp: 100,
@@ -40,8 +41,12 @@ class PlayerState {
 			},
 		];
 
-		this.lineup = ['p1', 'p2'];
-		this.inventory = [{ actionId: 'item_recoverHp', instanceId: 'item1' }];
+		this.lineup = ['p1'];
+		this.inventory = [
+			{ actionId: 'item_recoverHp', instanceId: 'item1' },
+			{ actionId: 'item_recoverHp', instanceId: 'item1' },
+			{ actionId: 'item_recoverHp', instanceId: 'item1' },
+		];
 	}
 
 	swapLineup(oldId: string, incomingId: string) {

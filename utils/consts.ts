@@ -11,21 +11,22 @@ export const EVENTS = {
 	MESSAGE: 'MESSAGE',
 	MAP_CHANGE: 'MAP_CHANGE',
 	BATTLE: 'BATTLE',
-  PAUSE: 'PAUSE',
+	PAUSE: 'PAUSE',
+  STORY_FLAG: 'STORY_FLAG',
 } as const;
 
 export const BATTLE_EVENTS = {
 	SUBMISSION_MENU: 'SUBMISSION_MENU',
 	STATE_CHANGE: 'STATE_CHANGE',
 	ANIMATION: 'ANIMATION',
-  SWAP: 'SWAP',
-  REPLACEMENT_MENU: 'REPLACEMENT_MENU',
-  GIVE_EXP: 'GIVE_EXP',
+	SWAP: 'SWAP',
+	REPLACEMENT_MENU: 'REPLACEMENT_MENU',
+	GIVE_EXP: 'GIVE_EXP',
 } as const;
 
 export const ANIMATIONS = {
 	SPIN: 'SPIN',
-  GLOB: 'GLOB',
+	GLOB: 'GLOB',
 } as const;
 
 export const ACTION_TYPES = {
@@ -134,7 +135,7 @@ export const PIZZA_TYPES = {
 
 export const PIZZA_SKINS = {
 	S001: '/images/characters/pizzas/s001.png',
-  S002: '/images/characters/pizzas/s002.png',
+	S002: '/images/characters/pizzas/s002.png',
 	V001: '/images/characters/pizzas/v001.png',
 	F001: '/images/characters/pizzas/f001.png',
 } as const;
@@ -145,4 +146,10 @@ export const PIZZA_ICONS = {
 	VEGGIE: '/images/icons/veggie.png',
 	FUNGI: '/images/icons/fungi.png',
 	CHILL: '/images/icons/chill.png',
+} as const;
+
+// Story Flags
+export const STORY_FLAGS = {
+	TALKED_TO_ERIO: 'TALKED_TO_ERIO',
+  DEFEATED_BETH: 'DEFEATED_BETH',
 } as const;

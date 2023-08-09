@@ -8,6 +8,9 @@ import Trainers from '@/data/TrainerMap';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
 import { Pause } from '@/classes/Pause';
+import { playerState } from '@/classes/state/PlayerState';
+
+type ResolveFn = (value: void | 'WON_BATTLE' | 'LOST_BATTLE') => void;
 
 interface OverworldEventProps {
 	overworld: OverworldState;
@@ -23,7 +26,7 @@ export class OverworldEvent {
 		this.event = event;
 	}
 
-	stand(resolve: () => void) {
+	stand(resolve: ResolveFn) {
 		const { direction, time } = this.event as StandEvent;
 
 		if (!direction || !time) {
@@ -52,7 +55,7 @@ export class OverworldEvent {
 		document.addEventListener(CUSTOM_EVENTS.STAND, completeHandler);
 	}
 
-	walk(resolve: () => void) {
+	walk(resolve: ResolveFn) {
 		const { direction } = this.event as WalkEvent;
 
 		if (!direction) {
@@ -81,7 +84,7 @@ export class OverworldEvent {
 		document.addEventListener(CUSTOM_EVENTS.WALK, completeHandler);
 	}
 
-	textMessage(resolve: () => void) {
+	textMessage(resolve: ResolveFn) {
 		const { text, faceHero } = this.event as TextMessageEvent;
 
 		if (!text) {
@@ -107,7 +110,7 @@ export class OverworldEvent {
 		});
 	}
 
-	changeMap(resolve: () => void) {
+	changeMap(resolve: ResolveFn) {
 		const { map } = this.event as MapChangeEvent;
 
 		this.overworld.sceneTransition = new SceneTransition({
@@ -125,7 +128,7 @@ export class OverworldEvent {
 		this.overworld.sceneTransition.init();
 	}
 
-	battle(resolve: () => void) {
+	battle(resolve: ResolveFn) {
 		const { trainerId } = this.event as BattleStartEvent;
 
 		this.overworld.sceneTransition = new SceneTransition({
@@ -134,7 +137,7 @@ export class OverworldEvent {
 				this.overworld.battle = new Battle({
 					trainer: Trainers[trainerId],
 					overworld: this.overworld,
-					onComplete: () => resolve(),
+					onComplete: didWin => resolve(didWin ? 'WON_BATTLE' : 'LOST_BATTLE'),
 				});
 
 				this.overworld.battle.init();
@@ -156,8 +159,15 @@ export class OverworldEvent {
 		this.overworld.pause.init();
 	}
 
+	storyFlag(resolve: ResolveFn) {
+		const { flag } = this.event as StoryFlagEvent;
+
+		playerState.storyFlags[flag] = true;
+		resolve();
+	}
+
 	init() {
-		return new Promise<void>(resolve => {
+		return new Promise((resolve: ResolveFn) => {
 			switch (this.event.type) {
 				case EVENTS.STAND:
 					return this.stand(resolve);
@@ -171,6 +181,8 @@ export class OverworldEvent {
 					return this.battle(resolve);
 				case EVENTS.PAUSE:
 					return this.pause(resolve);
+				case EVENTS.STORY_FLAG:
+					return this.storyFlag(resolve);
 				default:
 					return resolve();
 			}
