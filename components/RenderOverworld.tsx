@@ -18,7 +18,7 @@ const RenderOverworld = () => {
 	useEffect(() => {
 		// Create and subscribe to overworld state changes
 		const overworldState = new OverworldState(
-			'DemoRoom',
+			'Street',
 			(newState: OverworldChanges) => {
 				setOverworld(newState);
 			}
