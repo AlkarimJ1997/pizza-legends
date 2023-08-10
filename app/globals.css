@@ -28,14 +28,12 @@ body {
 }
 
 @layer components {
-	.canvas {
-		display: inline-block;
-		vertical-align: top;
-		image-rendering: -moz-crisp-edges;
-		image-rendering: -webkit-crisp-edges;
-		image-rendering: pixelated;
-		image-rendering: crisp-edges;
-	}
+	.pixelart {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
 }
 
 @media screen and (min-width: 360px) and (min-height: 360px) {

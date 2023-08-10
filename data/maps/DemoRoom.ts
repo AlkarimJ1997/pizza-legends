@@ -55,6 +55,7 @@ const OVERWORLD_STATE: OverworldConfig = {
 			y: 4,
 			skin: SKINS.ERIO,
 			type: PLACEMENT_TYPES.NPC,
+			behaviorLoop: [{ type: EVENTS.WALK, direction: DIRECTIONS.LEFT }],
 			talking: [
 				{
 					events: [

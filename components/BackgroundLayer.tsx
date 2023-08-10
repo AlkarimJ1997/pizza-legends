@@ -57,7 +57,7 @@ const BackgroundLayer = ({ overworld }: BackgroundLayerProps) => {
 			{mapImages.lower && (
 				<canvas
 					ref={canvasRef}
-					className='canvas'
+					className='pixelart'
 					width={mapImages.lower.width}
 					height={mapImages.lower.height}
 				/>

@@ -20,6 +20,7 @@ module.exports = {
 				battlePixelSize: 'var(--battle-pixel-size)',
 			},
 			animation: {
+				walk: 'moveSpritesheet 0.8s steps(4) infinite',
 				'fade-in': 'fade-in 0.5s forwards',
 				'fade-out': 'fade-out 0.5s forwards',
 				blink: 'blink 0.3s steps(2, start) infinite',
@@ -29,6 +30,10 @@ module.exports = {
 				'glob-left': 'glob-left 1s forwards',
 			},
 			keyframes: {
+				moveSpritesheet: {
+					from: { transform: 'translate3d(0, 0, 0)' },
+					to: { transform: 'translate3d(-100%, 0, 0)' },
+				},
 				'fade-in': {
 					from: { opacity: 0 },
 					to: { opacity: 1 },

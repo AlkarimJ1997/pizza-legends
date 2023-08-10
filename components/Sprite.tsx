@@ -1,53 +1,27 @@
-'use client';
+/* eslint-disable @next/next/no-img-element */
+import { DIRECTIONS, SHADOW } from '@/utils/consts';
+import clsx from 'clsx';
 
-import { useEffect, useRef, useState } from 'react';
+interface SpriteProps {
+	skinSrc: Skin;
+  isMoving: boolean;
+	direction: Direction;
+}
 
-type DefaultProps = {
-	imageSrc: Skin;
-};
-
-type OverloadProps = {
-	imageSrc: Skin;
-	frameCoord: [number, number];
-};
-
-type SpriteProps = DefaultProps | OverloadProps;
-
-const Sprite = ({ imageSrc, ...props }: SpriteProps) => {
-	const [skinImage, setSkinImage] = useState<HTMLImageElement | null>(null);
-	const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-	useEffect(() => {
-		if (!imageSrc) return;
-
-		const image = new Image();
-
-		image.src = imageSrc;
-		image.onload = () => setSkinImage(image);
-	}, [imageSrc]);
-
-	useEffect(() => {
-		if (!skinImage || !canvasRef.current) return;
-
-		const canvasEl = canvasRef.current;
-		const ctx = canvasEl.getContext('2d');
-
-		// Clear out anything in the canvas
-		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
-
-		// Draw the skin image
-		const [frameX, frameY] = 'frameCoord' in props ? props.frameCoord : [0, 0];
-
-		ctx?.drawImage(skinImage, frameX * 32, frameY * 32, 32, 32, 0, 0, 32, 32);
-	}, [skinImage, props]);
-
+const Sprite = ({ skinSrc, isMoving, direction }: SpriteProps) => {
 	return (
-		<div className='relative left-[-7px]'>
-			<canvas
-				ref={canvasRef}
-				className='absolute canvas'
-				width={32}
-				height={32}
+		<div className='relative left-[-7px] w-8 h-8 overflow-hidden'>
+			<img src={SHADOW} alt='Shadow' className='absolute pixelart max-w-none' />
+			<img
+				src={skinSrc}
+				alt='Character'
+				className={clsx(
+					'pixelart absolute max-w-none',
+					isMoving && 'animate-walk',
+					direction === DIRECTIONS.RIGHT && '-top-8',
+					direction === DIRECTIONS.UP && '-top-16',
+					direction === DIRECTIONS.LEFT && '-top-24'
+				)}
 			/>
 		</div>
 	);

@@ -99,7 +99,6 @@ export class OverworldEvent {
 
 			if (who && hero) {
 				who.movingPixelDirection = oppositeDirection(hero.movingPixelDirection);
-				who.updateSprite();
 			}
 		}
 
