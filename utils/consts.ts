@@ -3,6 +3,7 @@ export const CELL_SIZE = 16;
 export const PLACEMENT_TYPES = {
 	HERO: 'HERO',
 	NPC: 'NPC',
+  PIZZA_STONE: 'PIZZA_STONE',
 } as const;
 
 export const EVENTS = {
@@ -53,6 +54,7 @@ export const SKINS = {
 } as const;
 
 export const SHADOW = '/images/characters/shadow.png';
+export const PIZZA_STONE = '/images/characters/pizza-stone.png';
 
 export const MAPS = {
 	DemoRoom: {

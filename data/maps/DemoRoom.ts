@@ -65,6 +65,7 @@ const OVERWORLD_STATE: OverworldConfig = {
 				},
 			],
 		},
+		{ x: 2, y: 6, type: PLACEMENT_TYPES.PIZZA_STONE },
 	],
 	walls: ['7x5', '8x5', '7x6', '8x6'],
 	cutsceneSpaces: {

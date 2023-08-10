@@ -6,6 +6,7 @@ import {
 	EVENTS,
 	SHADOW,
 	STORY_FLAGS,
+	PIZZA_STONE,
 } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { Message } from '@/classes/Message';
@@ -19,7 +20,7 @@ declare global {
 	// Utilities
 	type ValueOf<T> = T[keyof T];
 
-	type Skin = ValueOf<typeof SKINS> | typeof SHADOW;
+	type Skin = ValueOf<typeof SKINS> | typeof SHADOW | typeof PIZZA_STONE;
 	type Direction = ValueOf<typeof DIRECTIONS>;
 
 	// Maps
@@ -40,7 +41,13 @@ declare global {
 		talking?: StoryConfig[];
 	};
 
-	type PlacementConfig = PersonConfig;
+	type PizzaStoneConfig = {
+		x: number;
+		y: number;
+		type: 'PIZZA_STONE';
+	};
+
+	type PlacementConfig = PersonConfig | PizzaStoneConfig;
 
 	// Overworld Stuff
 	type OverworldConfig = {
@@ -76,8 +83,11 @@ declare global {
 		| 'walk-left'
 		| 'walk-right';
 
+	type StoneAnimationName = 'used-down' | 'unused-down';
+	type SpriteAnimationName = WalkAnimationName | StoneAnimationName;
+
 	type AnimationMap = {
-		[key in WalkAnimationName]: [number, number][];
+		[key in WalkAnimationName | StoneAnimationName]: [number, number][];
 	};
 
 	// Story Flag events (Talking or Cutscene Spaces)

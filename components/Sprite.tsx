@@ -6,7 +6,7 @@ import useImage from '@/hooks/useImage';
 
 interface SpriteProps {
 	skinSrc: Skin;
-	frameCoord: [number, number];
+	frameCoord: [number, number] | undefined;
 }
 
 const Sprite = ({ skinSrc, frameCoord }: SpriteProps) => {

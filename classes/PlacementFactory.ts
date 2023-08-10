@@ -3,6 +3,7 @@ import { NPCPlacement } from '@/classes/placements/NPCPlacement';
 import { PLACEMENT_TYPES } from '@/utils/consts';
 import type { OverworldState } from '@/classes/OverworldState';
 import { v4 as uuidv4 } from 'uuid';
+import { PizzaStonePlacement } from '@/classes/placements/PizzaStonePlacement';
 
 class PlacementFactory {
 	createPlacement(config: PlacementConfig, overworld: OverworldState) {
@@ -18,6 +19,8 @@ class PlacementFactory {
 				return new HeroPlacement(config as PersonConfig, overworld);
 			case PLACEMENT_TYPES.NPC:
 				return new NPCPlacement(config as PersonConfig, overworld);
+			case PLACEMENT_TYPES.PIZZA_STONE:
+				return new PizzaStonePlacement(config as PizzaStoneConfig, overworld);
 			default:
 				throw new Error(`Unknown placement type: ${config}`);
 		}

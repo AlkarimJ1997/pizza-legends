@@ -13,6 +13,13 @@ export abstract class Placement {
 	movingPixelsRemaining: number = 0;
 	movingPixelDirection: Direction = DIRECTIONS.DOWN;
 
+	// Animation
+	animations: Partial<AnimationMap> = {};
+	currentAnimation: SpriteAnimationName = 'idle-down';
+	currentAnimationFrame: number = 0;
+	animationFrameLimit: number = 8;
+	animationFrameProgress: number;
+
 	// Collision detection
 	intentPosition: { x: number; y: number } | null = null;
 
@@ -30,10 +37,19 @@ export abstract class Placement {
 			this.movingPixelDirection = properties.direction ?? DIRECTIONS.DOWN;
 		}
 
+		// Animation
+		this.animationFrameProgress = this.animationFrameLimit;
+
 		// Talking
 		if ('talking' in properties) {
 			this.talking = properties.talking ?? [];
 		}
+	}
+
+	get frame() {
+		return this.animations?.[this.currentAnimation]?.[
+			this.currentAnimationFrame
+		];
 	}
 
 	tick() {}

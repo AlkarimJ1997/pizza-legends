@@ -13,12 +13,6 @@ import { ReactNode } from 'react';
 export abstract class PersonPlacement extends Placement {
 	skin: Skin;
 
-	animations: AnimationMap;
-	currentAnimation: WalkAnimationName;
-	currentAnimationFrame: number;
-	animationFrameLimit: number;
-	animationFrameProgress: number;
-
 	// Behavior
 	behaviorLoop: BehaviorEvent[];
 	behaviorLoopIndex: number;
@@ -38,18 +32,10 @@ export abstract class PersonPlacement extends Placement {
 			'walk-left': TILES.WALK_LEFT,
 			'walk-right': TILES.WALK_RIGHT,
 		};
-		this.currentAnimation = 'idle-down';
-		this.currentAnimationFrame = 0;
-		this.animationFrameLimit = 8;
-		this.animationFrameProgress = this.animationFrameLimit;
 
 		// Behavior
 		this.behaviorLoop = config.behaviorLoop ?? [];
 		this.behaviorLoopIndex = 0;
-	}
-
-	get frame() {
-		return this.animations[this.currentAnimation][this.currentAnimationFrame];
 	}
 
 	startBehavior(behavior: WalkEvent | StandEvent) {
