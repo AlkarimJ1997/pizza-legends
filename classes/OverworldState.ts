@@ -49,15 +49,30 @@ export class OverworldState {
 		this.onEmit = onEmit;
 		this.progress = new Progress();
 
-		this.start();
+		this.initialLoad();
 	}
 
-	loadMap(mapId: MapName, heroState: HeroState) {
+	initialLoad() {
+		let initialHeroState: HeroState | null = null;
+
+		if (this.progress.getSaveFile()) {
+			this.progress.load();
+			initialHeroState = {
+				x: this.progress.startingHeroX,
+				y: this.progress.startingHeroY,
+				direction: this.progress.startingHeroDirection,
+			};
+		}
+
+		this.loadMap(this.id, initialHeroState);
+	}
+
+	loadMap(mapId: MapName, heroState: HeroState | null = null) {
 		this.id = mapId;
 		this.destroy();
 		this.start();
 
-		if (this.heroRef) {
+		if (this.heroRef && heroState) {
 			this.heroRef.x = heroState.x;
 			this.heroRef.y = heroState.y;
 			this.heroRef.movingPixelDirection = heroState.direction;
