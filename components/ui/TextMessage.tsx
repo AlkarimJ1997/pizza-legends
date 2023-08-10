@@ -12,6 +12,7 @@ const TextMessage = ({ overworld }: TextMessageProps) => {
 
 	return (
 		<div
+    // text-sm sm:text-lg md:text-xl
 			className={clsx(
 				'px-[2px] rounded-sm bg-slate-700 text-slate-100 shadow-xl border border-indigo-400 absolute left-0 right-0 mx-auto',
 				overworld.battle && 'max-w-[200px] py-[1px] text-[7px] bottom-3',

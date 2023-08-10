@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 /* eslint-disable @next/next/no-img-element */
 interface BattleImageProps {
 	src: string;
