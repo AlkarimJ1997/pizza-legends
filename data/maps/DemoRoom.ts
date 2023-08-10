@@ -65,20 +65,6 @@ const OVERWORLD_STATE: OverworldConfig = {
 				},
 			],
 		},
-		{
-			id: 'npcC',
-			x: 3,
-			y: 6,
-			skin: SKINS. NPC3,
-			type: PLACEMENT_TYPES.NPC,
-			behaviorLoop: [
-        { type: EVENTS.STAND, direction: DIRECTIONS.DOWN, time: 800 },
-        { type: EVENTS.WALK, direction: DIRECTIONS.LEFT },
-        { type: EVENTS.WALK, direction: DIRECTIONS.UP },
-        { type: EVENTS.WALK, direction: DIRECTIONS.RIGHT },
-        { type: EVENTS.WALK, direction: DIRECTIONS.DOWN },
-      ]
-		},
 	],
 	walls: ['7x5', '8x5', '7x6', '8x6'],
 	cutsceneSpaces: {
