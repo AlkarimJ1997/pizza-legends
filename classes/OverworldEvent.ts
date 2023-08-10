@@ -150,6 +150,7 @@ export class OverworldEvent {
 	pause(resolve: () => void) {
 		this.overworld.isPaused = true;
 		this.overworld.overlay = new PauseMenu({
+      progress: this.overworld.progress,
 			onComplete: () => {
 				resolve();
 				this.overworld.overlay = null;

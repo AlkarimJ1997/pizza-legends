@@ -1,15 +1,23 @@
+import type { Progress } from '@/classes/state/Progress';
 import { KeyPressListener } from '@/classes/KeyPressListener';
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { playerState } from '@/classes/state/PlayerState';
 import { wait } from '@/utils/helpers';
 
+interface PauseMenuProps {
+  progress: Progress;
+  onComplete: () => void;
+}
+
 export class PauseMenu {
+  progress: Progress;
 	onComplete: () => void;
 
 	keyboardMenu: KeyboardMenu | null = null;
 	escapeBind: KeyPressListener | null = null;
 
-	constructor({ onComplete }: { onComplete: () => void }) {
+	constructor({ progress, onComplete }: PauseMenuProps) {
+    this.progress = progress;
 		this.onComplete = onComplete;
 	}
 
@@ -37,7 +45,8 @@ export class PauseMenu {
 					label: 'Save',
 					description: 'Save your progress',
 					handler: () => {
-						// TODO: Save
+						this.progress?.save();
+            this.close();
 					},
 				},
 				{

@@ -1,7 +1,7 @@
 import { DirectionControls } from '@/classes/DirectionControls';
 import { placementFactory } from '@/classes/PlacementFactory';
 import { GameLoop } from '@/classes/GameLoop';
-import { CUSTOM_EVENTS, EVENTS, MAPS } from '@/utils/consts';
+import { CUSTOM_EVENTS, DIRECTIONS, EVENTS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
@@ -16,6 +16,7 @@ import { OverworldHud } from '@/classes/OverworldHud';
 import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
 import { playerState } from '@/classes/state/PlayerState';
+import { Progress } from '@/classes/state/Progress';
 
 export class OverworldState {
 	id: MapName;
@@ -40,9 +41,13 @@ export class OverworldState {
 	hud: OverworldHud | null = null;
 	overlay: PauseMenu | CraftingMenu | null = null;
 
+	// Game progress
+	progress: Progress;
+
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
+		this.progress = new Progress();
 
 		this.start();
 	}
@@ -52,12 +57,19 @@ export class OverworldState {
 		this.destroy();
 		this.start();
 
-		if (!this.heroRef) return;
+		if (this.heroRef) {
+			this.heroRef.x = heroState.x;
+			this.heroRef.y = heroState.y;
+			this.heroRef.movingPixelDirection = heroState.direction;
+			this.heroRef.updateSprite();
+		}
 
-		this.heroRef.x = heroState.x;
-		this.heroRef.y = heroState.y;
-		this.heroRef.movingPixelDirection = heroState.direction;
-    this.heroRef.updateSprite();
+		// Update game progress
+		this.progress.mapId = mapId;
+		this.progress.startingHeroX = this.heroRef?.x || 0;
+		this.progress.startingHeroY = this.heroRef?.y || 0;
+		this.progress.startingHeroDirection =
+			this.heroRef?.movingPixelDirection || DIRECTIONS.DOWN;
 	}
 
 	start() {
