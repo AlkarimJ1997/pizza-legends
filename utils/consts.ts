@@ -14,6 +14,7 @@ export const EVENTS = {
 	BATTLE: 'BATTLE',
 	PAUSE: 'PAUSE',
   STORY_FLAG: 'STORY_FLAG',
+  CRAFTING: 'CRAFTING',
 } as const;
 
 export const BATTLE_EVENTS = {
@@ -154,4 +155,5 @@ export const PIZZA_ICONS = {
 export const STORY_FLAGS = {
 	TALKED_TO_ERIO: 'TALKED_TO_ERIO',
   DEFEATED_BETH: 'DEFEATED_BETH',
+  USED_PIZZA_STONE: 'USED_PIZZA_STONE',
 } as const;

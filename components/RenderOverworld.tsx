@@ -11,6 +11,7 @@ import BattleScene from '@/components/battle/BattleScene';
 import Container from '@/components/Container';
 import MainHud from '@/components/ui/MainHud';
 import PauseMenu from '@/components/ui/PauseMenu';
+import CraftingMenu from '@/components/ui/CraftingMenu';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -52,6 +53,7 @@ const RenderOverworld = () => {
 				<TextMessage overworld={overworld} />
 			</Container>
 			<PauseMenu overworld={overworld} />
+			<CraftingMenu overworld={overworld} />
 			<MainHud overworld={overworld} />
 			<SceneChange overworld={overworld} />
 		</div>

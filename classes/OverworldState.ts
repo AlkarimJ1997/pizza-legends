@@ -5,15 +5,16 @@ import { CUSTOM_EVENTS, EVENTS, MAPS } from '@/utils/consts';
 import type { Placement } from '@/classes/placements/Placement';
 import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
+import type { SceneTransition } from '@/classes/SceneTransition';
+import type { Battle } from '@/classes/battle/Battle';
+import type { Pause } from '@/classes/Pause';
+import type { CraftingMenu } from '@/classes/CraftingMenu';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
 import { OverworldEvent } from '@/classes/OverworldEvent';
+import { OverworldHud } from '@/classes/OverworldHud';
 import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
-import { SceneTransition } from '@/classes/SceneTransition';
-import { Battle } from '@/classes/battle/Battle';
-import { OverworldHud } from '@/classes/OverworldHud';
-import { Pause } from '@/classes/Pause';
 import { playerState } from '@/classes/state/PlayerState';
 
 export class OverworldState {
@@ -31,11 +32,13 @@ export class OverworldState {
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
+  // UI Elements
 	message: Message | null = null;
 	sceneTransition: SceneTransition | null = null;
 	battle: Battle | null = null;
 	hud: OverworldHud | null = null;
 	pause: Pause | null = null;
+  craftingMenu: CraftingMenu | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -191,6 +194,7 @@ export class OverworldState {
 			battle: this.battle,
 			hud: this.hud,
 			pause: this.pause,
+      craftingMenu: this.craftingMenu,
 		};
 	}
 

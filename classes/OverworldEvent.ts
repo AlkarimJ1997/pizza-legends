@@ -9,6 +9,7 @@ import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
 import { Pause } from '@/classes/Pause';
 import { playerState } from '@/classes/state/PlayerState';
+import { CraftingMenu } from '@/classes/CraftingMenu';
 
 type ResolveFn = (value: void | 'WON_BATTLE' | 'LOST_BATTLE') => void;
 
@@ -166,6 +167,19 @@ export class OverworldEvent {
 		resolve();
 	}
 
+	crafting(resolve: ResolveFn) {
+		const { pizzas } = this.event as CraftingEvent;
+
+		this.overworld.craftingMenu = new CraftingMenu({
+			pizzas,
+			onComplete: () => {
+				resolve();
+			},
+		});
+
+		this.overworld.craftingMenu.init();
+	}
+
 	init() {
 		return new Promise((resolve: ResolveFn) => {
 			switch (this.event.type) {
@@ -183,6 +197,8 @@ export class OverworldEvent {
 					return this.pause(resolve);
 				case EVENTS.STORY_FLAG:
 					return this.storyFlag(resolve);
+				case EVENTS.CRAFTING:
+					return this.crafting(resolve);
 				default:
 					return resolve();
 			}
