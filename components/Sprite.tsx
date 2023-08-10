@@ -1,30 +1,26 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { SHADOW } from '@/utils/consts';
+import NextImage from 'next/image';
 
-type DefaultProps = {
-	imageSrc: Skin;
-};
-
-type OverloadProps = {
-	imageSrc: Skin;
+interface SpriteProps {
+	skinSrc: Skin;
 	frameCoord: [number, number];
-};
+}
 
-type SpriteProps = DefaultProps | OverloadProps;
-
-const Sprite = ({ imageSrc, ...props }: SpriteProps) => {
+const Sprite = ({ skinSrc, frameCoord }: SpriteProps) => {
 	const [skinImage, setSkinImage] = useState<HTMLImageElement | null>(null);
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
 	useEffect(() => {
-		if (!imageSrc) return;
+		if (!skinSrc) return;
 
 		const image = new Image();
 
-		image.src = imageSrc;
+		image.src = skinSrc;
 		image.onload = () => setSkinImage(image);
-	}, [imageSrc]);
+	}, [skinSrc]);
 
 	useEffect(() => {
 		if (!skinImage || !canvasRef.current) return;
@@ -36,16 +32,23 @@ const Sprite = ({ imageSrc, ...props }: SpriteProps) => {
 		ctx?.clearRect(0, 0, canvasEl.width, canvasEl.height);
 
 		// Draw the skin image
-		const [frameX, frameY] = 'frameCoord' in props ? props.frameCoord : [0, 0];
+		const [frameX, frameY] = frameCoord;
 
 		ctx?.drawImage(skinImage, frameX * 32, frameY * 32, 32, 32, 0, 0, 32, 32);
-	}, [skinImage, props]);
+	}, [skinImage, frameCoord]);
 
 	return (
 		<div className='relative left-[-7px]'>
+			<NextImage
+				src={SHADOW}
+				alt='Shadow'
+				className='absolute max-w-none pixelart'
+				width={32}
+				height={32}
+			/>
 			<canvas
 				ref={canvasRef}
-				className='absolute canvas'
+				className='absolute inline-block align-top pixelart'
 				width={32}
 				height={32}
 			/>

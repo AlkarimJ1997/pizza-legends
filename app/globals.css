@@ -28,9 +28,7 @@ body {
 }
 
 @layer components {
-	.canvas {
-		display: inline-block;
-		vertical-align: top;
+	.pixelart {
 		image-rendering: -moz-crisp-edges;
 		image-rendering: -webkit-crisp-edges;
 		image-rendering: pixelated;

@@ -1,7 +1,7 @@
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { OverworldEvent } from '@/classes/OverworldEvent';
 import type { OverworldState } from '@/classes/OverworldState';
-import Person from '@/components/Person';
+import Sprite from '@/components/Sprite';
 
 export class NPCPlacement extends PersonPlacement {
 	tickBetweenMovesInterval: number;
@@ -51,6 +51,6 @@ export class NPCPlacement extends PersonPlacement {
 	}
 
 	renderComponent() {
-		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
+		return <Sprite skinSrc={this.skin} frameCoord={this.frame} />;
 	}
 }

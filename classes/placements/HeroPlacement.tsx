@@ -1,6 +1,6 @@
 import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import { EVENTS } from '@/utils/consts';
-import Person from '@/components/Person';
+import Sprite from '@/components/Sprite';
 
 export class HeroPlacement extends PersonPlacement {
 	controllerMoveRequested(direction: Direction) {
@@ -14,6 +14,6 @@ export class HeroPlacement extends PersonPlacement {
 	}
 
 	renderComponent() {
-		return <Person skinSrc={this.skin} frameCoord={this.frame} />;
+		return <Sprite skinSrc={this.skin} frameCoord={this.frame} />;
 	}
 }
