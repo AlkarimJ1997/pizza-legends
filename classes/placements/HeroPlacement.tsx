@@ -16,7 +16,7 @@ export class HeroPlacement extends PersonPlacement {
 		return (
 			<Sprite
 				skinSrc={this.skin}
-				isMoving={!!this.overworld.directionControls?.direction}
+				isMoving={this.isMoving}
 				direction={this.movingPixelDirection}
 			/>
 		);

@@ -90,6 +90,7 @@ export class OverworldState {
 
 				if (!match || this.isCutscenePlaying) return;
 
+				this.heroRef.isMoving = false;
 				this.startCutscene(match[0].events);
 			}
 		);

@@ -11,6 +11,7 @@ import { ReactNode } from 'react';
 
 export abstract class PersonPlacement extends Placement {
 	skin: Skin;
+  isMoving: boolean = false;
 
 	// Behavior
 	behaviorLoop: BehaviorEvent[];
@@ -31,11 +32,13 @@ export abstract class PersonPlacement extends Placement {
 
 		if (behavior.type === EVENTS.WALK) {
 			if (!this.canMoveToNextDestination(behavior.direction)) {
+        this.isMoving = false;
 				behavior.retry && setTimeout(() => this.startBehavior(behavior), 10);
 				return;
 			}
 
 			this.movingPixelsRemaining = CELL_SIZE;
+      this.isMoving = true;
 			this.updateIntentPosition(behavior.direction);
 			return;
 		}
@@ -81,6 +84,10 @@ export abstract class PersonPlacement extends Placement {
 		this.x += x;
 		this.y += y;
 		this.intentPosition = null;
+
+    if (!this.overworld.directionControls?.direction) {
+      this.isMoving = false;
+    }
 	}
 
 	updateIntentPosition(direction: Direction) {
