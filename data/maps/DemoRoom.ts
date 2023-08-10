@@ -55,7 +55,6 @@ const OVERWORLD_STATE: OverworldConfig = {
 			y: 4,
 			skin: SKINS.ERIO,
 			type: PLACEMENT_TYPES.NPC,
-			behaviorLoop: [{ type: EVENTS.WALK, direction: DIRECTIONS.LEFT }],
 			talking: [
 				{
 					events: [
@@ -64,6 +63,20 @@ const OVERWORLD_STATE: OverworldConfig = {
 						// { type: EVENTS.BATTLE, trainerId: 'erio' },
 					],
 				},
+			],
+		},
+		{
+			id: 'npcC',
+			x: 3,
+			y: 6,
+			skin: SKINS.NPC3,
+			type: PLACEMENT_TYPES.NPC,
+			behaviorLoop: [
+				{ type: EVENTS.STAND, direction: DIRECTIONS.DOWN, time: 800 },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.LEFT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.UP },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.RIGHT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.DOWN },
 			],
 		},
 	],

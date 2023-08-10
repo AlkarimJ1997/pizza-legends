@@ -54,7 +54,7 @@ export class NPCPlacement extends PersonPlacement {
 		return (
 			<Sprite
 				skinSrc={this.skin}
-				isMoving={this.isMoving}
+				isMoving={this.movingPixelsRemaining > 0}
 				direction={this.movingPixelDirection}
 			/>
 		);
