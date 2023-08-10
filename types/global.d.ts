@@ -121,10 +121,11 @@ declare global {
 		faceHero?: string;
 	};
 
+	type HeroState = { x: number; y: number; direction: Direction };
 	type MapChangeEvent = {
 		type: 'MAP_CHANGE';
 		map: MapName;
-	};
+	} & HeroState;
 
 	type BattleStartEvent = {
 		type: 'BATTLE';

@@ -112,14 +112,12 @@ export class OverworldEvent {
 	}
 
 	changeMap(resolve: ResolveFn) {
-		const { map } = this.event as MapChangeEvent;
+		const { map, x, y, direction } = this.event as MapChangeEvent;
 
 		this.overworld.sceneTransition = new SceneTransition({
 			overworld: this.overworld,
 			callback: () => {
-				this.overworld.id = map;
-				this.overworld.destroy();
-				this.overworld.start();
+				this.overworld.loadMap(map, { x, y, direction });
 				resolve();
 
 				this.overworld.sceneTransition?.fadeOut();
@@ -176,7 +174,7 @@ export class OverworldEvent {
 			pizzas,
 			onComplete: () => {
 				resolve();
-        this.overworld.overlay = null;
+				this.overworld.overlay = null;
 			},
 		});
 

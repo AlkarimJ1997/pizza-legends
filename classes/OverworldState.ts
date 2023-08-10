@@ -47,6 +47,19 @@ export class OverworldState {
 		this.start();
 	}
 
+	loadMap(mapId: MapName, heroState: HeroState) {
+		this.id = mapId;
+		this.destroy();
+		this.start();
+
+		if (!this.heroRef) return;
+
+		this.heroRef.x = heroState.x;
+		this.heroRef.y = heroState.y;
+		this.heroRef.movingPixelDirection = heroState.direction;
+    this.heroRef.updateSprite();
+	}
+
 	start() {
 		const overworldData = OverworldMaps[this.id]!;
 

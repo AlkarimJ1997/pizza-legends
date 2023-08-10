@@ -1,4 +1,11 @@
-import { EVENTS, MAPS, PLACEMENT_TYPES, SKINS } from '@/utils/consts';
+import {
+	DIRECTIONS,
+	EVENTS,
+	MAPS,
+	PLACEMENT_TYPES,
+	SKINS,
+} from '@/utils/consts';
+import { asGridCoord } from '@/utils/helpers';
 
 const OVERWORLD_STATE: OverworldConfig = {
 	map: MAPS.Kitchen,
@@ -23,6 +30,21 @@ const OVERWORLD_STATE: OverworldConfig = {
 			],
 		},
 	],
+	cutsceneSpaces: {
+		[asGridCoord(5, 9)]: [
+			{
+				events: [
+					{
+						type: EVENTS.MAP_CHANGE,
+						map: 'Street',
+						x: 29,
+						y: 8,
+						direction: DIRECTIONS.DOWN,
+					},
+				],
+			},
+		],
+	},
 };
 
 export default OVERWORLD_STATE;
