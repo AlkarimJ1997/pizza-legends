@@ -7,9 +7,9 @@ import { PersonPlacement } from '@/classes/placements/PersonPlacement';
 import Trainers from '@/data/TrainerMap';
 import { EVENTS, CUSTOM_EVENTS } from '@/utils/consts';
 import { oppositeDirection } from '@/utils/helpers';
-import { Pause } from '@/classes/Pause';
+import { PauseMenu } from '@/classes/menus/PauseMenu';
 import { playerState } from '@/classes/state/PlayerState';
-import { CraftingMenu } from '@/classes/CraftingMenu';
+import { CraftingMenu } from '@/classes/menus/CraftingMenu';
 
 type ResolveFn = (value: void | 'WON_BATTLE' | 'LOST_BATTLE') => void;
 
@@ -150,14 +150,16 @@ export class OverworldEvent {
 	}
 
 	pause(resolve: () => void) {
-		this.overworld.pause = new Pause({
+		this.overworld.isPaused = true;
+		this.overworld.overlay = new PauseMenu({
 			onComplete: () => {
 				resolve();
-				this.overworld.pause = null;
+				this.overworld.overlay = null;
+				this.overworld.isPaused = false;
 			},
 		});
 
-		this.overworld.pause.init();
+		this.overworld.overlay.init();
 	}
 
 	storyFlag(resolve: ResolveFn) {
@@ -170,14 +172,15 @@ export class OverworldEvent {
 	crafting(resolve: ResolveFn) {
 		const { pizzas } = this.event as CraftingEvent;
 
-		this.overworld.craftingMenu = new CraftingMenu({
+		this.overworld.overlay = new CraftingMenu({
 			pizzas,
 			onComplete: () => {
 				resolve();
+        this.overworld.overlay = null;
 			},
 		});
 
-		this.overworld.craftingMenu.init();
+		this.overworld.overlay.init();
 	}
 
 	init() {

@@ -1,5 +1,6 @@
-import Pizzas from '@/data/PizzaMap';
 import { TEAMS } from '@/utils/consts';
+import { v4 as uuid } from 'uuid';
+import Pizzas from '@/data/PizzaMap';
 
 class PlayerState {
 	party: CombatantConfig[] = [];
@@ -47,6 +48,25 @@ class PlayerState {
 			{ actionId: 'item_recoverHp', instanceId: 'item1' },
 			{ actionId: 'item_recoverHp', instanceId: 'item1' },
 		];
+	}
+
+	addMember(id: keyof typeof Pizzas) {
+		const pizza = Pizzas[id];
+		const newId = uuid();
+
+		this.party.push({
+			...pizza,
+			id: newId,
+			belongsToTeam: TEAMS.PLAYER,
+			hp: 50,
+			maxHp: 50,
+			xp: 0,
+			maxXp: 100,
+			level: 1,
+		});
+
+		// Add pizza to lineup if there's room
+		this.lineup.length < 3 && this.lineup.push(newId);
 	}
 
 	swapLineup(oldId: string, incomingId: string) {

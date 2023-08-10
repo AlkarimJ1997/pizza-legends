@@ -7,8 +7,8 @@ import type { HeroPlacement } from '@/classes/placements/HeroPlacement';
 import type { Message } from '@/classes/Message';
 import type { SceneTransition } from '@/classes/SceneTransition';
 import type { Battle } from '@/classes/battle/Battle';
-import type { Pause } from '@/classes/Pause';
-import type { CraftingMenu } from '@/classes/CraftingMenu';
+import type { PauseMenu } from '@/classes/menus/PauseMenu';
+import type { CraftingMenu } from '@/classes/menus/CraftingMenu';
 import OverworldMaps from '@/data/OverworldStateMap';
 import { Camera } from '@/classes/Camera';
 import { OverworldEvent } from '@/classes/OverworldEvent';
@@ -26,19 +26,19 @@ export class OverworldState {
 	cutsceneSpaces: { [key: string]: StoryConfig[] } = {};
 
 	isCutscenePlaying: boolean = false;
+	isPaused: boolean = false;
 	heroRef: HeroPlacement | undefined;
 
 	directionControls: DirectionControls | null = null;
 	camera: Camera | null = null;
 	gameLoop: GameLoop | null = null;
 
-  // UI Elements
+	// UI Elements
 	message: Message | null = null;
 	sceneTransition: SceneTransition | null = null;
 	battle: Battle | null = null;
 	hud: OverworldHud | null = null;
-	pause: Pause | null = null;
-  craftingMenu: CraftingMenu | null = null;
+	overlay: PauseMenu | CraftingMenu | null = null;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -167,7 +167,7 @@ export class OverworldState {
 
 	tick() {
 		// If paused, emit React state and return
-		if (this.pause) {
+		if (this.isPaused) {
 			this.onEmit(this.getState());
 			return;
 		}
@@ -193,8 +193,7 @@ export class OverworldState {
 			sceneTransition: this.sceneTransition,
 			battle: this.battle,
 			hud: this.hud,
-			pause: this.pause,
-      craftingMenu: this.craftingMenu,
+			overlay: this.overlay,
 		};
 	}
 

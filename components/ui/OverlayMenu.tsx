@@ -1,21 +1,19 @@
 import useMenu from '@/hooks/useMenu';
 import clsx from 'clsx';
 
-interface PauseMenuProps {
-	overworld: OverworldChanges;
+interface OverlayMenuProps {
+	title: string;
+	options: PageOption[];
 }
 
-const PauseMenu = ({ overworld }: PauseMenuProps) => {
-	const options = overworld.pause?.keyboardMenu?.options ?? [];
+const OverlayMenu = ({ title, options }: OverlayMenuProps) => {
 	const { focusedIndex, buttonRefs, handleFocus } = useMenu({ options });
-
-	if (!overworld.pause) return null;
 
 	return (
 		<div className='absolute inset-0 z-50 grid place-items-center auto-rows-fr'>
 			<div className='bg-slate-700 text-slate-100 w-[90%] mx-auto max-w-md p-4 rounded-md shadow-xl'>
 				<h2 className='mb-4 text-3xl text-center border-b border-b-slate-400'>
-					Pause Menu
+					{title}
 				</h2>
 				{options.map(({ label, disabled, handler, right }, i) => (
 					<div key={i} className='text-lg md:text-2xl'>
@@ -43,4 +41,4 @@ const PauseMenu = ({ overworld }: PauseMenuProps) => {
 	);
 };
 
-export default PauseMenu;
+export default OverlayMenu;

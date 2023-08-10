@@ -14,8 +14,8 @@ import type { SceneTransition } from '@/classes/SceneTransition';
 import type { Combatant } from '@/classes/battle/Combatant';
 import type { Battle } from '@/classes/battle/Battle';
 import type { OverworldHud } from '@/classes/OverworldHud';
-import type { Pause } from '@/classes/Pause';
-import type { CraftingMenu } from '@/classes/CraftingMenu';
+import type { PauseMenu } from '@/classes/menus/PauseMenu';
+import type { CraftingMenu } from '@/classes/menus/CraftingMenu';
 import Pizzas from '@/data/PizzaMap';
 
 declare global {
@@ -47,8 +47,8 @@ declare global {
 		x: number;
 		y: number;
 		type: 'PIZZA_STONE';
-    flag: StoryFlag;
-    pizzas: (keyof typeof Pizzas)[];
+		flag: StoryFlag;
+		pizzas: (keyof typeof Pizzas)[];
 	};
 
 	type PlacementConfig = PersonConfig | PizzaStoneConfig;
@@ -73,8 +73,7 @@ declare global {
 		sceneTransition: SceneTransition | null;
 		battle: Battle | null;
 		hud: OverworldHud | null;
-		pause: Pause | null;
-    craftingMenu: CraftingMenu | null;
+		overlay: PauseMenu | CraftingMenu | null;
 	};
 
 	// Animation
@@ -139,10 +138,10 @@ declare global {
 		flag: StoryFlag;
 	};
 
-  type CraftingEvent = {
-    type: 'CRAFTING';
-    pizzas: (keyof typeof Pizzas)[];
-  }
+	type CraftingEvent = {
+		type: 'CRAFTING';
+		pizzas: (keyof typeof Pizzas)[];
+	};
 
 	type BehaviorEvent = { who?: string } & (
 		| WalkEvent
@@ -152,7 +151,7 @@ declare global {
 		| BattleStartEvent
 		| PauseEvent
 		| StoryFlagEvent
-    | CraftingEvent
+		| CraftingEvent
 	);
 
 	// Revealing Text

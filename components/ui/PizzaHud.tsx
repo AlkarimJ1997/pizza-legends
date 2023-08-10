@@ -13,14 +13,11 @@ interface BattleHudProps {
 	inBattle?: boolean;
 }
 
-const PizzaHud = ({
-	config,
-	isActive,
-	hp,
-	xp,
-	inBattle = false,
-}: BattleHudProps) => {
-	const team = config.belongsToTeam;
+const PizzaHud = ({ config, isActive, inBattle = false }: BattleHudProps) => {
+	const { belongsToTeam: team, hp, maxHp, xp, maxXp } = config;
+  
+	const hpRatio = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+	const xpRatio = (xp / maxXp) * 100;
 
 	return (
 		<div
@@ -59,8 +56,8 @@ const PizzaHud = ({
 					/>
 				</div>
 			)}
-			<HealthBar hp={hp} />
-			<ExperienceBar xp={xp} />
+			<HealthBar hp={hpRatio} />
+			<ExperienceBar xp={xpRatio} />
 			{config.status && <StatusIndicator status={config.status} team={team} />}
 		</div>
 	);

@@ -10,8 +10,7 @@ import { setBackgroundColor } from '@/utils/helpers';
 import BattleScene from '@/components/battle/BattleScene';
 import Container from '@/components/Container';
 import MainHud from '@/components/ui/MainHud';
-import PauseMenu from '@/components/ui/PauseMenu';
-import CraftingMenu from '@/components/ui/CraftingMenu';
+import OverlayMenu from '@/components/ui/OverlayMenu';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -52,8 +51,12 @@ const RenderOverworld = () => {
 				)}
 				<TextMessage overworld={overworld} />
 			</Container>
-			<PauseMenu overworld={overworld} />
-			<CraftingMenu overworld={overworld} />
+			{overworld.overlay && (
+				<OverlayMenu
+					title={overworld.overlay.title}
+					options={overworld.overlay.keyboardMenu?.options ?? []}
+				/>
+			)}
 			<MainHud overworld={overworld} />
 			<SceneChange overworld={overworld} />
 		</div>

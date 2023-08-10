@@ -1,4 +1,5 @@
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
+import { playerState } from '@/classes/state/PlayerState';
 import Pizzas from '@/data/PizzaMap';
 
 interface CraftingMenuProps {
@@ -17,8 +18,23 @@ export class CraftingMenu {
 		this.onComplete = onComplete;
 	}
 
+	get title() {
+		return 'Create a Pizza';
+	}
+
 	getOptions(): PageOption[] {
-		return [{ label: 'Test', description: 'description', handler: () => {} }];
+		return this.pizzas.map(id => {
+			const base = Pizzas[id];
+
+			return {
+				label: base.name,
+				description: base.description,
+				handler: () => {
+					playerState.addMember(id);
+					this.close();
+				},
+			};
+		});
 	}
 
 	close() {

@@ -3,7 +3,7 @@ import { KeyboardMenu } from '@/classes/KeyboardMenu';
 import { playerState } from '@/classes/state/PlayerState';
 import { wait } from '@/utils/helpers';
 
-export class Pause {
+export class PauseMenu {
 	onComplete: () => void;
 
 	keyboardMenu: KeyboardMenu | null = null;
@@ -11,6 +11,10 @@ export class Pause {
 
 	constructor({ onComplete }: { onComplete: () => void }) {
 		this.onComplete = onComplete;
+	}
+
+	get title() {
+		return 'Pause Menu';
 	}
 
 	getOptions(pageKey: string): PageOption[] {
@@ -59,7 +63,7 @@ export class Pause {
 				label: 'Move to front',
 				description: 'Move this pizza to the front of your party',
 				handler: () => {
-          playerState.moveToFront(pageKey);
+					playerState.moveToFront(pageKey);
 					this.keyboardMenu?.setOptions(this.getOptions('root'));
 				},
 			},
