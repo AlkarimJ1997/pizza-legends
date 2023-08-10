@@ -62,9 +62,10 @@ export class Progress {
 		this.startingHeroY = file.startingHeroY;
 		this.startingHeroDirection = file.startingHeroDirection;
 
-		playerState.party = file.playerState.party;
-		playerState.lineup = file.playerState.lineup;
-		playerState.inventory = file.playerState.inventory;
-		playerState.storyFlags = file.playerState.storyFlags;
+		// playerState.party = file.playerState.party;
+		// playerState.lineup = file.playerState.lineup;
+		// playerState.inventory = file.playerState.inventory;
+		// playerState.storyFlags = file.playerState.storyFlags;
+    Object.assign(playerState, file.playerState);
 	}
 }

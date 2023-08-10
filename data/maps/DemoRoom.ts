@@ -100,7 +100,15 @@ const OVERWORLD_STATE: OverworldConfig = {
 		],
 		[asGridCoord(5, 9)]: [
 			{
-				events: [{ type: EVENTS.MAP_CHANGE, map: 'Kitchen' }],
+				events: [
+					{
+						type: EVENTS.MAP_CHANGE,
+						map: 'Kitchen',
+						x: 5,
+						y: 4,
+						direction: DIRECTIONS.DOWN,
+					},
+				],
 			},
 		],
 	},
