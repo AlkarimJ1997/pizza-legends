@@ -1,5 +1,7 @@
+import type { OverworldState } from '@/classes/OverworldState';
 import { playerState } from '@/classes/state/PlayerState';
 import { DIRECTIONS } from '@/utils/consts';
+import { getFromLocalStorage } from '@/utils/helpers';
 
 type GameState = {
 	mapId: MapName;
@@ -17,24 +19,25 @@ type GameState = {
 export class Progress {
 	private readonly saveKey = 'PizzaLegends_SaveFile1';
 
-	mapId: MapName;
-	startingHeroX: number;
-	startingHeroY: number;
-	startingHeroDirection: Direction;
+	overworld: OverworldState;
+	startingHeroX: number | null = null;
+	startingHeroY: number | null = null;
+	startingHeroDirection: Direction | null = null;
 
-	constructor() {
-		this.mapId = 'DemoRoom';
-		this.startingHeroX = 0;
-		this.startingHeroY = 0;
-		this.startingHeroDirection = DIRECTIONS.DOWN;
+	constructor({ overworld }: { overworld: OverworldState }) {
+		this.overworld = overworld;
 	}
 
 	save() {
+		if (!this.overworld.heroRef) {
+			throw new Error('Cannot save without a hero');
+		}
+
 		const gameState = {
-			mapId: this.mapId,
-			startingHeroX: this.startingHeroX,
-			startingHeroY: this.startingHeroY,
-			startingHeroDirection: this.startingHeroDirection,
+			mapId: this.overworld.id,
+			startingHeroX: this.overworld.heroRef.x,
+			startingHeroY: this.overworld.heroRef.y,
+			startingHeroDirection: this.overworld.heroRef.movingPixelDirection,
 			playerState: {
 				party: playerState.party,
 				lineup: playerState.lineup,
@@ -46,26 +49,38 @@ export class Progress {
 		window.localStorage.setItem(this.saveKey, JSON.stringify(gameState));
 	}
 
-	getSaveFile(): GameState | null {
-		const gameState = window.localStorage.getItem(this.saveKey);
+	updateHeroPosition() {
+		if (!this.overworld.heroRef) {
+			throw new Error("Can't find hero instance");
+		}
 
-		return gameState ? (JSON.parse(gameState) as GameState) : null;
+		const { heroRef } = this.overworld;
+
+		if (
+			!this.startingHeroX ||
+			!this.startingHeroY ||
+			!this.startingHeroDirection
+		) {
+			return;
+		}
+
+		heroRef.x = this.startingHeroX;
+		heroRef.y = this.startingHeroY;
+		heroRef.movingPixelDirection = this.startingHeroDirection;
 	}
 
 	load() {
-		const file = this.getSaveFile();
+		const file = getFromLocalStorage<GameState>(this.saveKey);
 
-		if (!file) return;
+		if (!file) {
+			console.log('No save file found');
+			return;
+		}
 
-		this.mapId = file.mapId;
+		this.overworld.id = file.mapId;
 		this.startingHeroX = file.startingHeroX;
 		this.startingHeroY = file.startingHeroY;
 		this.startingHeroDirection = file.startingHeroDirection;
-
-		// playerState.party = file.playerState.party;
-		// playerState.lineup = file.playerState.lineup;
-		// playerState.inventory = file.playerState.inventory;
-		// playerState.storyFlags = file.playerState.storyFlags;
-    Object.assign(playerState, file.playerState);
+		Object.assign(playerState, file.playerState);
 	}
 }

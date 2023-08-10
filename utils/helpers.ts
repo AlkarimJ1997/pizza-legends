@@ -44,3 +44,9 @@ export const wait = (ms: number) => {
 export const randomFromArray = <T>(arr: T[]) => {
 	return arr[Math.floor(Math.random() * arr.length)];
 };
+
+export const getFromLocalStorage = <T>(key: string) => {
+	const value = localStorage.getItem(key);
+
+	return value ? (JSON.parse(value) as T) : null;
+};

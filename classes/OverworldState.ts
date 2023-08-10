@@ -47,44 +47,24 @@ export class OverworldState {
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
-		this.progress = new Progress();
 
-		this.initialLoad();
+		this.progress = new Progress({ overworld: this });
+		this.progress.load();
+
+		this.start();
 	}
 
-	initialLoad() {
-		let initialHeroState: HeroState | null = null;
-
-		if (this.progress.getSaveFile()) {
-			this.progress.load();
-			initialHeroState = {
-				x: this.progress.startingHeroX,
-				y: this.progress.startingHeroY,
-				direction: this.progress.startingHeroDirection,
-			};
-		}
-
-		this.loadMap(this.id, initialHeroState);
-	}
-
-	loadMap(mapId: MapName, heroState: HeroState | null = null) {
+	loadMap(mapId: MapName, heroState: HeroState) {
 		this.id = mapId;
 		this.destroy();
 		this.start();
 
-		if (this.heroRef && heroState) {
-			this.heroRef.x = heroState.x;
-			this.heroRef.y = heroState.y;
-			this.heroRef.movingPixelDirection = heroState.direction;
-			this.heroRef.updateSprite();
-		}
+		if (!this.heroRef) return;
 
-		// Update game progress
-		this.progress.mapId = mapId;
-		this.progress.startingHeroX = this.heroRef?.x || 0;
-		this.progress.startingHeroY = this.heroRef?.y || 0;
-		this.progress.startingHeroDirection =
-			this.heroRef?.movingPixelDirection || DIRECTIONS.DOWN;
+		this.heroRef.x = heroState.x;
+		this.heroRef.y = heroState.y;
+		this.heroRef.movingPixelDirection = heroState.direction;
+		this.heroRef.updateSprite();
 	}
 
 	start() {
@@ -101,6 +81,8 @@ export class OverworldState {
 		this.camera = new Camera(this, this.heroRef);
 		this.directionControls = new DirectionControls();
 		this.hud = new OverworldHud();
+
+		this.progress.updateHeroPosition();
 
 		this.bindActionInput();
 		this.bindHeroPositionCheck();
