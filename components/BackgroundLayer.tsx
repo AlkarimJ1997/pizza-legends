@@ -1,6 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
 import { useState, useEffect, useRef } from 'react';
 
 interface BackgroundLayerProps {
