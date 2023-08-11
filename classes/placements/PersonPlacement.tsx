@@ -17,6 +17,8 @@ export abstract class PersonPlacement extends Placement {
 	behaviorLoop: BehaviorEvent[];
 	behaviorLoopIndex: number;
 
+	isStanding: boolean = false;
+
 	constructor(config: PersonConfig, overworld: OverworldState) {
 		super(config, overworld);
 
@@ -55,9 +57,13 @@ export abstract class PersonPlacement extends Placement {
 		}
 
 		if (behavior.type === EVENTS.STAND) {
+			this.isStanding = true;
+
 			setTimeout(() => {
 				emitEvent(CUSTOM_EVENTS.STAND, { whoId: this.id! });
+				this.isStanding = false;
 			}, behavior.time);
+
 			this.updateSprite();
 		}
 	}

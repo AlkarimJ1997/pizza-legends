@@ -31,6 +31,8 @@ export class NPCPlacement extends PersonPlacement {
 			return;
 		}
 
+		if (this.isStanding) return;
+
 		let eventConfig = this.behaviorLoop[this.behaviorLoopIndex];
 		eventConfig.who = this.id ?? '';
 
