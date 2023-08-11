@@ -60,7 +60,6 @@ const OVERWORLD_STATE: OverworldConfig = {
 					events: [
 						{ type: EVENTS.MESSAGE, text: 'Bahaha!', faceHero: 'npcB' },
 						{ type: EVENTS.STORY_FLAG, flag: 'TALKED_TO_ERIO' },
-						// { type: EVENTS.BATTLE, trainerId: 'erio' },
 					],
 				},
 			],

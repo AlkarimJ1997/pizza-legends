@@ -10,20 +10,50 @@ import { asGridCoord } from '@/utils/helpers';
 const OVERWORLD_STATE: OverworldConfig = {
 	map: MAPS.Kitchen,
 	placements: [
-		{ id: 'hero', x: 5, y: 4, skin: SKINS.HERO, type: PLACEMENT_TYPES.HERO },
+		{ id: 'hero', x: 10, y: 4, skin: SKINS.HERO, type: PLACEMENT_TYPES.HERO },
 		{
-			id: 'npcB',
-			x: 10,
-			y: 7,
+			id: 'kitchenNpcA',
+			x: 9,
+			y: 4,
 			skin: SKINS.NPC3,
+			direction: DIRECTIONS.UP,
 			type: PLACEMENT_TYPES.NPC,
 			talking: [
 				{
 					events: [
 						{
 							type: EVENTS.MESSAGE,
-							text: 'You made it!',
-							faceHero: 'npcB',
+							text: "** They don't want to talk to you **",
+						},
+					],
+				},
+			],
+		},
+		{
+			id: 'kitchenNpcB',
+			x: 3,
+			y: 5,
+			skin: SKINS.NPC3,
+			type: PLACEMENT_TYPES.NPC,
+			behaviorLoop: [
+				{ type: EVENTS.WALK, direction: DIRECTIONS.RIGHT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.RIGHT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.DOWN },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.DOWN },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.LEFT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.LEFT },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.UP },
+				{ type: EVENTS.WALK, direction: DIRECTIONS.UP },
+				{ type: EVENTS.STAND, direction: DIRECTIONS.UP, time: 500 },
+				{ type: EVENTS.STAND, direction: DIRECTIONS.LEFT, time: 500 },
+			],
+			talking: [
+				{
+					events: [
+						{
+							type: EVENTS.MESSAGE,
+							text: 'People take their jobs here very seriously.',
+							faceHero: 'kitchenNpcB',
 						},
 					],
 				},
@@ -36,14 +66,15 @@ const OVERWORLD_STATE: OverworldConfig = {
 				events: [
 					{
 						type: EVENTS.MAP_CHANGE,
-						map: 'Street',
-						x: 29,
-						y: 8,
+						map: 'DiningRoom',
+						x: 7,
+						y: 2,
 						direction: DIRECTIONS.DOWN,
 					},
 				],
 			},
 		],
+		[asGridCoord(10, 5)]: [],
 	},
 };
 
