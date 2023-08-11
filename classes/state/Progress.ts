@@ -1,6 +1,5 @@
 import type { OverworldState } from '@/classes/OverworldState';
 import { playerState } from '@/classes/state/PlayerState';
-import { DIRECTIONS } from '@/utils/consts';
 import { getFromLocalStorage } from '@/utils/helpers';
 
 type GameState = {
@@ -26,6 +25,10 @@ export class Progress {
 
 	constructor({ overworld }: { overworld: OverworldState }) {
 		this.overworld = overworld;
+	}
+
+	get saveExists() {
+		return !!getFromLocalStorage<GameState>(this.saveKey);
 	}
 
 	save() {

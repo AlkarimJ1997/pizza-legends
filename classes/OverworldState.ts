@@ -45,6 +45,7 @@ export class OverworldState {
 
 	// Game progress
 	progress: Progress;
+	shouldLoad: boolean = false;
 
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
@@ -52,16 +53,15 @@ export class OverworldState {
 		this.progress = new Progress({ overworld: this });
 
 		this.showGameMenu();
-
-		this.progress.load();
-
-		this.start();
 	}
 
 	async showGameMenu() {
 		this.gameMenu = new GameMenu({ overworld: this });
 
 		await this.gameMenu.init();
+
+    this.shouldLoad && this.progress.load();
+    this.start();
 	}
 
 	loadMap(mapId: MapName, heroState: HeroState) {
@@ -94,7 +94,7 @@ export class OverworldState {
 		this.directionControls = new DirectionControls();
 		this.hud = new OverworldHud();
 
-		this.progress.updateHeroPosition();
+		this.shouldLoad && this.progress.updateHeroPosition();
 		this.camera.centerOnHero();
 
 		this.bindActionInput();
@@ -229,7 +229,7 @@ export class OverworldState {
 			battle: this.battle,
 			hud: this.hud,
 			overlay: this.overlay,
-      gameMenu: this.gameMenu,
+			gameMenu: this.gameMenu,
 		};
 	}
 

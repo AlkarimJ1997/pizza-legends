@@ -19,14 +19,14 @@ const TitleScreen = ({ options }: TitleScreenProps) => {
 				/>
 				<div>
 					{options.map(({ label, disabled, handler, right }, i) => (
-						<div key={i} className='text-lg md:text-3xl'>
+						<div key={i} className='text-lg md:text-3xl my-2'>
 							<button
 								ref={el => (buttonRefs.current[i] = el)}
 								disabled={!!disabled}
 								onClick={handler}
 								onMouseEnter={event => handleFocus(event, i)}
 								className={clsx(
-									'cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-md px-4 py-2',
+									'w-full cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-md px-4 py-2',
 									disabled && 'opacity-50'
 								)}>
 								{label}

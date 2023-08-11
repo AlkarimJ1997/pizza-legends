@@ -1,4 +1,3 @@
-import type { Progress } from '@/classes/state/Progress';
 import type { OverworldState } from '@/classes/OverworldState';
 import { KeyboardMenu } from '@/classes/KeyboardMenu';
 
@@ -16,11 +15,23 @@ export class GameMenu {
 				label: 'New Game',
 				description: 'Start a new pizza adventure!',
 				handler: () => {
+          this.overworld.shouldLoad = false;
 					this.close();
 					resolve();
 				},
 			},
-		];
+			this.overworld.progress.saveExists
+				? {
+						label: 'Continue Game',
+						description: 'Continue your pizza adventure!',
+						handler: () => {
+              this.overworld.shouldLoad = true;
+							this.close();
+							resolve();
+						},
+				  }
+				: null,
+		].filter(Boolean);
 	}
 
 	close() {
