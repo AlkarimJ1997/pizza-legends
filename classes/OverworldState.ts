@@ -17,6 +17,7 @@ import { KeyPressListener } from '@/classes/KeyPressListener';
 import { getNextCoords } from '@/utils/helpers';
 import { playerState } from '@/classes/state/PlayerState';
 import { Progress } from '@/classes/state/Progress';
+import { GameMenu } from '@/classes/menus/GameMenu';
 
 export class OverworldState {
 	id: MapName;
@@ -35,6 +36,7 @@ export class OverworldState {
 	gameLoop: GameLoop | null = null;
 
 	// UI Elements
+	gameMenu: GameMenu | null = null;
 	message: Message | null = null;
 	sceneTransition: SceneTransition | null = null;
 	battle: Battle | null = null;
@@ -47,11 +49,19 @@ export class OverworldState {
 	constructor(mapId: MapName, onEmit: (newState: OverworldChanges) => void) {
 		this.id = mapId;
 		this.onEmit = onEmit;
-
 		this.progress = new Progress({ overworld: this });
+
+		this.showGameMenu();
+
 		this.progress.load();
 
 		this.start();
+	}
+
+	async showGameMenu() {
+		this.gameMenu = new GameMenu({ overworld: this });
+
+		await this.gameMenu.init();
 	}
 
 	loadMap(mapId: MapName, heroState: HeroState) {
@@ -66,7 +76,7 @@ export class OverworldState {
 		this.heroRef.movingPixelDirection = heroState.direction;
 		this.heroRef.updateSprite();
 
-    this.camera?.centerOnHero();
+		this.camera?.centerOnHero();
 	}
 
 	start() {
@@ -85,7 +95,7 @@ export class OverworldState {
 		this.hud = new OverworldHud();
 
 		this.progress.updateHeroPosition();
-    this.camera.centerOnHero();
+		this.camera.centerOnHero();
 
 		this.bindActionInput();
 		this.bindHeroPositionCheck();
@@ -219,6 +229,7 @@ export class OverworldState {
 			battle: this.battle,
 			hud: this.hud,
 			overlay: this.overlay,
+      gameMenu: this.gameMenu,
 		};
 	}
 

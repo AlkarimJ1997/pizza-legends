@@ -1,7 +1,7 @@
 import RenderOverworld from '@/components/RenderOverworld';
 
 const Home = () => {
-	return <RenderOverworld />;
+	return <RenderOverworld />
 };
 
 export default Home;

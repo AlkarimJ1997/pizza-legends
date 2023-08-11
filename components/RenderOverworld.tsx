@@ -11,6 +11,7 @@ import BattleScene from '@/components/battle/BattleScene';
 import Container from '@/components/Container';
 import MainHud from '@/components/ui/MainHud';
 import OverlayMenu from '@/components/ui/OverlayMenu';
+import TitleScreen from '@/components/TitleScreen';
 
 const RenderOverworld = () => {
 	const [overworld, setOverworld] = useState<OverworldChanges | null>(null);
@@ -31,6 +32,11 @@ const RenderOverworld = () => {
 	}, []);
 
 	if (!overworld) return null;
+	if (overworld.gameMenu) {
+		return (
+			<TitleScreen options={overworld.gameMenu.keyboardMenu?.options || []} />
+		);
+	}
 
 	setBackgroundColor(overworld.id);
 	const { cameraTransformX: x, cameraTransformY: y } = overworld;

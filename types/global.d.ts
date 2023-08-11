@@ -16,6 +16,7 @@ import type { Battle } from '@/classes/battle/Battle';
 import type { OverworldHud } from '@/classes/OverworldHud';
 import type { PauseMenu } from '@/classes/menus/PauseMenu';
 import type { CraftingMenu } from '@/classes/menus/CraftingMenu';
+import type { GameMenu } from '@/classes/menus/GameMenu';
 import Pizzas from '@/data/PizzaMap';
 
 declare global {
@@ -74,6 +75,7 @@ declare global {
 		battle: Battle | null;
 		hud: OverworldHud | null;
 		overlay: PauseMenu | CraftingMenu | null;
+    gameMenu: GameMenu | null;
 	};
 
 	// Animation
