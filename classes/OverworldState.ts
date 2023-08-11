@@ -52,7 +52,8 @@ export class OverworldState {
 		this.onEmit = onEmit;
 		this.progress = new Progress({ overworld: this });
 
-		this.showGameMenu();
+		// this.showGameMenu();
+    this.start();
 	}
 
 	async showGameMenu() {
