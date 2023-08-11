@@ -46,10 +46,6 @@ export class Camera {
 		return currentValue * (1 - time) + targetValue * time;
 	}
 
-	tick() {
-		this.getNewCameraPosition();
-	}
-
 	getNewCameraPosition() {
 		const [personX, personY] = this.targetCoords;
 
@@ -86,5 +82,16 @@ export class Camera {
 		}
 
 		return [targetX, targetY];
+	}
+
+	centerOnHero() {
+		const [personX, personY] = this.targetCoords;
+
+		this.cameraX = personX;
+		this.cameraY = personY;
+	}
+
+	tick() {
+		this.getNewCameraPosition();
 	}
 }

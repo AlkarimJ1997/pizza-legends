@@ -65,6 +65,8 @@ export class OverworldState {
 		this.heroRef.y = heroState.y;
 		this.heroRef.movingPixelDirection = heroState.direction;
 		this.heroRef.updateSprite();
+
+    this.camera?.centerOnHero();
 	}
 
 	start() {
@@ -83,6 +85,7 @@ export class OverworldState {
 		this.hud = new OverworldHud();
 
 		this.progress.updateHeroPosition();
+    this.camera.centerOnHero();
 
 		this.bindActionInput();
 		this.bindHeroPositionCheck();
