@@ -7,7 +7,7 @@ import Pizzas from '@/data/PizzaMap';
 
 export class PizzaStonePlacement extends Placement {
 	storyFlag: StoryFlag;
-  pizzas: (keyof typeof Pizzas)[];
+	pizzas: (keyof typeof Pizzas)[];
 
 	constructor(config: PizzaStoneConfig, overworld: OverworldState) {
 		super(config, overworld);
@@ -19,10 +19,10 @@ export class PizzaStonePlacement extends Placement {
 
 		this.currentAnimation = 'used-down';
 		this.storyFlag = config.flag;
-    this.pizzas = config.pizzas;
+		this.pizzas = config.pizzas;
 		this.talking = [
 			{
-				required: [this.storyFlag],
+				disqualify: [this.storyFlag],
 				events: [{ type: EVENTS.MESSAGE, text: 'You have already used this.' }],
 			},
 			{

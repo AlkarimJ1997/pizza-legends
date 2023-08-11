@@ -75,7 +75,7 @@ declare global {
 		battle: Battle | null;
 		hud: OverworldHud | null;
 		overlay: PauseMenu | CraftingMenu | null;
-    gameMenu: GameMenu | null;
+		gameMenu: GameMenu | null;
 	};
 
 	// Animation
@@ -98,7 +98,7 @@ declare global {
 
 	// Story Flag events (Talking or Cutscene Spaces)
 	type StoryConfig = {
-		required?: StoryFlag[];
+		disqualify?: StoryFlag[];
 		events: BehaviorEvent[];
 	};
 

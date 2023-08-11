@@ -38,6 +38,8 @@ export abstract class PersonPlacement extends Placement {
 		// Behavior
 		this.behaviorLoop = config.behaviorLoop ?? [];
 		this.behaviorLoopIndex = 0;
+
+    this.updateSprite();
 	}
 
 	startBehavior(behavior: WalkEvent | StandEvent) {

@@ -53,7 +53,7 @@ export class OverworldState {
 		this.progress = new Progress({ overworld: this });
 
 		// this.showGameMenu();
-    this.start();
+		this.start();
 	}
 
 	async showGameMenu() {
@@ -61,8 +61,8 @@ export class OverworldState {
 
 		await this.gameMenu.init();
 
-    this.shouldLoad && this.progress.load();
-    this.start();
+		this.shouldLoad && this.progress.load();
+		this.start();
 	}
 
 	loadMap(mapId: MapName, heroState: HeroState) {
@@ -148,9 +148,9 @@ export class OverworldState {
 
 		if (match && match.talking.length > 0) {
 			const relevantScenario = match.talking.find(scenario => {
-				if (!scenario.required) return true;
+				if (!scenario.disqualify) return true;
 
-				return scenario.required.every(sf => playerState.storyFlags[sf]);
+				return scenario.disqualify.every(sf => playerState.storyFlags[sf]);
 			});
 
 			relevantScenario && this.startCutscene(relevantScenario.events);

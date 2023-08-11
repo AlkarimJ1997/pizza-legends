@@ -26,7 +26,7 @@ const OVERWORLD_STATE: OverworldConfig = {
 			],
 			talking: [
 				{
-					required: [STORY_FLAGS.TALKED_TO_ERIO],
+					disqualify: [STORY_FLAGS.TALKED_TO_ERIO],
 					events: [
 						{
 							type: EVENTS.MESSAGE,
